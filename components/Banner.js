@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     },
     banner:{
         height: 350,
-        resizeMode: 'cover',
+        // resizeMode: 'contain',
         width: '100%',
         margin: 0
     }

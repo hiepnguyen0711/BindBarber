@@ -1,36 +1,114 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Text } from "react-native";
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
 
-function CategoryScreen(){
-    function ViewBannerHandler(){
+function CategoryScreen() {
+    function ViewBannerHandler() {
         console.log('abc');
     }
-    return(
+    return (
         <View style={styles.container}>
             <Banner onPress={ViewBannerHandler} />
-            <Service title='Dịch vụ' />
-            <ServiceItem  title='Cắt Tóc' />
+            <View style={styles.innerContainer}>
+                <View style={styles.serviceTitle}>
+                    <Service title='Dịch vụ' />
+                </View>
+                <View style={styles.serviceButton}>
+                    <ServiceItem title='Cắt Tóc' />
+                </View>
+                <View style={styles.barberTitle}>
+                    <Text style={styles.barberFont}>Barber</Text>
+                </View>
+                <View style={styles.barberImg}>
+                    {/* barber 1 */}
+                    <View style={styles.textImg}>
+                        <View style={styles.innerBarber}>
+                            <Image source={require('../assets/images/barber/bind.jpeg')} style={styles.barberPicture} />
+                        </View>
+                        <Text style={[styles.barberText, {color: 'red'}]}>BOSS</Text>
+                    </View>
+                    {/* barber 2 */}
+                    <View style={styles.textImg}>
+                        <View style={styles.innerBarber}>
+                            <Image source={require('../assets/images/barber/hiep_2.jpeg')} style={styles.barberPicture} />
+                        </View>
+                        <Text style={[styles.barberText, {color: 'white'}]}>Hiệp</Text>
+                    </View>
+                    {/* barber 3 */}
+                    <View style={styles.textImg}>
+                        <View style={styles.innerBarber}>
+                            <Image source={require('../assets/images/barber/hung.jpeg')} style={styles.barberPicture} />
+                        </View>
+                        <Text style={[styles.barberText, {color: 'white'}]}>Hùng</Text>
+                    </View>
+                    {/*  */}
+                </View>
+            </View>
         </View>
-        
+
     );
-  
+
 }
 
 export default CategoryScreen;
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        
+        backgroundColor: '#025464'
     },
-    innerContainer:{
+    innerContainer: {
         flex: 1,
-        
     },
-    banner:{
+    banner: {
         height: 250,
         resizeMode: 'cover',
         width: '100%',
+    },
+    serviceTitle: {
+        flex: 2
+    },
+    serviceButton: {
+        flex: 3
+    },
+    barberTitle: {
+        flex: 3,
+        marginHorizontal: 16
+    },
+    barberFont: {
+        fontFamily: 'pacifico',
+        fontWeight: 500,
+        fontSize: 28,
+        color: '#E8AA42'
+    },
+    barberImg: {
+        flex: 4,
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textImg: {
+        alignItems: 'center',
+        marginHorizontal: 10
+    },
+    innerBarber: {
+        backgroundColor: 'white',
+        borderRadius: 100,
+        overflow: 'hidden',
+        width: 100,
+        height: 100,
+        marginTop: -30,
+        marginBottom: 8
+    },
+    barberPicture: {
+        height: 100,
+        width: 100,
+        resizeMode: 'cover'
+    },
+    barberText: {
+        fontFamily: 'josefin-m',
+        fontSize: 18,
+
     }
 })

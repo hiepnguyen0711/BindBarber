@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 function Service({title}){
     return(
         <View style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.service}>{title}</Text>
             {/* <View></View> */}
         </View>
     );
@@ -17,9 +17,10 @@ const styles = StyleSheet.create({
         marginTop: 0,
         marginHorizontal: 16
     },
-    title:{
+    service:{
         fontFamily: 'pacifico',
         fontWeight: 500,
-        fontSize: 28
+        fontSize: 28,
+        color: '#E8AA42'
     }
 });
