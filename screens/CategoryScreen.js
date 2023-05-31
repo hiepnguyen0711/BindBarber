@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View, Text } from "react-native";
+import { Image, StyleSheet, View, Text, Platform, ScrollView } from "react-native";
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
@@ -46,7 +46,6 @@ function CategoryScreen() {
                 </View>
             </View>
         </View>
-
     );
 
 }
@@ -85,25 +84,33 @@ const styles = StyleSheet.create({
         flex: 4,
         paddingHorizontal: 10,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: 'flex-start',
+        justifyContent: 'space-around'
     },
     textImg: {
         alignItems: 'center',
         marginHorizontal: 10
     },
     innerBarber: {
-        backgroundColor: 'white',
-        borderRadius: 100,
-        overflow: 'hidden',
-        width: 100,
-        height: 100,
+        backgroundColor: '#E57C23',
+        borderRadius: 80,
+        overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
+        width: 80,
+        height: 80,
         marginTop: -30,
-        marginBottom: 8
+        marginBottom: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        elevation: 8,
+        shadowColor: 'black',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.25,
+        shadowRadius: 8
     },
     barberPicture: {
-        height: 100,
-        width: 100,
+        height: 75,
+        width: 75,
+        borderRadius: 75,
         resizeMode: 'cover'
     },
     barberText: {

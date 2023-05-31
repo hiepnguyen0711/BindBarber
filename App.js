@@ -34,6 +34,9 @@ function BottomTabNavigator() {
       tabBarStyle: { backgroundColor: '#E8AA42'},
       tabBarActiveTintColor: '#025464',
       tabBarInactiveTintColor: '#F8F1F1',
+      tabBarLabelStyle: {
+        fontFamily: 'josefin-r',
+      },
     }}
 
     >
