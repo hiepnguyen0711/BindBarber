@@ -11,6 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
+import PropTypes from 'prop-types';
+
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -76,7 +78,10 @@ export default function App() {
     'josefin-b': require('./assets/fonts/josefin-b.ttf'),
     'josefin-m': require('./assets/fonts/josefin-m.ttf'),
     'josefin-r': require('./assets/fonts/josefin-r.ttf'),
-    'pacifico': require('./assets/fonts/pacifico.ttf')
+    'pacifico': require('./assets/fonts/pacifico.ttf'),
+    'chakra-b': require('./assets/fonts/chakra-b.ttf'),
+    'chakra-m': require('./assets/fonts/chakra-m.ttf'),
+    'chakra-r': require('./assets/fonts/chakra-r.ttf')
   });
   if (!fontLoaded) {
     return <AppLoading />;

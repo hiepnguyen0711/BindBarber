@@ -2,12 +2,14 @@ import { Image, StyleSheet, View, Text, Platform, ScrollView } from "react-nativ
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
+import InfoContact from "../components/InfoContact";
 
 function CategoryScreen() {
     function ViewBannerHandler() {
         console.log('abc');
     }
     return (
+        <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
         <View style={styles.container}>
             <Banner onPress={ViewBannerHandler} />
             <View style={styles.innerContainer}>
@@ -45,19 +47,24 @@ function CategoryScreen() {
                     {/*  */}
                 </View>
             </View>
+            {/* info contact */}
+            <InfoContact />
         </View>
+        </ScrollView>
     );
 
 }
 
 export default CategoryScreen;
 const styles = StyleSheet.create({
+    root:{
+        backgroundColor: '#025464',
+    },
     container: {
-        flex: 1,
-        backgroundColor: '#025464'
+        flex: 1
     },
     innerContainer: {
-        flex: 1,
+        flex: 1
     },
     banner: {
         height: 250,
@@ -97,7 +104,7 @@ const styles = StyleSheet.create({
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
         width: 80,
         height: 80,
-        marginTop: -30,
+        // marginTop: -30,
         marginBottom: 8,
         alignItems: 'center',
         justifyContent: 'center',
