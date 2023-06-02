@@ -1,6 +1,6 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Carousel from "react-native-snap-carousel";
-
+const windowWidth = Dimensions.get('window').width;
 function Banner({onPress}){
     const data = [
         { imageUrl: 'https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?cs=srgb&dl=pexels-thgusstavo-santana-1813272.jpg&fm=jpg' },
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     banner:{
         height: 350,
         // resizeMode: 'contain',
-        width: '100%',
-        margin: 0
+        width: windowWidth,
+        margin: 0,
+        aspectRatio: 1.25
     }
 })

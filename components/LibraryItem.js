@@ -55,16 +55,19 @@ const styles = StyleSheet.create({
         shadowColor: 'black',
         shadowOffset: {width: 0, height: 2},
         shadowOpacity: 0.25,
-        shadowRadius: 4
+        shadowRadius: 4,
+        // overflow: 'hidden'
     },
     imgContainer: {
         // width: windowWidth
     },
     libraryImg: {
         height: 370,
+        // width: '100%',
         resizeMode: 'stretch',
         borderTopRightRadius: 16,
-        borderTopLeftRadius: 16
+        borderTopLeftRadius: 16,
+        // aspectRatio: 1.25
     },
     buttonContainer: {
         flexDirection: 'row',

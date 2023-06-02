@@ -1,6 +1,7 @@
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import LibraryItem from "../components/LibraryItem";
+import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -33,6 +34,31 @@ function LibraryScreen() {
             barberImage={'https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.6435-9/130242922_3428356397217425_17754825496431605_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=174925&_nc_ohc=ZOWu2WMzHckAX-j9pM5&_nc_ht=scontent.fsgn5-3.fna&oh=00_AfBwbr6jJtVNF8qxGW7X1DG4x9b6dp9iQdE-DVdtSLNGlA&oe=649E4D0C'} 
             imageUrl={'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/334243394_944611409879294_2467136747150626261_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=0debeb&_nc_ohc=e3KGqfAArmYAX9T8T6o&_nc_ht=scontent.fsgn5-5.fna&oh=00_AfD8l-WoUwsJuCnKfZKYue-xkb10trdggvpDr5PP1GC28w&oe=647B03CD'}
             />
+            <LibraryItem 
+            barberName={'BOSS'} 
+            barberImage={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfBag4V62KLhZuX0kusSxKE7ThAfvn6SFKXXW7-D2LtPMw&oe=649E5399'} 
+            imageUrl={'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/333800196_900840704490137_6178222022291082004_n.jpg?stp=cp6_dst-jpg&_nc_cat=110&ccb=1-7&_nc_sid=0debeb&_nc_ohc=k8tbN0i83iAAX97DMrZ&_nc_ht=scontent.fsgn5-11.fna&oh=00_AfBVr--zfJsDNPtssDyvPP6v1OX-dtBvXQDmcLKeROIkMg&oe=647E892F'}
+            />
+            <LibraryItem 
+            barberName={'BOSS'} 
+            barberImage={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfBag4V62KLhZuX0kusSxKE7ThAfvn6SFKXXW7-D2LtPMw&oe=649E5399'} 
+            imageUrl={'https://scontent.fsgn5-12.fna.fbcdn.net/v/t39.30808-6/334205105_1635258060259752_3210984640982722770_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0debeb&_nc_ohc=Kim8cmRmJJAAX_K3doh&_nc_ht=scontent.fsgn5-12.fna&oh=00_AfDVPn_x4FbYzw32RYRHvNWZTU9T1TN9_RrsMwyx1DC3XQ&oe=647E236D'}
+            />
+            <LibraryItem 
+            barberName={'BOSS'} 
+            barberImage={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfBag4V62KLhZuX0kusSxKE7ThAfvn6SFKXXW7-D2LtPMw&oe=649E5399'} 
+            imageUrl={'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/334239748_119225401095018_6710446906982336523_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=0debeb&_nc_ohc=yWlRSmEllP8AX_Yy9PM&_nc_ht=scontent.fsgn5-11.fna&oh=00_AfACFr7Mx7yBVpCAqZhQan3EuLbcHTYHI4qSq66uIbdU-g&oe=647EA078'}
+            />
+            <LibraryItem 
+            barberName={'BOSS'} 
+            barberImage={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfBag4V62KLhZuX0kusSxKE7ThAfvn6SFKXXW7-D2LtPMw&oe=649E5399'} 
+            imageUrl={'https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/333713698_728489358780585_5357062106134467385_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=0debeb&_nc_ohc=4W5SIgBekUwAX8FG6fd&_nc_ht=scontent.fsgn5-5.fna&oh=00_AfAcNhS8jO_wOGdaANVIaXRBvISyqEfAZsIkzMsyx1j3yA&oe=647E38D5'}
+            />
+            <LibraryItem 
+            barberName={'BOSS'} 
+            barberImage={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfBag4V62KLhZuX0kusSxKE7ThAfvn6SFKXXW7-D2LtPMw&oe=649E5399'} 
+            imageUrl={'https://scontent.fsgn5-11.fna.fbcdn.net/v/t39.30808-6/334168182_758286465511212_6973186562313153931_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=0debeb&_nc_ohc=5k3pEuZ6QS4AX8KXD6O&_nc_ht=scontent.fsgn5-11.fna&oh=00_AfDth1Gim0MjGVtzXzmuTGYdbCLiJ0hQV7j3x0Z2oDspUg&oe=647F6746'}
+            />
         </ScrollView>
 
     );
@@ -42,7 +68,7 @@ export default LibraryScreen;
 
 const styles = StyleSheet.create({
     root:{
-        backgroundColor: '#025464',
+        backgroundColor: Colors.primary100,
     },
     container: {
         backgroundColor: 'white',

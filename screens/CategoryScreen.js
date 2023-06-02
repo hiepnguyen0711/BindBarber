@@ -3,6 +3,7 @@ import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
 import InfoContact from "../components/InfoContact";
+import { Colors } from "../constants/Colors";
 
 function CategoryScreen() {
     function ViewBannerHandler() {
@@ -58,7 +59,7 @@ function CategoryScreen() {
 export default CategoryScreen;
 const styles = StyleSheet.create({
     root:{
-        backgroundColor: '#025464',
+        backgroundColor: Colors.primary100,
     },
     container: {
         flex: 1

@@ -4,6 +4,7 @@ import SelectHourItem from "../components/SelectHourItem";
 import SelectBarberItem from "../components/SelectBarberItem";
 import SelectServiceItem from "../components/SelectServiceItem";
 import ButtonBooking from "../components/ButtonBooking";
+import { Colors } from "../constants/Colors";
 
 function BookScreen() {
     return (
@@ -21,7 +22,7 @@ export default BookScreen;
 
 const styles = StyleSheet.create({
     root:{
-        backgroundColor: '#025464',
+        backgroundColor: Colors.primary100,
         flex: 1,
         padding: 8,
         paddingHorizontal: 10,
