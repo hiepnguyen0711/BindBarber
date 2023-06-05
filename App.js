@@ -11,8 +11,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-import PropTypes from 'prop-types';
-import TestFirebase from './screens/TestFirebase';
+// import PropTypes from 'prop-types';
+// import TestFirebase from './screens/TestFirebase';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
