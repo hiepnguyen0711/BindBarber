@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import PropTypes from 'prop-types';
+import TestFirebase from './screens/TestFirebase';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -66,6 +67,10 @@ function BottomTabNavigator() {
         title: 'Tài Khoản',
         tabBarIcon: ({ color, size }) => <Ionicons name="ios-person-circle-sharp" size={size} color={color} />
       }} />
+      {/* <BottomTab.Screen name="firebase" component={TestFirebase} options={{
+        title: 'Test',
+        tabBarIcon: ({ color, size }) => <Ionicons name="bug" size={size} color={color} />
+      }} /> */}
     </BottomTab.Navigator>
   );
 }
