@@ -12,14 +12,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
 // import PropTypes from 'prop-types';
-// import TestFirebase from './screens/TestFirebase';
-
+import TestFirebase from './screens/TestFirebase';
+import LoginScreen from './screens/LoginScreen';
+import SigupScreen from './screens/SigupScreen';
+import {useState} from 'react';
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
 
 
 function BottomTabNavigator() {
+  const [checkLogin, setLogin] = useState(false);
   return (
     <BottomTab.Navigator 
     screenOptions={{
@@ -63,20 +66,18 @@ function BottomTabNavigator() {
         tabBarIcon: ({ color, size }) => <Ionicons name="ios-basket" size={size} color={color} />,
         tabBarLabel: 'Cửa hàng'
       }} />
-      <BottomTab.Screen name="account" component={AccountScreen} options={{
-        title: 'Tài Khoản',
-        tabBarIcon: ({ color, size }) => <Ionicons name="ios-person-circle-sharp" size={size} color={color} />
-      }} />
-      {/* <BottomTab.Screen name="firebase" component={TestFirebase} options={{
-        title: 'Test',
-        tabBarIcon: ({ color, size }) => <Ionicons name="bug" size={size} color={color} />
-      }} /> */}
+        <BottomTab.Screen name="account" 
+        component={checkLogin? AccountScreen : LoginScreen} 
+        options={{
+          title: 'Tài khoản',
+          tabBarIcon: ({ color, size }) => <Ionicons name="ios-person-circle-sharp" size={size} color={color} />
+        }} />
     </BottomTab.Navigator>
   );
 }
 
 export default function App() {
-   const  [fontLoaded] =  useFonts({
+  const [fontLoaded] =  useFonts({
     'dancing-b': require('./assets/fonts/dancing-b.ttf'),
     'dancing-m': require('./assets/fonts/dancing-m.ttf'),
     'dancing-r': require('./assets/fonts/dancing-r.ttf'),
@@ -97,6 +98,12 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="bottomtab" component={BottomTabNavigator} options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="login" component={LoginScreen} options={{
+            headerShown: false 
+          }} />
+          <Stack.Screen name="sigup" component={SigupScreen} options={{
             headerShown: false
           }} />
         </Stack.Navigator>

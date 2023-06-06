@@ -1,10 +1,7 @@
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Ionicons } from '@expo/vector-icons';
+import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import LibraryItem from "../components/LibraryItem";
 import { Colors } from "../constants/Colors";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 function LibraryScreen() {
     return (

@@ -1,5 +1,7 @@
 import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import Carousel from "react-native-snap-carousel";
+
+
 const windowWidth = Dimensions.get('window').width;
 function Banner({onPress}){
     const data = [
