@@ -1,16 +1,40 @@
-import { Image, View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import { Image, View, Text, TextInput, StyleSheet, Dimensions, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-
+import { createAccount } from '../util/auth';
 const windowWidth = Dimensions.get('window').width;
-
 function SigupForm() {
-    const [user, setUser] = useState();
+    const [email, setMail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const navigation = useNavigation();
-    function loginFormHandler(){
+    
+    function loginFormHandler() {
         navigation.replace('login');
+    }
+    function setMailHandler(data) {
+        setMail(data);
+    }
+    function setPhoneHandler(data) {
+        setPhone(data);
+    }
+    function setPasswordHandler(data) {
+        setPassword(data);
+    }
+    function setConfirmPasswordHandler(data) {
+        setConfirmPassword(data);
+    }
+    function createUser() {
+        if(phone.length < 9){
+            return Alert.alert('Lỗi', 'Số điện thoại phải từ 9 số trở lên');
+        }else if(password !== confirmPassword)
+        {
+            return Alert.alert('Lỗi', 'Xác nhận mật khẩu không giống nhau\nHãy nhập lại !');
+        }
+        createAccount(email, password, phone);
     }
     return (
         <View style={styles.container}>
@@ -21,11 +45,14 @@ function SigupForm() {
                 </View>
                 {/*  */}
                 <View style={styles.groupInput}>
-                    <Ionicons name="person-outline" size={32} color={'black'} />
+                    <Ionicons name="mail-outline" size={32} color={'black'} />
                     <TextInput
-                        placeholder="Họ Tên"
+                        placeholder="Email"
                         style={styles.input}
                         maxLength={32}
+                        onChangeText={setMailHandler}
+                        value={email}
+                        keyboardType="email-address"
                     />
                 </View>
                 {/*  */}
@@ -35,7 +62,9 @@ function SigupForm() {
                         placeholder="Số điện thoại"
                         style={styles.input}
                         keyboardType="numeric"
-                        maxLength={16}
+                        maxLength={10}
+                        onChangeText={setPhoneHandler}
+                        value={phone}
                     />
                 </View>
                 {/*  */}
@@ -46,6 +75,8 @@ function SigupForm() {
                         style={styles.input}
                         secureTextEntry={true}
                         maxLength={16}
+                        onChangeText={setPasswordHandler}
+                        value={password}
                     />
                 </View>
                 {/*  */}
@@ -56,10 +87,12 @@ function SigupForm() {
                         style={styles.input}
                         secureTextEntry={true}
                         maxLength={16}
+                        onChangeText={setConfirmPasswordHandler}
+                        value={confirmPassword}
                     />
                 </View>
                 {/*  */}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={createUser}>
                     <View style={styles.buttonLogin}>
                         <Ionicons name="finger-print-sharp" size={36} color={'white'} />
                     </View>
@@ -68,7 +101,7 @@ function SigupForm() {
                 <View style={styles.sigupGroup}>
                     <Text style={styles.sigupTitle}>Đã có tài khoản</Text>
                     <TouchableOpacity onPress={loginFormHandler}><Text style={styles.sigupFont}>Đăng nhập</Text></TouchableOpacity>
-                    </View>
+                </View>
             </View>
         </View>
     );
@@ -102,7 +135,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
         elevation: 8,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 8,
     },
@@ -117,12 +150,12 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 80,
         justifyContent: 'center',
-        
+
     },
     logoImage: {
         width: 60,
         height: 60,
-        
+
     },
     groupInput: {
         flexDirection: 'row',
@@ -140,29 +173,29 @@ const styles = StyleSheet.create({
         fontSize: 18,
         padding: 4,
         width: '80%',
-        
+
     },
-    buttonLogin:{
+    buttonLogin: {
         backgroundColor: Colors.primary200,
         padding: 12,
         borderRadius: 64,
         elevation: 4,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         marginTop: 30
     },
-    sigupGroup:{
+    sigupGroup: {
         marginTop: 30,
         height: 40,
         justifyContent: 'space-between'
     },
-    sigupTitle:{
+    sigupTitle: {
         fontFamily: 'josefin-r',
         textAlign: 'center'
     },
-    sigupFont:{
+    sigupFont: {
         fontFamily: 'josefin-b',
         color: Colors.primary300,
         fontSize: 18,

@@ -20,11 +20,11 @@ function LoginForm() {
                     <Image source={require('../assets/images/logo.png')} style={styles.logoImage} />
                 </View>
                 <View style={styles.groupInput}>
-                    <Ionicons name="call-outline" size={32} color={'black'} />
+                    <Ionicons name="mail-outline" size={32} color={'black'} />
                     <TextInput
-                        placeholder="Số điện thoại"
+                        placeholder="Email"
                         style={styles.input}
-                        keyboardType="numeric"
+                        keyboardType="email-address"
                         maxLength={16}
                     />
                 </View>
