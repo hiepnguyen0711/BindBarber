@@ -37,8 +37,7 @@ function SigupForm() {
             return Alert.alert('Lỗi', 'Xác nhận mật khẩu không giống nhau\nHãy nhập lại !');
         }
         // <CreateAccountComponent email={email} password={password} phone={phone} />
-        setPending(true);
-        // await delay(2000);
+        await setPending(true);
         await createAccount(email, password, phone, navigation);
         await setPending(false);
     }

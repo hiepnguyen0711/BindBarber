@@ -3,14 +3,25 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { loginUser } from "../util/auth";
 
 const windowWidth = Dimensions.get('window').width;
 
 function LoginForm() {
-    const [user, setUser] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigation = useNavigation();
     function sigupFormHandler(){
         navigation.replace('sigup');
+    }
+    function setEmailHandler(data){
+        setEmail(data);
+    }
+    function setPasswordHandler(data){
+        setPassword(data);
+    }
+    function loginHandler(){
+        loginUser(email, password, navigation);
     }
     return (
         <View style={styles.container}>
@@ -25,7 +36,9 @@ function LoginForm() {
                         placeholder="Email"
                         style={styles.input}
                         keyboardType="email-address"
-                        maxLength={16}
+                        maxLength={32}
+                        onChangeText={setEmailHandler}
+                        value={email}
                     />
                 </View>
                 {/*  */}
@@ -36,10 +49,12 @@ function LoginForm() {
                         style={styles.input}
                         secureTextEntry={true}
                         maxLength={16}
+                        onChangeText={setPasswordHandler}
+                        value={password}
                     />
                 </View>
                 {/*  */}
-                <TouchableOpacity>
+                <TouchableOpacity onPress={loginHandler}>
                     <View style={styles.buttonLogin}>
                         <Ionicons name="log-in" size={36} color={'white'} />
                     </View>
