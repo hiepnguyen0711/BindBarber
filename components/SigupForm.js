@@ -3,13 +3,15 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { createAccount } from '../util/auth';
+import CreateAccountComponent, { createAccount } from '../util/auth';
+import ScreenLoading from "../screens/ScreenLoading";
 const windowWidth = Dimensions.get('window').width;
 function SigupForm() {
     const [email, setMail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [singUpPending, setPending] = useState(false);
     const navigation = useNavigation();
     
     function loginFormHandler() {
@@ -27,16 +29,21 @@ function SigupForm() {
     function setConfirmPasswordHandler(data) {
         setConfirmPassword(data);
     }
-    function createUser() {
+    async function createUser() {
         if(phone.length < 9){
             return Alert.alert('Lỗi', 'Số điện thoại phải từ 9 số trở lên');
         }else if(password !== confirmPassword)
         {
             return Alert.alert('Lỗi', 'Xác nhận mật khẩu không giống nhau\nHãy nhập lại !');
         }
-        createAccount(email, password, phone);
+        // <CreateAccountComponent email={email} password={password} phone={phone} />
+        setPending(true);
+        // await delay(2000);
+        await createAccount(email, password, phone, navigation);
+        await setPending(false);
     }
     return (
+        <>
         <View style={styles.container}>
             <Text style={styles.titleFont}>Đăng Ký</Text>
             <View style={styles.innerContainer}>
@@ -47,7 +54,7 @@ function SigupForm() {
                 <View style={styles.groupInput}>
                     <Ionicons name="mail-outline" size={32} color={'black'} />
                     <TextInput
-                        placeholder="Email"
+                        placeholder="vd: bind@gmail.com"
                         style={styles.input}
                         maxLength={32}
                         onChangeText={setMailHandler}
@@ -104,6 +111,9 @@ function SigupForm() {
                 </View>
             </View>
         </View>
+        {singUpPending ? <ScreenLoading /> : null}
+        
+        </>
     );
 }
 export default SigupForm;
