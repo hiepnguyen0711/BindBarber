@@ -3,8 +3,10 @@ import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import React, { useState, useEffect } from 'react';
 import { Alert } from "react-native";
-const API_KEY = 'AIzaSyBR68LGZ2rQAV_UyLwjR-xZ8YbsBfDMJLs';
-export async function createAccount(email, password, phone, navigation) {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const API_KEY = 'AIzaSyB8NqJwFSO-ce2kvKYhO_Wo3b7MZVGcFn4';
+export async function createAccount(email, fullName, password, phone, navigation) {
     
     try {
         const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY, {
@@ -21,8 +23,12 @@ export async function createAccount(email, password, phone, navigation) {
         await setDoc(userDocRef, {
             uid: currentUserUID,
             email: email,
+            fullName: fullName,
             phone: phone,
-            rank: 1
+            rank: 1,
+            totalAmount: 0,
+            shipping: [],
+            savedCollection: []
         });
         console.log('Document ID:', userDocRef.id);
         await Alert.alert('Chúc mừng', 'Bạn đã đăng kí thành công !');
@@ -55,7 +61,12 @@ export async function loginUser(email, password, navigation){
         const currentUserUID = response.data.localId;
         console.log('currentUser UID:', currentUserUID);
         navigation.replace('bottomtab');
-
+        AsyncStorage.setItem('email', email);
+        AsyncStorage.setItem('password', password);
+        AsyncStorage.setItem('isLogged', '1');
+        AsyncStorage.setItem('uid', currentUserUID);
+        // const valueUid = JSON.stringify(currentUserUID);
+        
     } catch (error) {
         if (error.response) {
             console.log('Thông tin chi tiết lỗi: ', error.response.data);

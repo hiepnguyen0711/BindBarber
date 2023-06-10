@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 
-function AccountSetting({iconName, title}) {
+function AccountSetting({iconName, title, onPress}) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Ionicons name={iconName} size={24} color={'black'} />
                 <Text style={styles.accountSettingFont}>{title}</Text>

@@ -8,6 +8,7 @@ import ScreenLoading from "../screens/ScreenLoading";
 const windowWidth = Dimensions.get('window').width;
 function SigupForm() {
     const [email, setMail] = useState('');
+    const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,6 +20,9 @@ function SigupForm() {
     }
     function setMailHandler(data) {
         setMail(data);
+    }
+    function setFullNameHandler(data) {
+        setFullName(data);
     }
     function setPhoneHandler(data) {
         setPhone(data);
@@ -38,7 +42,7 @@ function SigupForm() {
         }
         // <CreateAccountComponent email={email} password={password} phone={phone} />
         await setPending(true);
-        await createAccount(email, password, phone, navigation);
+        await createAccount(email, fullName, password, phone, navigation);
         await setPending(false);
     }
     return (
@@ -59,6 +63,17 @@ function SigupForm() {
                         onChangeText={setMailHandler}
                         value={email}
                         keyboardType="email-address"
+                    />
+                </View>
+                {/*  */}
+                <View style={styles.groupInput}>
+                    <Ionicons name="person-outline" size={32} color={'black'} />
+                    <TextInput
+                        placeholder="Họ Tên"
+                        style={styles.input}
+                        maxLength={32}
+                        onChangeText={setFullNameHandler}
+                        value={fullName}
                     />
                 </View>
                 {/*  */}
