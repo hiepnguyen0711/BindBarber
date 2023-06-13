@@ -9,7 +9,7 @@ import { FIRESTORE_DB } from '../firebase/app/firebaseConfig';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from 'react';
 
-function AccountScreen() {
+function AccountScreen({navigation}) {
     const [userName, setUserName] = useState('');
     const [phone, setPhone] = useState('');
     const [totalAmount, setTotalAmount] = useState(0);
@@ -50,6 +50,9 @@ function AccountScreen() {
             console.log('ban đủ quyền hạn');
         }
     }
+    function SettingsHandler(){
+        navigation.navigate('accountsettings');
+    }
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
             <View style={styles.container}>
@@ -64,7 +67,7 @@ function AccountScreen() {
                     <TotalAmountSpent price={totalAmount == 0 ? 0 : totalAmount} />
                 </View>
                 <View style={styles.functionContainer}>
-                    <AccountSetting iconName={'person-outline'} title={'Thiết lập tài khoản'} />
+                    <AccountSetting iconName={'person-outline'} title={'Thiết lập tài khoản'} onPress={SettingsHandler} />
                     <AccountSetting iconName={'calendar-outline'} title={'Lịch đã đặt'} />
                     <AccountSetting iconName={'cart-outline'} title={'Đơn hàng đã đặt'} />
                     <AccountSetting iconName={'bookmark-outline'} title={'Danh sách đã lưu'} />

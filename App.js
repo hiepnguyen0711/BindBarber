@@ -18,6 +18,11 @@ import SigupScreen from './screens/SigupScreen';
 import { useState } from 'react';
 import TestAsyncStorage from './screens/TestAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AccountSetting from './screens/AccountSettings';
+import { Colors } from './constants/Colors';
+import ChangeUserNameScreen from './screens/ChangeUserNameScreen';
+import ChangePhoneScreen from './screens/ChangePhoneScreen';
+import ChangePasswordScreen from './screens/ChangePasswordScreen';
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -121,7 +126,15 @@ export default function App() {
     <>
       <StatusBar style='light' />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+          headerStyle:{
+            backgroundColor: Colors.primary300,
+          },
+          headerTintColor: Colors.primary400,
+          headerTitleStyle:{
+            fontFamily: 'chakra-b',
+          }
+        }} >
           <Stack.Screen name="bottomtab" component={BottomTabNavigator} options={{
             headerShown: false
           }} />
@@ -130,6 +143,22 @@ export default function App() {
           }} />
           <Stack.Screen name="sigup" component={SigupScreen} options={{
             headerShown: false
+          }} />
+          <Stack.Screen name="accountsettings" component={AccountSetting} options={{
+            title: 'Thiết lập tài khoản',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="changeusername" component={ChangeUserNameScreen} options={{
+            title: 'Đổi tên tài khoản',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="changephone" component={ChangePhoneScreen} options={{
+            title: 'Đổi số điện thoại',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="changepassword" component={ChangePasswordScreen} options={{
+            title: 'Đổi mật khẩu',
+            headerBackTitleVisible: false
           }} />
         </Stack.Navigator>
       </NavigationContainer>
