@@ -53,6 +53,12 @@ function AccountScreen({navigation}) {
     function SettingsHandler(){
         navigation.navigate('accountsettings');
     }
+    function BookScheduleScreenHandler(){
+        navigation.navigate('bookschedule');
+    }
+    function OrderPlacedScreenHandler(){
+        navigation.navigate('orderplaced');
+    }
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
             <View style={styles.container}>
@@ -68,8 +74,8 @@ function AccountScreen({navigation}) {
                 </View>
                 <View style={styles.functionContainer}>
                     <AccountSetting iconName={'person-outline'} title={'Thiết lập tài khoản'} onPress={SettingsHandler} />
-                    <AccountSetting iconName={'calendar-outline'} title={'Lịch đã đặt'} />
-                    <AccountSetting iconName={'cart-outline'} title={'Đơn hàng đã đặt'} />
+                    <AccountSetting iconName={'calendar-outline'} title={'Lịch đã đặt'} onPress={BookScheduleScreenHandler} />
+                    <AccountSetting iconName={'cart-outline'} title={'Đơn hàng đã đặt'} onPress={OrderPlacedScreenHandler} />
                     <AccountSetting iconName={'bookmark-outline'} title={'Danh sách đã lưu'} />
                     {rank > 1 ? <AccountSetting iconName={'desktop-outline'} title={'Công cụ quản lí của Admin'} onPress={adminHandler} /> : null } 
                 </View>

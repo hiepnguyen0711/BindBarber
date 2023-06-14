@@ -23,6 +23,8 @@ import { Colors } from './constants/Colors';
 import ChangeUserNameScreen from './screens/ChangeUserNameScreen';
 import ChangePhoneScreen from './screens/ChangePhoneScreen';
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
+import BookScheduleScreen from './screens/BookScheduleScreen';
+import OrderPlacedScreen from './screens/OrderPlacedScreen';
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -158,6 +160,14 @@ export default function App() {
           }} />
           <Stack.Screen name="changepassword" component={ChangePasswordScreen} options={{
             title: 'Đổi mật khẩu',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="bookschedule" component={BookScheduleScreen} options={{
+            title: 'Lịch đã đặt',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="orderplaced" component={OrderPlacedScreen} options={{
+            title: 'Đơn hàng đã đặt',
             headerBackTitleVisible: false
           }} />
         </Stack.Navigator>
