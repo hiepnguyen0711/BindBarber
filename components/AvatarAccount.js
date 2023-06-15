@@ -10,10 +10,13 @@ function AvatarAccount({ imageUrl, accountName, phone }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.nameInfo}>
+                <View style={styles.nameContainer}>
                 <Text style={styles.nameFont}>{accountName}</Text>
+                <Image source={require('../assets/images/verified.gif')} style={styles.iconVerified} />
+                </View>
                 <Text style={styles.phoneFont}>{phone}</Text>
                 <View style={styles.accuracyContainer}>
-                    <Text style={styles.accuracyFont}>Đã xác thực</Text>
+                    <Text style={styles.accuracyFont}>Thành viên</Text>
                 </View>
             </View>
         </View>
@@ -48,10 +51,20 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'flex-start'
     },
+    nameContainer:{
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
     nameFont: {
         fontFamily: 'chakra-b',
         fontSize: 22,
         marginVertical: 2
+    },
+    iconVerified:{
+        width: 25,
+        height: 25,
+        resizeMode: 'contain',
+        marginLeft: 2
     },
     phoneFont: {
         fontFamily: 'josefin-r',
