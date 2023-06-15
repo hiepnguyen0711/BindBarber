@@ -5,9 +5,9 @@ function InfoContact() {
         <View style={styles.container}>
             <View style={styles.groupBarberName}> 
 
-            <Image source={require('../assets/images/barber-shop.png')} style={styles.iconBarberShop} />
+            <Image source={require('../assets/images/barber-light.gif')} style={styles.iconBarberShop} />
             <Text style={styles.storeName}>BIND BARBERSHOP</Text>
-            <Image source={require('../assets/images/barber-shop.png')} style={styles.iconBarberShop} />
+            <Image source={require('../assets/images/barber-light.gif')} style={styles.iconBarberShop} />
             </View>
             <View style={styles.titleContainer}>
                 <Text style={styles.Title}>Địa chỉ:</Text>
@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     iconBarberShop:{
-        height: 20,
+        width: 30,
+        height: 30,
         resizeMode: 'contain'
     },
     storeName: {

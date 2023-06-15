@@ -47,7 +47,7 @@ function AccountScreen({navigation}) {
         if(rank == 1){
             Alert.alert('Thông báo', 'Bạn không đủ quyền hạn,\nđể sử dụng chức năng này !');
         }else{
-            console.log('ban đủ quyền hạn');
+            navigation.navigate('admindashboard');
         }
     }
     function SettingsHandler(){
@@ -58,6 +58,9 @@ function AccountScreen({navigation}) {
     }
     function OrderPlacedScreenHandler(){
         navigation.navigate('orderplaced');
+    }
+    function SavedListScreenHandler(){
+        navigation.navigate('savedlist');
     }
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
@@ -76,7 +79,7 @@ function AccountScreen({navigation}) {
                     <AccountSetting iconName={'person-outline'} title={'Thiết lập tài khoản'} onPress={SettingsHandler} />
                     <AccountSetting iconName={'calendar-outline'} title={'Lịch đã đặt'} onPress={BookScheduleScreenHandler} />
                     <AccountSetting iconName={'cart-outline'} title={'Đơn hàng đã đặt'} onPress={OrderPlacedScreenHandler} />
-                    <AccountSetting iconName={'bookmark-outline'} title={'Danh sách đã lưu'} />
+                    <AccountSetting iconName={'bookmark-outline'} title={'Danh sách đã lưu'} onPress={SavedListScreenHandler} />
                     {rank > 1 ? <AccountSetting iconName={'desktop-outline'} title={'Công cụ quản lí của Admin'} onPress={adminHandler} /> : null } 
                 </View>
                 <View>

@@ -25,6 +25,8 @@ import ChangePhoneScreen from './screens/ChangePhoneScreen';
 import ChangePasswordScreen from './screens/ChangePasswordScreen';
 import BookScheduleScreen from './screens/BookScheduleScreen';
 import OrderPlacedScreen from './screens/OrderPlacedScreen';
+import SavedListScreen from './screens/SavedListScreen';
+import AdminDashboardScreen from './screens/AdminDashboardScreen';
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -169,6 +171,15 @@ export default function App() {
           <Stack.Screen name="orderplaced" component={OrderPlacedScreen} options={{
             title: 'Đơn hàng đã đặt',
             headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="savedlist" component={SavedListScreen} options={{
+            title: 'Tóc đã lưu',
+            headerBackTitleVisible: false
+          }} />
+          <Stack.Screen name="admindashboard" component={AdminDashboardScreen} options={{
+            title: 'Bảng điều khiển của Administator',
+            headerBackTitleVisible: false,
+            headerShown: false
           }} />
         </Stack.Navigator>
       </NavigationContainer>

@@ -6,7 +6,7 @@ function TotalAmountSpent({price}){
     return(
         <View style={styles.container}>
             <View>
-                <Image source={require('../assets/images/wallet.png')} style={styles.imageWallet} />
+                <Image source={require('../assets/images/payment.png')} style={styles.imageWallet} />
             </View>
         <View style={styles.totalInfo}>
                 <Text style={styles.totalAmountSpentTitle}>Tổng số tiền đã chi</Text>
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     },
     imageWallet:{
         width: 50,
+        height: 50,
         resizeMode: 'contain'
     },
     totalInfo:{
