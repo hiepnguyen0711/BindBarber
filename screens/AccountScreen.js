@@ -67,7 +67,7 @@ function AccountScreen({navigation}) {
             <View style={styles.container}>
                 <View >
                     <AvatarAccount
-                        imageUrl={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfCVbDShzHzuw3kjCFyKJCwdIkLzLZrvGDoj5oYoIev-ig&oe=649FA519'}
+                        imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/no-avatar.png?alt=media&token=8c24e03d-1b95-4384-8021-53f5db61b838'}
                         accountName={userName}
                         phone={phone}
                     />

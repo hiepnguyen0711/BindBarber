@@ -1,5 +1,4 @@
 import SigupForm from "../components/SigupForm";
-import ScreenLoading from "./ScreenLoading";
 
 function SigupScreen(){
     return(
