@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Switch, Text, View } from "react-native";
 import AvatarAccount from "../components/AvatarAccount";
 import { Colors } from "../constants/Colors";
 import TotalAmountSpent from "../components/TotalAmountSpent";
@@ -9,11 +9,12 @@ import { FIRESTORE_DB } from '../firebase/app/firebaseConfig';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from 'react';
 
-function AccountScreen({navigation}) {
+function AccountScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [phone, setPhone] = useState('');
     const [totalAmount, setTotalAmount] = useState(0);
-    const [rank, setRank] = useState(1);
+    const [rank, setRank] = useState(0);
+    const [avatar, setAvatar] = useState('');
 
     const userRef = collection(FIRESTORE_DB, 'Users');
     const getUserData = async () => {
@@ -31,11 +32,11 @@ function AccountScreen({navigation}) {
                 console.log(users);
                 // set data 
                 if (users.length > 0) {
-
                     setUserName(users[0].fullName);
                     setPhone(users[0].phone);
                     setTotalAmount(users[0].totalAmount);
                     setRank(users[0].rank);
+                    setAvatar(users[0].avatar);
                 }
             })
         } catch (e) {
@@ -43,23 +44,23 @@ function AccountScreen({navigation}) {
         }
     };
     getUserData();
-    function adminHandler(){
-        if(rank == 1){
+    function adminHandler() {
+        if (rank == 1) {
             Alert.alert('Thông báo', 'Bạn không đủ quyền hạn,\nđể sử dụng chức năng này !');
-        }else{
+        } else {
             navigation.navigate('admindashboard');
         }
     }
-    function SettingsHandler(){
+    function SettingsHandler() {
         navigation.navigate('accountsettings');
     }
-    function BookScheduleScreenHandler(){
+    function BookScheduleScreenHandler() {
         navigation.navigate('bookschedule');
     }
-    function OrderPlacedScreenHandler(){
+    function OrderPlacedScreenHandler() {
         navigation.navigate('orderplaced');
     }
-    function SavedListScreenHandler(){
+    function SavedListScreenHandler() {
         navigation.navigate('savedlist');
     }
     return (
@@ -67,9 +68,10 @@ function AccountScreen({navigation}) {
             <View style={styles.container}>
                 <View >
                     <AvatarAccount
-                        imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/no-avatar.png?alt=media&token=8c24e03d-1b95-4384-8021-53f5db61b838'}
+                        imageUrl={avatar}
                         accountName={userName}
                         phone={phone}
+                        rankName={rank === 1 ? 'Thành viên' : 'Administrator'}
                     />
                 </View>
                 <View>
@@ -80,7 +82,7 @@ function AccountScreen({navigation}) {
                     <AccountSetting iconName={'calendar-outline'} title={'Lịch đã đặt'} onPress={BookScheduleScreenHandler} />
                     <AccountSetting iconName={'cart-outline'} title={'Đơn hàng đã đặt'} onPress={OrderPlacedScreenHandler} />
                     <AccountSetting iconName={'bookmark-outline'} title={'Danh sách đã lưu'} onPress={SavedListScreenHandler} />
-                    {rank > 1 ? <AccountSetting iconName={'desktop-outline'} title={'Công cụ quản lí của Admin'} onPress={adminHandler} /> : null } 
+                    {rank > 1 ? <AccountSetting iconName={'desktop-outline'} title={'Công cụ quản lí của Admin'} onPress={adminHandler} /> : null}
                 </View>
                 <View>
                     <ButtonLogout />

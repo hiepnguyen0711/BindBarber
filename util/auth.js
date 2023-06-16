@@ -27,6 +27,7 @@ export async function createAccount(email, fullName, password, phone, navigation
             phone: phone,
             rank: 1,
             totalAmount: 0,
+            avatar: 'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Avatar%2Fno-avatar.png?alt=media&token=e88193de-43e1-45ef-9238-684a80a79092',
             shipping: [],
             savedCollection: []
         });
@@ -65,6 +66,7 @@ export async function loginUser(email, password, navigation){
         AsyncStorage.setItem('password', password);
         AsyncStorage.setItem('isLogged', '1');
         AsyncStorage.setItem('uid', currentUserUID);
+        
         // const valueUid = JSON.stringify(currentUserUID);
         
     } catch (error) {
