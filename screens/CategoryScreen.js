@@ -7,7 +7,6 @@ import { Colors } from "../constants/Colors";
 
 function CategoryScreen() {
     function ViewBannerHandler() {
-        console.log('abc');
     }
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >

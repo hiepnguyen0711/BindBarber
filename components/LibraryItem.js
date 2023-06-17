@@ -1,13 +1,25 @@
-import {  Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import { useState } from 'react';
 
-function LibraryItem({barberName, imageUrl, barberImage}){
-    return(
+function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
+    const [loading, setLoading] = useState(false);
+    function onLoading(value, label) {
+        setLoading(value);
+    }
+    return (
         <View style={styles.container}>
+
             <View style={styles.imgContainer}>
+                {loading && <View style={styles.loadingActivity}>
+                    <ActivityIndicator size='large' color='red' />
+                </View>}
                 <Image
                     source={{ uri: imageUrl }}
-                    style={styles.libraryImg} />
+                    style={styles.libraryImg} 
+                    onLoadStart={() => onLoading(true, 'onLoadStart')}
+                    onLoadEnd={() => onLoading(false, 'onLoadEnd')}
+                    />
             </View>
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonGroup}>
@@ -38,7 +50,7 @@ function LibraryItem({barberName, imageUrl, barberImage}){
 
             </View>
             <View style={styles.containerLike}>
-                <Text style={styles.likeFont} >35 lượt thích</Text>
+                <Text style={styles.likeFont} >{liked} lượt thích</Text>
             </View>
         </View>
     );
@@ -53,13 +65,21 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         elevation: 8,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         // overflow: 'hidden'
     },
     imgContainer: {
         // width: windowWidth
+    },
+    loadingActivity: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1,
+        alignContent: 'center',
+        alignSelf: 'center',
+        paddingTop: 50
     },
     libraryImg: {
         height: 370,
@@ -107,11 +127,11 @@ const styles = StyleSheet.create({
         height: 35,
         borderRadius: 35,
     },
-    containerLike:{
+    containerLike: {
         paddingHorizontal: 4,
         paddingVertical: 4
     },
-    likeFont:{
+    likeFont: {
         fontFamily: 'josefin-r',
         fontSize: 14,
         color: '#000000',

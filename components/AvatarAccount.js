@@ -64,7 +64,7 @@ function AvatarAccount({ imageUrl, accountName, phone, rankName }) {
         <View style={styles.container}>
             <View style={styles.avatarContainer}>
                 <TouchableOpacity onPress={pickAvatar}>
-                    <Image source={{ uri: imageUrl }} style={styles.avatarAccount} />
+                    <Image source={{ uri: imageUrl === null ? '' : imageUrl }} style={styles.avatarAccount} />
                 </TouchableOpacity>
             </View>
             <View style={styles.nameInfo}>

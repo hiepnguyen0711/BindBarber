@@ -11,11 +11,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import AppLoading from 'expo-app-loading';
-// import PropTypes from 'prop-types';
 import TestFirebase from './screens/TestFirebase';
 import LoginScreen from './screens/LoginScreen';
 import SigupScreen from './screens/SigupScreen';
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import TestAsyncStorage from './screens/TestAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountSetting from './screens/AccountSettings';
@@ -34,23 +33,24 @@ const BottomTab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
   const [checkLogin, setLogin] = useState();
-  const checkLogged = async () => {
-    try {
-      const response = await AsyncStorage.getItem('isLogged');
-      console.log('response:' + response);
-      // return response;
-      if(response == 1){
-        setLogin(true);
-      }else{
-        setLogin(false);
+  useLayoutEffect(() => {
+    const checkLogged = async () => {
+      try {
+        const response = await AsyncStorage.getItem('isLogged');
+        console.log('response:' + response);
+        // return response;
+        if(response == 1){
+          setLogin(true);
+        }else{
+          setLogin(false);
+        }
+      } catch (error) {
+        console.log(error.message);
       }
-    } catch (error) {
-      console.log(error.message);
     }
-  }
-  checkLogged();
-  // const checkLogin = checkLogged();
-  // console.log(JSON.stringify(checkLogin));
+    checkLogged();
+  }, [checkLogin]);
+
   return (
     <BottomTab.Navigator
       screenOptions={{

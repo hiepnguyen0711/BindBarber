@@ -7,43 +7,46 @@ import ButtonLogout from "../components/ButtonLogout";
 import { addDoc, collection, onSnapshot, query, where } from 'firebase/firestore';
 import { FIRESTORE_DB } from '../firebase/app/firebaseConfig';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function AccountScreen({ navigation }) {
     const [userName, setUserName] = useState('');
     const [phone, setPhone] = useState('');
     const [totalAmount, setTotalAmount] = useState(0);
     const [rank, setRank] = useState(0);
-    const [avatar, setAvatar] = useState('');
+    const [avatar, setAvatar] = useState();
 
     const userRef = collection(FIRESTORE_DB, 'Users');
-    const getUserData = async () => {
-        try {
-            const uid = await AsyncStorage.getItem('uid');
-            console.log('uid = ' + uid);
-
-            const q = query(userRef, where('uid', '==', uid));
-            const result = onSnapshot(q, (querySnapshot) => {
-                const users = [];
-                querySnapshot.forEach((doc) => {
-                    const user = doc.data();
-                    users.push(user);
-                });
-                console.log(users);
-                // set data 
-                if (users.length > 0) {
-                    setUserName(users[0].fullName);
-                    setPhone(users[0].phone);
-                    setTotalAmount(users[0].totalAmount);
-                    setRank(users[0].rank);
-                    setAvatar(users[0].avatar);
-                }
-            })
-        } catch (e) {
-            console.log(e);
-        }
-    };
-    getUserData();
+    useEffect(() => {
+        const getUserData = async () => {
+            try {
+                const uid = await AsyncStorage.getItem('uid');
+                console.log('uid = ' + uid);
+    
+                const q = query(userRef, where('uid', '==', uid));
+                const result = onSnapshot(q, (querySnapshot) => {
+                    const users = [];
+                    querySnapshot.forEach((doc) => {
+                        const user = doc.data();
+                        users.push(user);
+                    });
+                    console.log(users);
+                    // set data 
+                    if (users.length > 0) {
+                        setUserName(users[0].fullName);
+                        setPhone(users[0].phone);
+                        setTotalAmount(users[0].totalAmount);
+                        setRank(users[0].rank);
+                        setAvatar(users[0].avatar);
+                    }
+                })
+            } catch (e) {
+                console.log(e);
+            }
+        };
+        getUserData();
+    }, []);
+    
     function adminHandler() {
         if (rank == 1) {
             Alert.alert('Thông báo', 'Bạn không đủ quyền hạn,\nđể sử dụng chức năng này !');
