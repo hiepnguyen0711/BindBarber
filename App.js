@@ -26,9 +26,10 @@ import BookScheduleScreen from './screens/BookScheduleScreen';
 import OrderPlacedScreen from './screens/OrderPlacedScreen';
 import SavedListScreen from './screens/SavedListScreen';
 import AdminDashboardScreen from './screens/AdminDashboardScreen';
+import PostAdminScreen from './screens/PostAdminScreen';
+import PostAdminFormScreen from './screens/PostAdminFormScreen';
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
-
 
 
 function BottomTabNavigator() {
@@ -39,9 +40,9 @@ function BottomTabNavigator() {
         const response = await AsyncStorage.getItem('isLogged');
         console.log('response:' + response);
         // return response;
-        if(response == 1){
+        if (response == 1) {
           setLogin(true);
-        }else{
+        } else {
           setLogin(false);
         }
       } catch (error) {
@@ -95,7 +96,7 @@ function BottomTabNavigator() {
         tabBarLabel: 'Cửa hàng'
       }} />
       <BottomTab.Screen name="account"
-        component={checkLogin ?  AccountScreen : LoginScreen}
+        component={checkLogin ? AccountScreen : LoginScreen}
         options={{
           title: 'Tài khoản',
           tabBarIcon: ({ color, size }) => <Ionicons name="ios-person-circle-sharp" size={size} color={color} />
@@ -131,11 +132,11 @@ export default function App() {
       <StatusBar style='light' />
       <NavigationContainer>
         <Stack.Navigator screenOptions={{
-          headerStyle:{
+          headerStyle: {
             backgroundColor: Colors.primary300,
           },
           headerTintColor: Colors.primary400,
-          headerTitleStyle:{
+          headerTitleStyle: {
             fontFamily: 'chakra-b',
           }
         }} >
@@ -180,6 +181,15 @@ export default function App() {
             title: 'Bảng điều khiển của Administator',
             headerBackTitleVisible: false,
             headerShown: false
+          }} />
+          <Stack.Screen name="postadmin" component={PostAdminScreen} options={{
+            title: 'Quản lý bài viết',
+            headerBackTitleVisible: false,
+            headerShown: false
+          }} />
+          <Stack.Screen name="postadminform" component={PostAdminFormScreen} options={{
+            title: 'Đăng bài viết',
+            headerBackTitleVisible: false,
           }} />
         </Stack.Navigator>
       </NavigationContainer>

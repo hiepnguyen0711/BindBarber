@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
 import * as ImagePicker from 'expo-image-picker';
 import { FIRESTORE_DB, storage } from '../firebase/app/firebaseConfig';
@@ -9,12 +9,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function AvatarAccount({ imageUrl, accountName, phone, rankName }) {
     const [picture, setImage] = useState(null);
-    // const [rankName, setRankName] = useState('');
-    // async function getRankName(){
-    //    const rank = await AsyncStorage.getItem('rank');
-    //    setRankName(rank);
-    // }
-    // getRankName();
+    const [loading, setLoading] = useState(false);
+
+    function onLoading(value) {
+        setLoading(value);
+    }
+
     const pickAvatar = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -64,7 +64,13 @@ function AvatarAccount({ imageUrl, accountName, phone, rankName }) {
         <View style={styles.container}>
             <View style={styles.avatarContainer}>
                 <TouchableOpacity onPress={pickAvatar}>
-                    <Image source={{ uri: imageUrl === null ? '' : imageUrl }} style={styles.avatarAccount} />
+                    {loading && <ActivityIndicator size='small' color={Colors.primary200} />}
+                    <Image
+                        source={{ uri: imageUrl === null ? '' : imageUrl }}
+                        style={styles.avatarAccount}
+                        onLoadStart={() => onLoading(true)}
+                        onLoadEnd={() => onLoading(false)}
+                    />
                 </TouchableOpacity>
             </View>
             <View style={styles.nameInfo}>

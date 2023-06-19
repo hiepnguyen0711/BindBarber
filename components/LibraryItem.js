@@ -16,10 +16,10 @@ function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
                 </View>}
                 <Image
                     source={{ uri: imageUrl }}
-                    style={styles.libraryImg} 
+                    style={styles.libraryImg}
                     onLoadStart={() => onLoading(true, 'onLoadStart')}
                     onLoadEnd={() => onLoading(false, 'onLoadEnd')}
-                    />
+                />
             </View>
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonGroup}>

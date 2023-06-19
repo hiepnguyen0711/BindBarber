@@ -2,9 +2,9 @@ import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View }
 import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
-function DashboardContentItem({ imageUrl, title }) {
+function DashboardContentItem({ imageUrl, title, onPress }) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.itemContainer}>
                 <Image source={{ uri: imageUrl }} style={styles.iconImage} />
                 <Text style={styles.titleFont}>{title}</Text>

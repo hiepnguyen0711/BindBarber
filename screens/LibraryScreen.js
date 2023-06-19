@@ -1,7 +1,7 @@
 import { Dimensions, ScrollView, StyleSheet } from "react-native";
 import LibraryItem from "../components/LibraryItem";
 import { Colors } from "../constants/Colors";
-import { collection, doc, getDocs, onSnapshot, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import { useState, useEffect } from 'react';
 
@@ -26,7 +26,7 @@ function LibraryScreen() {
                 // setBarberData(barber);
 
                 // này là lấy dữ liệu = onSnapshot
-                const qq = await query(customerRef)
+                const qq = await query(customerRef, orderBy('time', 'desc'))
                 const resultsss = await onSnapshot(qq, (querySnapshot) => {
                     const data = [];
                     querySnapshot.forEach(async (doc) => {

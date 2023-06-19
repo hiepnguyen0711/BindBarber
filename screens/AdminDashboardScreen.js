@@ -7,7 +7,7 @@ function AdminDashboardScreen({navigation}) {
     return (
         <View style={styles.container}>
             <BannerAdmin navigation={navigation} />
-            <ContentAdmin />
+            <ContentAdmin navigation={navigation} />
         </View>
     );
 }
