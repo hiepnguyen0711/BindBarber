@@ -47,7 +47,6 @@ function SelectDayItem() {
                 />
                 <DayItem title={formattedAfterOutput}
                     selected={selectedItem === formattedAfterOutput}
-
                     onPress={handleDayItemClick}
                 />
             </View>

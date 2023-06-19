@@ -1,7 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import BarberItem from "./barberItem";
+import React, {useState} from 'react';
 
 function SelectBarberItem() {
+    const [selectBarber, setSelectBarber]= useState(null);
+    function selectBarberHandler(value){
+        setSelectBarber(value);
+    }
     return (
         <View>
             <View>
@@ -11,21 +16,30 @@ function SelectBarberItem() {
             </View>
             <View style={styles.barberGroup}>
                     <BarberItem 
-                    imageUrl={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/39258895_1413699528773919_6219279194849804288_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=H8D1WzJSH24AX_6bOZW&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfCVbDShzHzuw3kjCFyKJCwdIkLzLZrvGDoj5oYoIev-ig&oe=649FA519'} 
+                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fbind.jpeg?alt=media&token=971ff10c-163d-4c64-9eae-a6ac03bee76c'} 
                     barberName={'BOSS'}
                     color={'red'}
+                    onPress={selectBarberHandler}
+                    value={1}
+                    selected={selectBarber === 1}
                     />
                     {/* barber 2 */}
                     <BarberItem 
-                    imageUrl={'https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.6435-9/130242922_3428356397217425_17754825496431605_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=174925&_nc_ohc=ZOWu2WMzHckAX-j9pM5&_nc_ht=scontent.fsgn5-3.fna&oh=00_AfDdDru6DIoyVk6wUz4WqnF6uO5joxm2kI9jyomggOeK5Q&oe=649F9E8C'} 
+                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fhiep_2.jpeg?alt=media&token=5ea5be23-47a2-4539-a28c-2d19ec723689'} 
                     barberName={'Hiệp'}
                     color={'white'}
+                    onPress={selectBarberHandler}
+                    value={2}
+                    selected={selectBarber === 2}
                     />
                     {/* barber 3 */}
                     <BarberItem 
-                    imageUrl={'https://scontent.fsgn5-10.fna.fbcdn.net/v/t1.6435-9/80620817_2569011343216010_2423870651832991744_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=174925&_nc_ohc=19VdIot49HMAX9scV1-&_nc_ht=scontent.fsgn5-10.fna&oh=00_AfDC-mRPNekkp7dP_0jZUFo297o4DD09VsmpBGSIQayc-w&oe=649FB58D'} 
+                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fhung.jpeg?alt=media&token=99308eab-dc44-40df-adc9-c933c01ee11d'} 
                     barberName={'Hùng'}
                     color={'white'}
+                    onPress={selectBarberHandler}
+                    value={3}
+                    selected={selectBarber === 3}
                     />
             </View>
         </View>

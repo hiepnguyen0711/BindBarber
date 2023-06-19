@@ -1,10 +1,11 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Colors } from "../constants/Colors";
 
-function BarberItem({ imageUrl, barberName, color }) {
+function BarberItem({ imageUrl, barberName, color, onPress, value, selected }) {
     return (
-        <TouchableOpacity  >
+        <TouchableOpacity onPress={() => onPress(value)} >
             <View style={styles.barberContainer}>
-            <View style={styles.barberItem}>
+            <View style={[styles.barberItem, selected && styles.selectedBarberItem]}>
                 <Image
                     source={{ uri: imageUrl }}
                     style={styles.barberImage}
@@ -51,5 +52,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         marginVertical: 8 
+    },
+    selectedBarberItem:{
+        backgroundColor: Colors.primary300
     }
 })

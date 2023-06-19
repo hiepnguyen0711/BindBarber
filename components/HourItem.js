@@ -1,10 +1,11 @@
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { Colors } from "../constants/Colors";
 
-function HourItem({title}){
+function HourItem({title, onPress, value, selected}){
     return(
-        <TouchableOpacity>
-        <View style={styles.hourItem}>
-            <Text style={styles.hourFont}>{title}</Text>
+        <TouchableOpacity onPress={() => onPress(value)}>
+        <View style={[styles.hourItem, selected &&  styles.selectedHourItem]}>
+            <Text style={[styles.hourFont, selected && styles.selectedHourFont]}>{title}</Text>
         </View>
         </TouchableOpacity>
 
@@ -30,5 +31,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'josefin-m',
         textTransform: 'uppercase'
+    },
+    selectedHourItem:{
+        backgroundColor: Colors.primary300,
+    },
+    selectedHourFont:{
+        color: Colors.primary400
     }
 })
