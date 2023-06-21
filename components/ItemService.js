@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import number_format from "../library/NumberFormat";
-function ItemService({title, price, nameIonicons }) {
+function ItemService({title, price, nameIonicons, onPress }) {
     return (
         <View style={styles.serviceContainer}>
         <View style={styles.innerContainer}>
@@ -15,7 +15,7 @@ function ItemService({title, price, nameIonicons }) {
                 </View>
             </View>
             <View >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPress}>
                     <Ionicons name={nameIonicons} size={32} color='#E57C23' />
                 </TouchableOpacity>
             </View>

@@ -1,15 +1,15 @@
 import { View, Text, StyleSheet } from "react-native";
 import number_format from "../library/NumberFormat";
 
-function TotalService() {
+function TotalService({totalCount, totalPrice}) {
     return (
         <View style={styles.totalContainer}>
             <View style={styles.totalInnerContainer}>
                 <Text style={styles.titleFont}>Tổng Cộng</Text>
             </View>
             <View style={styles.priceInfomation}>
-                <Text style={styles.serviceFont}>1 dịch vụ</Text>
-                <Text style={styles.totalFont}>{number_format(60000)} đ</Text>
+                <Text style={styles.serviceFont}>{totalCount} dịch vụ</Text>
+                <Text style={styles.totalFont}>{number_format(totalPrice)} đ</Text>
             </View>
         </View>
 
