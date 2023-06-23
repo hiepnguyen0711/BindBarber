@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import DayItem from "./DayItem";
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 
 function SelectDayItem() {
     const currentDate = new Date();
@@ -8,6 +8,7 @@ function SelectDayItem() {
 
     const tomorrow = new Date();
     tomorrow.setDate(currentformattedDate + 1);
+    const tomorrowDate = tomorrow.getDate();
     const options = { weekday: 'short', day: 'numeric', month: 'numeric' }
     const formattedTomorrowDate = tomorrow.toLocaleString('vi-VN', options);
     const weekday = formattedTomorrowDate.split(',')[0].toLocaleLowerCase();
@@ -16,17 +17,24 @@ function SelectDayItem() {
 
     const afterTomorrow = new Date();
     afterTomorrow.setDate(currentformattedDate + 2);
+    const afterTomorrowDate = afterTomorrow.getDate();
     const formattedAfterTomorrowDate = afterTomorrow.toLocaleString('vi-VN', options);
     const weekdays = formattedAfterTomorrowDate.split(',')[0].toLocaleLowerCase();
     const dates = formattedAfterTomorrowDate.split(',')[1].trim();
     const formattedAfterOutput = `${weekdays} - ${dates}`;
 
     const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedDay, setSelectedDay] = useState(currentformattedDate);
 
-    const handleDayItemClick = (itemValue) => {
-        setSelectedItem(itemValue);
+    const handleDayItemClick = (itemValue, value) => {
+      setSelectedItem(itemValue);
+        setSelectedDay(value);
+
     };
 
+    useEffect(() => {
+        console.log(selectedDay);
+    }, [selectedDay])
 
     return (
         <View>
@@ -38,16 +46,16 @@ function SelectDayItem() {
                     title={'Hôm nay'}
                     value={currentformattedDate}
                     selected={selectedItem === 'Hôm nay'}
-                    onPress={handleDayItemClick}
+                    onPress={() => handleDayItemClick('Hôm nay', currentformattedDate)}
                 />
                 <DayItem title={formattedOutput}
                     selected={selectedItem === formattedOutput}
 
-                    onPress={handleDayItemClick}
+                    onPress={() => handleDayItemClick(formattedOutput, tomorrowDate)}
                 />
                 <DayItem title={formattedAfterOutput}
                     selected={selectedItem === formattedAfterOutput}
-                    onPress={handleDayItemClick}
+                    onPress={() => handleDayItemClick(formattedAfterOutput, afterTomorrowDate)}
                 />
             </View>
 

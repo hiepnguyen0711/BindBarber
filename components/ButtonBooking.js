@@ -1,9 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function ButtonBooking() {
+function ButtonBooking({onPress}) {
     return (
         <View style={styles.root}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <View>
                     <Text style={styles.buttonFont}>Đặt Lịch</Text>
