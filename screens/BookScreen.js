@@ -8,7 +8,6 @@ import { Colors } from "../constants/Colors";
 import React, { useState, useEffect } from 'react';
 import ModalBookSchedule from "../components/ModalBookSchedule";
 
-
 function BookScreen() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedDay, setSelectedDay] = useState();
@@ -16,11 +15,13 @@ function BookScreen() {
         setModalVisible(!isModalVisible);
     }
     const selectDayHandler = (value) => {
-        setSelectedDay(value)
+        setSelectedDay(value);
     }
     useEffect(() => {
-        console.log('Ngày được chọn: '+selectedDay);
-    },[selectedDay])
+        console.log('Ngày được chọn: '+ selectedDay);
+    },[selectedDay]);
+
+    
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
             <SelectDayItem value={selectDayHandler}/>
