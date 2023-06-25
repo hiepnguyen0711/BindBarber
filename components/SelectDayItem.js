@@ -1,8 +1,11 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import DayItem from "./DayItem";
 import React, { useState, useEffect  } from 'react';
+import { useDispatch } from "react-redux";
+import { addBooking } from "../store/redux/bookSchedule";
 
 function SelectDayItem() {
+    const dispatch = useDispatch();
     const currentDate = new Date();
     const currentformattedDate = currentDate.getDate();
 
@@ -26,14 +29,27 @@ function SelectDayItem() {
     const [selectedItem, setSelectedItem] = useState(null);
     const [selectedDay, setSelectedDay] = useState(currentformattedDate);
 
+    const getDateName = (value) => {
+        if(value === currentformattedDate )
+        {
+           return 'Hôm nay';
+        }else if(value === tomorrowDate)
+        {
+            return formattedOutput;
+        }
+        else if(value === afterTomorrowDate)
+        {
+            return formattedAfterOutput;
+        }
+    }
     const handleDayItemClick = (itemValue, value) => {
       setSelectedItem(itemValue);
         setSelectedDay(value);
-
+        dispatch(addBooking({ date: value, dateName: getDateName(value) })); // Thay đổi tên hành động thành addBooking
     };
 
     useEffect(() => {
-        console.log(selectedDay);
+        // console.log(selectedDay);
     }, [selectedDay])
 
     return (

@@ -1,11 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import BarberItem from "./barberItem";
 import React, {useState} from 'react';
+import { useDispatch } from "react-redux";
+import { addBookingBarber } from "../store/redux/bookSchedule";
 
 function SelectBarberItem() {
+    const dispatch = useDispatch();
     const [selectBarber, setSelectBarber]= useState(null);
-    function selectBarberHandler(value){
+    function selectBarberHandler(value, name){
         setSelectBarber(value);
+        dispatch(addBookingBarber({barberName: name}));
     }
     return (
         <View>
@@ -21,6 +25,7 @@ function SelectBarberItem() {
                     color={'red'}
                     onPress={selectBarberHandler}
                     value={1}
+                    name={'Bind'}
                     selected={selectBarber === 1}
                     />
                     {/* barber 2 */}
@@ -30,15 +35,17 @@ function SelectBarberItem() {
                     color={'white'}
                     onPress={selectBarberHandler}
                     value={2}
+                    name={'Hiệp'}
                     selected={selectBarber === 2}
                     />
-                    {/* barber 3 */}
+                    {/* barber 3 */} 
                     <BarberItem 
                     imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fhung.jpeg?alt=media&token=99308eab-dc44-40df-adc9-c933c01ee11d'} 
                     barberName={'Hùng'}
                     color={'white'}
                     onPress={selectBarberHandler}
                     value={3}
+                    name={'Hùng'}
                     selected={selectBarber === 3}
                     />
             </View>

@@ -1,26 +1,38 @@
 import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
+import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
 
 const windowWidth = Dimensions.get('window').width;
 function ModalBookSchedule({ onPressCancel }) {
+    const hourBooking = useSelector((state) => state.booking.hours);
+    const dateBookingName = useSelector((state) => state.booking.dates.dateName);
+    const barberBookingName = useSelector((state) => state.booking.barber);
+    const serviceBooking = useSelector((state) => state.booking.service)
+
+    useEffect(() => {
+        console.log(serviceBooking);
+    }, serviceBooking)
     return (
         <View style={styles.root}>
             <View style={styles.container}>
                 <Text style={styles.titleFont}>Xác nhận Đặt Lịch</Text>
                 <View>
-                    <Text style={styles.dateFont}>Hôm nay - 18:00</Text>
-                    <View style={styles.iconContainer}>
-                        <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                        <Text style={styles.serviceFont}>Cắt & Cạo</Text>
+                    <Text style={styles.dateFont}>{dateBookingName} - {hourBooking}:00</Text>
+                    <View style={styles.barberContainer}>
+                        <Image source={require('../assets/images/scissors.png')}
+                            style={styles.barberImage}
+                        />
+                        <Text style={styles.barberFont}>Thợ cắt: <Text style={styles.barberName}>{barberBookingName}</Text></Text>
                     </View>
-                    <View style={styles.iconContainer}>
-                        <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                        <Text style={styles.serviceFont}>Uốn</Text>
-                    </View>
-                    <View style={styles.iconContainer}>
-                        <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                        <Text style={styles.serviceFont}>Uốn</Text>
-                    </View>
+                    {serviceBooking !== null && serviceBooking.map(service => (
+                        <View style={styles.iconContainer}>
+                            <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
+                            <Text style={styles.serviceFont}>{service.serviceName}</Text>
+                        </View>
+                    ))
+                    }
+
                 </View>
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalTitleFont}>TỔNG CHI PHÍ</Text>
@@ -75,13 +87,33 @@ const styles = StyleSheet.create({
     dateFont: {
         fontFamily: 'chakra-b',
         fontSize: 18,
-        marginTop: 3
+        marginTop: 3,
+        textTransform: 'uppercase'
+    },
+    barberContainer: {
+        flexDirection: 'row',
+        padding: 4,
+        alignItems: 'center'
+    },
+    barberImage: {
+        width: 27,
+        height: 27,
+        resizeMode: 'contain',
+        marginRight: 5
+    },
+    barberFont: {
+        fontFamily: 'chakra-m',
+        fontSize: 16
+    },
+    barberName: {
+        color: Colors.primary200,
+        fontFamily: 'chakra-b'
     },
     iconContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 8,
-        marginVertical: Platform.OS === 'android'? 2:6
+        marginVertical: Platform.OS === 'android' ? 2 : 6
     },
     serviceIcon: {
         width: 20,
@@ -106,7 +138,7 @@ const styles = StyleSheet.create({
         color: '#367E18',
         fontFamily: 'chakra-b'
     },
-    btnContainer:{
+    btnContainer: {
         flexDirection: 'row',
         justifyContent: 'center'
     },

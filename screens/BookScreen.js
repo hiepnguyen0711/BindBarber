@@ -7,32 +7,33 @@ import ButtonBooking from "../components/ButtonBooking";
 import { Colors } from "../constants/Colors";
 import React, { useState, useEffect } from 'react';
 import ModalBookSchedule from "../components/ModalBookSchedule";
+import { useSelector } from "react-redux";
 
 function BookScreen() {
+
+    const bookingDate = useSelector((state) => state.booking.dates);
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedDay, setSelectedDay] = useState();
-    function toggleModal(){
+    function toggleModal() {
         setModalVisible(!isModalVisible);
     }
-    const selectDayHandler = (value) => {
-        setSelectedDay(value);
-    }
-    useEffect(() => {
-        console.log('Ngày được chọn: '+ selectedDay);
-    },[selectedDay]);
-
     
+    useEffect(() => {
+        console.log('bookingDate:', bookingDate);
+    }, [selectedDay, bookingDate]);
+
+
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
-            <SelectDayItem value={selectDayHandler}/>
+            <SelectDayItem />
             <SelectHourItem />
             <SelectBarberItem />
-            <SelectServiceItem />
-            <ButtonBooking onPress={ toggleModal} />
-            <Modal 
-            visible={isModalVisible}
-            transparent={true}
-            animationType="fade"
+            <SelectServiceItem  />
+            <ButtonBooking onPress={toggleModal} />
+            <Modal
+                visible={isModalVisible}
+                transparent={true}
+                animationType="fade"
             >
                 <ModalBookSchedule onPressCancel={toggleModal} />
             </Modal>
@@ -48,6 +49,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 8,
         paddingHorizontal: 10,
-        
+
     }
 })

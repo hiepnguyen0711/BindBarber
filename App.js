@@ -28,6 +28,9 @@ import SavedListScreen from './screens/SavedListScreen';
 import AdminDashboardScreen from './screens/AdminDashboardScreen';
 import PostAdminScreen from './screens/PostAdminScreen';
 import PostAdminFormScreen from './screens/PostAdminFormScreen';
+import { Provider } from 'react-redux'
+import { store } from './store/redux/store';
+
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -38,7 +41,7 @@ function BottomTabNavigator() {
     const checkLogged = async () => {
       try {
         const response = await AsyncStorage.getItem('isLogged');
-        console.log('response:' + response);
+        // console.log('response:' + response);
         // return response;
         if (response == 1) {
           setLogin(true);
@@ -130,69 +133,71 @@ export default function App() {
   return (
     <>
       <StatusBar style='light' />
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{
-          headerStyle: {
-            backgroundColor: Colors.primary300,
-          },
-          headerTintColor: Colors.primary400,
-          headerTitleStyle: {
-            fontFamily: 'chakra-b',
-          }
-        }} >
-          <Stack.Screen name="bottomtab" component={BottomTabNavigator} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="login" component={LoginScreen} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="sigup" component={SigupScreen} options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="accountsettings" component={AccountSetting} options={{
-            title: 'Thiết lập tài khoản',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="changeusername" component={ChangeUserNameScreen} options={{
-            title: 'Đổi tên tài khoản',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="changephone" component={ChangePhoneScreen} options={{
-            title: 'Đổi số điện thoại',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="changepassword" component={ChangePasswordScreen} options={{
-            title: 'Đổi mật khẩu',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="bookschedule" component={BookScheduleScreen} options={{
-            title: 'Lịch đã đặt',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="orderplaced" component={OrderPlacedScreen} options={{
-            title: 'Đơn hàng đã đặt',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="savedlist" component={SavedListScreen} options={{
-            title: 'Tóc đã lưu',
-            headerBackTitleVisible: false
-          }} />
-          <Stack.Screen name="admindashboard" component={AdminDashboardScreen} options={{
-            title: 'Bảng điều khiển của Administator',
-            headerBackTitleVisible: false,
-            headerShown: false
-          }} />
-          <Stack.Screen name="postadmin" component={PostAdminScreen} options={{
-            title: 'Quản lý bài viết',
-            headerBackTitleVisible: false,
-            headerShown: false
-          }} />
-          <Stack.Screen name="postadminform" component={PostAdminFormScreen} options={{
-            title: 'Đăng bài viết',
-            headerBackTitleVisible: false,
-          }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{
+            headerStyle: {
+              backgroundColor: Colors.primary300,
+            },
+            headerTintColor: Colors.primary400,
+            headerTitleStyle: {
+              fontFamily: 'chakra-b',
+            }
+          }} >
+            <Stack.Screen name="bottomtab" component={BottomTabNavigator} options={{
+              headerShown: false
+            }} />
+            <Stack.Screen name="login" component={LoginScreen} options={{
+              headerShown: false
+            }} />
+            <Stack.Screen name="sigup" component={SigupScreen} options={{
+              headerShown: false
+            }} />
+            <Stack.Screen name="accountsettings" component={AccountSetting} options={{
+              title: 'Thiết lập tài khoản',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="changeusername" component={ChangeUserNameScreen} options={{
+              title: 'Đổi tên tài khoản',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="changephone" component={ChangePhoneScreen} options={{
+              title: 'Đổi số điện thoại',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="changepassword" component={ChangePasswordScreen} options={{
+              title: 'Đổi mật khẩu',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="bookschedule" component={BookScheduleScreen} options={{
+              title: 'Lịch đã đặt',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="orderplaced" component={OrderPlacedScreen} options={{
+              title: 'Đơn hàng đã đặt',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="savedlist" component={SavedListScreen} options={{
+              title: 'Tóc đã lưu',
+              headerBackTitleVisible: false
+            }} />
+            <Stack.Screen name="admindashboard" component={AdminDashboardScreen} options={{
+              title: 'Bảng điều khiển của Administator',
+              headerBackTitleVisible: false,
+              headerShown: false
+            }} />
+            <Stack.Screen name="postadmin" component={PostAdminScreen} options={{
+              title: 'Quản lý bài viết',
+              headerBackTitleVisible: false,
+              headerShown: false
+            }} />
+            <Stack.Screen name="postadminform" component={PostAdminFormScreen} options={{
+              title: 'Đăng bài viết',
+              headerBackTitleVisible: false,
+            }} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
 
     </>
   );

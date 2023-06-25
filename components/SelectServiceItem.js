@@ -2,8 +2,11 @@ import { Alert, FlatList, Platform, StyleSheet, Text, View } from "react-native"
 import ItemService from "./ItemService";
 import TotalService from "./TotalService";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addBooking, addBookingService, removeBookingService } from "../store/redux/bookSchedule";
 
 function SelectServiceItem() {
+    const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
 
     const [totalService, setTotalService] = useState([]);
@@ -48,9 +51,11 @@ function SelectServiceItem() {
                     setTotalService((prevTotalService) =>
                         prevTotalService.filter((item) => item.id !== updateService.id)
                     );
+                    dispatch(removeBookingService({serviceName: updateService})); // remove itemService to totalService . variable
                 } else {
                     setTotalService((prevTotalService) => [...prevTotalService, updateService]);
                     setTotalPrice(prevTotalPrice => prevTotalPrice + updateService.price);
+                    dispatch(addBookingService({serviceName: updateService})); // add itemService to totalService . variable
                 }
                 return updateService;
             }
@@ -59,6 +64,11 @@ function SelectServiceItem() {
         setSelectedService(updateServices);
 
     }
+    useEffect(() => {
+        totalService.forEach(service => {
+            // console.log(service.serviceName)
+        })
+    },[totalService]);
 
     function renderItemService() {
 

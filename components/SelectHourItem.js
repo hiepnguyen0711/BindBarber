@@ -1,11 +1,16 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import HourItem from "./HourItem";
 import React, {useState} from 'react';
+import { useDispatch } from "react-redux";
+import { addBookingHours } from "../store/redux/bookSchedule";
 
 function SelectHourItem() {
+    const dispatch = useDispatch();
     const [selectedItem, setSelectedItem] = useState(null);
+
     function selectHourHandler(value){
         setSelectedItem(value);
+        dispatch(addBookingHours({hour: value}))
     }
     return (
         <View>
