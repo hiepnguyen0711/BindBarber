@@ -2,16 +2,20 @@ import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View }
 import { Colors } from "../constants/Colors";
 import { useSelector } from "react-redux";
 import React, { useState, useEffect } from 'react';
+import number_format from '../library/NumberFormat';
 
 const windowWidth = Dimensions.get('window').width;
-function ModalBookSchedule({ onPressCancel }) {
+function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
+
     const hourBooking = useSelector((state) => state.booking.hours);
     const dateBookingName = useSelector((state) => state.booking.dates.dateName);
     const barberBookingName = useSelector((state) => state.booking.barber);
     const serviceBooking = useSelector((state) => state.booking.service)
+    const priceBooking = useSelector((state) => state.booking.prices);
+    const dateBookingId = useSelector((state) => state.booking.dates.dateId);
 
     useEffect(() => {
-        console.log(serviceBooking);
+        // console.log(serviceBooking);
     }, serviceBooking)
     return (
         <View style={styles.root}>
@@ -36,16 +40,15 @@ function ModalBookSchedule({ onPressCancel }) {
                 </View>
                 <View style={styles.totalContainer}>
                     <Text style={styles.totalTitleFont}>TỔNG CHI PHÍ</Text>
-                    <Text style={styles.totalPriceFont}>260.000 đ</Text>
+                    <Text style={styles.totalPriceFont}>{number_format(priceBooking)} đ</Text>
                 </View>
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.btnConfirmContainer}>
+                    <TouchableOpacity style={styles.btnConfirmContainer} onPress={onPressConfirm}>
                         <Text style={styles.btnFont}>Xác nhận</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={onPressCancel}
-                        style={styles.btnCancelContainer}
-                    >
+                        style={styles.btnCancelContainer} >
                         <Text style={styles.btnFont}>Huỷ bỏ</Text>
                     </TouchableOpacity>
 

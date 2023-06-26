@@ -3,7 +3,7 @@ import ItemService from "./ItemService";
 import TotalService from "./TotalService";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addBooking, addBookingService, removeBookingService } from "../store/redux/bookSchedule";
+import { addBooking, addBookingPrice, addBookingService, removeBookingPrice, removeBookingService } from "../store/redux/bookSchedule";
 
 function SelectServiceItem() {
     const dispatch = useDispatch();
@@ -46,6 +46,7 @@ function SelectServiceItem() {
                 const updateService = { ...service, status: !service.status };
                 if(service.status){
                     setTotalPrice(prevTotalPrice => prevTotalPrice - updateService.price);
+                    dispatch(removeBookingPrice({price: updateService.price}));
                 }
                 if (!updateService.status) {
                     setTotalService((prevTotalService) =>
@@ -55,6 +56,7 @@ function SelectServiceItem() {
                 } else {
                     setTotalService((prevTotalService) => [...prevTotalService, updateService]);
                     setTotalPrice(prevTotalPrice => prevTotalPrice + updateService.price);
+                    dispatch(addBookingPrice({price: updateService.price}));
                     dispatch(addBookingService({serviceName: updateService})); // add itemService to totalService . variable
                 }
                 return updateService;

@@ -21,7 +21,7 @@ function AccountScreen({ navigation }) {
         const getUserData = async () => {
             try {
                 const uid = await AsyncStorage.getItem('uid');
-                console.log('uid = ' + uid);
+                // console.log('uid = ' + uid);
     
                 const q = query(userRef, where('uid', '==', uid));
                 const result = onSnapshot(q, (querySnapshot) => {
@@ -30,7 +30,7 @@ function AccountScreen({ navigation }) {
                         const user = doc.data();
                         users.push(user);
                     });
-                    console.log(users);
+                    // console.log(users);
                     // set data 
                     if (users.length > 0) {
                         setUserName(users[0].fullName);

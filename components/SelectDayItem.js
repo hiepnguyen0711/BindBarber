@@ -1,6 +1,6 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import DayItem from "./DayItem";
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import { addBooking } from "../store/redux/bookSchedule";
 
@@ -8,11 +8,15 @@ function SelectDayItem() {
     const dispatch = useDispatch();
     const currentDate = new Date();
     const currentformattedDate = currentDate.getDate();
+    const options = { weekday: 'short', day: 'numeric', month: 'numeric' }
+    const formattedTodayDate = currentDate.toLocaleString('vi-VN', options);
+    const weekdayss = formattedTodayDate.split(',')[0].toLocaleLowerCase();
+    const datess = formattedTodayDate.split(',')[1].trim();
+    const formattedTodayOutput = `${weekdayss} - ${datess}`;
 
     const tomorrow = new Date();
     tomorrow.setDate(currentformattedDate + 1);
     const tomorrowDate = tomorrow.getDate();
-    const options = { weekday: 'short', day: 'numeric', month: 'numeric' }
     const formattedTomorrowDate = tomorrow.toLocaleString('vi-VN', options);
     const weekday = formattedTomorrowDate.split(',')[0].toLocaleLowerCase();
     const date = formattedTomorrowDate.split(',')[1].trim();
@@ -30,22 +34,30 @@ function SelectDayItem() {
     const [selectedDay, setSelectedDay] = useState(currentformattedDate);
 
     const getDateName = (value) => {
-        if(value === currentformattedDate )
-        {
-           return 'Hôm nay';
-        }else if(value === tomorrowDate)
-        {
+        if (value === currentformattedDate) {
+            return formattedTodayOutput;
+        } else if (value === tomorrowDate) {
             return formattedOutput;
         }
-        else if(value === afterTomorrowDate)
-        {
+        else if (value === afterTomorrowDate) {
             return formattedAfterOutput;
         }
     }
+    const getDayId = (value) => {
+        if (value === currentformattedDate) {
+            return formattedTodayOutput;
+        } else if (value === tomorrowDate) {
+            return formattedOutput;
+        }
+        else if (value === afterTomorrowDate) {
+            return formattedAfterOutput;
+        }
+    }
+
     const handleDayItemClick = (itemValue, value) => {
-      setSelectedItem(itemValue);
+        setSelectedItem(itemValue);
         setSelectedDay(value);
-        dispatch(addBooking({ date: value, dateName: getDateName(value) })); // Thay đổi tên hành động thành addBooking
+        dispatch(addBooking({ dateId: getDayId(value), dateName: getDateName(value) })); // Thay đổi tên hành động thành addBooking
     };
 
     useEffect(() => {

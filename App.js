@@ -41,8 +41,7 @@ function BottomTabNavigator() {
     const checkLogged = async () => {
       try {
         const response = await AsyncStorage.getItem('isLogged');
-        // console.log('response:' + response);
-        // return response;
+      
         if (response == 1) {
           setLogin(true);
         } else {
