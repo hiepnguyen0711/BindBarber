@@ -7,6 +7,8 @@ import number_format from '../library/NumberFormat';
 const windowWidth = Dimensions.get('window').width;
 function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
 
+    const [selectedService, setSelectedService] = useState([]);
+
     const hourBooking = useSelector((state) => state.booking.hours);
     const dateBookingName = useSelector((state) => state.booking.dates.dateName);
     const barberBookingName = useSelector((state) => state.booking.barber);
@@ -16,6 +18,8 @@ function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
 
     useEffect(() => {
         // console.log(serviceBooking);
+        setSelectedService([]);
+        // setSelectedService(serviceBooking);
     }, serviceBooking)
     return (
         <View style={styles.root}>

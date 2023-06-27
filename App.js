@@ -30,6 +30,8 @@ import PostAdminScreen from './screens/PostAdminScreen';
 import PostAdminFormScreen from './screens/PostAdminFormScreen';
 import { Provider } from 'react-redux'
 import { store } from './store/redux/store';
+import AdminBookScheduleScreen from './screens/AdminBookScheduleScreen';
+import ProductScreen from './screens/ProductScreen';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -193,6 +195,12 @@ export default function App() {
             <Stack.Screen name="postadminform" component={PostAdminFormScreen} options={{
               title: 'Đăng bài viết',
               headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="managerbooked" component={AdminBookScheduleScreen} options={{
+              title: 'Quản lý Đặt Lịch',
+            }} />
+            <Stack.Screen name="managerproduct" component={ProductScreen} options={{
+              title: 'Quản lý sản phẩm',
             }} />
           </Stack.Navigator>
         </NavigationContainer>

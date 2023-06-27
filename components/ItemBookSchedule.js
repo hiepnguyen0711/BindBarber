@@ -1,27 +1,42 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
+import number_format from "../library/NumberFormat";
+import { useEffect, useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
-function ItemBookSchedule() {
+function ItemBookSchedule({hour, date, barberName, price, service, status}) {
+    const getStatusBooking = (status) => {
+        if(status === 1)
+        {
+            return(<Text style={styles.status}>chờ duyệt</Text>);
+        }else if(status === 2){
+            return(<Text style={styles.statusConfirm}>Đã xác nhận</Text>);
+        }else if(status === 3){
+            return(<Text style={styles.statusCancel}>Từ chối</Text>);
+        }
+    }
+    useEffect(() => {
+        
+    },[]);
     return (
         <View style={styles.root}>
             <View style={styles.container}>
                 <View >
                     <View style={styles.dateHours}>
-                        <Text style={styles.date}>15/06/2030</Text>
+                        <Text style={styles.date}>{date}</Text>
                         <Text> - </Text>
-                        <Text style={styles.hours}>9:00 SA</Text>
+                        <Text style={styles.hours}>{hour}:00</Text>
                     </View>
                     <View style={styles.barberContainer}>
-                        <Text style={styles.barber}>Barber: <Text style={styles.barberName}>BOSS</Text></Text>
+                        <Text style={styles.barber}>Barber: <Text style={styles.barberName}>{barberName}</Text></Text>
                     </View>
                     <View>
-                        <Text style={styles.status}>chờ duyệt</Text>
+                        {getStatusBooking(status)}
                     </View>
                 </View>
                 <View>
-                    <Text style={styles.price}>60.000 đ</Text>
-                    <Text style={styles.service}>1 dịch vụ</Text>
+                    <Text style={styles.price}>{number_format(price)} đ</Text>
+                    <Text style={styles.service}>{service} dịch vụ</Text>
                 </View>
             </View>
         </View>
@@ -54,7 +69,8 @@ const styles = StyleSheet.create({
         paddingVertical: 2
     },
     date:{
-        fontFamily: 'chakra-b'
+        fontFamily: 'chakra-b',
+        textTransform: 'uppercase'
     },
     hours:{
         fontFamily: 'chakra-b',
@@ -67,11 +83,22 @@ const styles = StyleSheet.create({
         fontFamily: 'chakra-b'
     },
     barberName:{
-        color: Colors.primary200
+        color: Colors.primary200,
+        textTransform: 'uppercase'
     },
     status:{
         fontFamily: 'josefin-m',
         color: Colors.primary300,
+        paddingVertical: 2
+    },
+    statusConfirm:{
+        fontFamily: 'josefin-m',
+        color: '#1F8A70',
+        paddingVertical: 2
+    },
+    statusCancel:{
+        fontFamily: 'josefin-m',
+        color: '#820000',
         paddingVertical: 2
     },
     price:{

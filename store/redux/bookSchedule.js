@@ -1,4 +1,4 @@
-import { createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 
 const bookSchedule = createSlice({
@@ -13,7 +13,7 @@ const bookSchedule = createSlice({
         service: [],
         prices: 0
     },
-    reducers:{
+    reducers: {
         addBooking: (state, action) => {
             state.dates.dateId = action.payload.dateId;
             state.dates.dateName = action.payload.dateName;
@@ -30,14 +30,20 @@ const bookSchedule = createSlice({
         removeBookingService: (state, action) => {
             state.service.splice(state.service.indexOf(action.payload.serviceName));
         },
+        removeAllBookingServices: (state) => {
+            state.service = [];
+        },
         addBookingPrice: (state, action) => {
             state.prices += action.payload.price;
         },
         removeBookingPrice: (state, action) => {
             state.prices -= action.payload.price;
+        },
+        removeAllBookingPrice: (state) => {
+            state.prices = 0;
         }
     }
 });
 
-export const { addBooking, addBookingHours, addBookingBarber, addBookingService, removeBookingService, addBookingPrice, removeBookingPrice } = bookSchedule.actions; // Thay đổi tên action thành addBooking
+export const { addBooking, addBookingHours, addBookingBarber, addBookingService, removeBookingService, removeAllBookingServices, addBookingPrice, removeBookingPrice, removeAllBookingPrice } = bookSchedule.actions; // Thay đổi tên action thành addBooking
 export default bookSchedule.reducer;

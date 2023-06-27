@@ -38,6 +38,7 @@ function AccountScreen({ navigation }) {
                         setTotalAmount(users[0].totalAmount);
                         setRank(users[0].rank);
                         setAvatar(users[0].avatar);
+                        AsyncStorage.setItem('phone', users[0].phone);
                     }
                 })
             } catch (e) {

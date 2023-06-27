@@ -7,13 +7,14 @@ import ButtonBooking from "../components/ButtonBooking";
 import { Colors } from "../constants/Colors";
 import React, { useState, useEffect } from 'react';
 import ModalBookSchedule from "../components/ModalBookSchedule";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { collection, doc, onSnapshot, query, setDoc, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { removeAllBookingPrice, removeAllBookingServices } from "../store/redux/bookSchedule";
 
 function BookScreen() {
-
+    const dispatch = useDispatch();
     const [userName, setUserName] = useState('');
     const [phone, setPhone] = useState('');
 
@@ -32,24 +33,36 @@ function BookScreen() {
 
     function toggleModal() {
         if (checkedLogin === false) return Alert.alert('Thông báo', 'Bạn hãy đăng nhập để đặt lịch');
+        else if(dateBookingId === null) return Alert.alert('Thông báo', 'Bạn chưa chọn ngày cắt');
+        else if(hourBooking === null) return Alert.alert('Thông báo', 'Bạn chưa chọn khung giờ');
+        else if(barberBookingName === '') return Alert.alert('Thông báo', 'Bạn chưa chọn thợ cắt');
+        else if(priceBooking === 0) return Alert.alert('Thông báo', 'Bạn chưa chọn dịch vụ');
         setModalVisible(!isModalVisible);
-        console.log(phone);
+        // console.log(phone);
     }
     function addBookingFireStore() {
+        try {
+            setModalVisible(!isModalVisible);
+            setDoc(doc(bookingRef), {
+                dateId: dateBookingId,
+                hour: hourBooking,
+                barberName: barberBookingName,
+                service: serviceBooking,
+                price: priceBooking,
+                guestName: userName,
+                phone: phone,
+                status: 1
+            });
+            Alert.alert('Chúc mừng', 'Bạn đã đặt lịch thành công');
+        } catch (error) {
+            console.log(error);
+        }
         
-        setModalVisible(!isModalVisible);
-        setDoc(doc(bookingRef), {
-            dateId: dateBookingId,
-            hour: hourBooking,
-            barberName: barberBookingName,
-            service: serviceBooking,
-            price: priceBooking,
-            guestName: userName,
-            phone: phone
-        });
     }
 
     useEffect(() => {
+        dispatch(removeAllBookingServices());
+        dispatch(removeAllBookingPrice());
         const getUserData = async () => {
             try {
                 const response = await AsyncStorage.getItem('isLogged');

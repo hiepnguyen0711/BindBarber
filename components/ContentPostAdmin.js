@@ -11,7 +11,7 @@ function ContentPostAdmin() {
     const [displayedItems, setDisplayedItems] = useState(5); // Initially display 2 items
     const [totalItems, setTotalItems] = useState(0);
 
-    useEffect(() => {
+    useEffect(() => { 
         const getLibraryData = async () => {
             try {
                 const q = await query(postRef, orderBy('time', 'desc'));

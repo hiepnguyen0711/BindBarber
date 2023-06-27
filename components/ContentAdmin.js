@@ -6,9 +6,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 const borderTopRadius = 50;
 function ContentAdmin({navigation}) {
-
     function PostAdminScreenHandler() {
         navigation.navigate('postadmin');
+    }
+    function ManagerBookingAdminScreenHandler(){
+        navigation.navigate('managerbooked');
+    }
+    function ManagerProductScreenHandler(){
+        navigation.navigate('managerproduct');
     }
     return (
         <View style={styles.container}>
@@ -16,11 +21,11 @@ function ContentAdmin({navigation}) {
                 <Text style={styles.serviceFont}>Công cụ</Text>
             </View>
             <View style={styles.itemContainer}>
-                <DashboardContentItem imageUrl={'https://i.imgur.com/ZwY5MrB.png'} title='Đặt lịch' />
+                <DashboardContentItem imageUrl={'https://i.imgur.com/ZwY5MrB.png'} title='Đặt lịch' onPress={ManagerBookingAdminScreenHandler}/>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/vHhzX7M.png'} title='Đơn hàng' />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/GW7eWZY.png'} title='Đăng bài' onPress={PostAdminScreenHandler} />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/YczV1Rf.png'} title='Dịch vụ' />
-                <DashboardContentItem imageUrl={'https://i.imgur.com/H0aJok0.png'} title='Sản phẩm' />
+                <DashboardContentItem imageUrl={'https://i.imgur.com/H0aJok0.png'} title='Sản phẩm' onPress={ManagerProductScreenHandler} />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/1Tx9vHE.png'} title='Thành viên' />
             </View>
             <TouchableOpacity style={styles.iconContainer}>

@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
 import { Ionicons } from '@expo/vector-icons';
 
-function BannerBookSchedule({navigation}) {
+function BannerBookSchedule({navigation, name}) {
     function backScreenHandler(){
         navigation.goBack();
     }
@@ -13,7 +13,7 @@ function BannerBookSchedule({navigation}) {
                     <Ionicons name='chevron-back-sharp' size={32} color={'white'} />
                 </TouchableOpacity>
             </View>
-            <Text style={styles.nameFont}>Hey <Text style={styles.name}>John</Text>!</Text>
+            <Text style={styles.nameFont}>Hey <Text style={styles.name}>{name} </Text>!</Text>
             <Text style={styles.titleFont}>Hãy kiểm tra lịch cắt tóc của bạn nào.</Text>
             <Image source={require('../assets/images/hair_cut_sticker.png')} style={styles.imgBanner} />
         </View>
