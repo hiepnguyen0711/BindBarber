@@ -1,14 +1,27 @@
-import { Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, View } from "react-native";
 import number_format from "../library/NumberFormat";
 import { Colors } from "../constants/Colors";
 import ButtonShop from "./ButtonShop";
+import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
 function ShopItem({ imageUrl, title, price }) {
+    const [loading, setLoading] = useState(false);
+
+    function onLoading(value){
+        setLoading(value);
+    }
     return (
         <View style={styles.root}>
             <View style={styles.container}>
-                <Image source={{ uri: imageUrl }} style={styles.itemImage} />
+                {loading && <ActivityIndicator size={'large'} color={'red'} />}
+                
+                <Image 
+                source={{ uri: imageUrl }} 
+                style={styles.itemImage} 
+                onLoadStart={() => onLoading(true)}
+                onLoadEnd={() => onLoading(false)}
+                />
                 <Text style={styles.itemTitle}>{title}</Text>
                 <Text style={styles.itemPrice}>{number_format(price)} đ</Text>
             </View>
@@ -43,7 +56,7 @@ const styles = StyleSheet.create({
     itemImage: {
         width: 110,
         height: 110,
-        resizeMode: 'stretch',
+        resizeMode: 'contain',
         aspectRatio: 1
     },
     itemTitle: {

@@ -1,7 +1,8 @@
-import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
 
+const windowWidth = Dimensions.get('window').width;
 function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
     const [loading, setLoading] = useState(false);
     function onLoading(value, label) {
@@ -9,7 +10,6 @@ function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
     }
     return (
         <View style={styles.container}>
-
             <View style={styles.imgContainer}>
                 {loading && <View style={styles.loadingActivity}>
                     <ActivityIndicator size='large' color='red' />
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        // overflow: 'hidden'
+        // overflow: 'hidden',
+        width: windowWidth - 60
     },
     imgContainer: {
-        // width: windowWidth
     },
     loadingActivity: {
         justifyContent: 'center',
@@ -82,9 +82,8 @@ const styles = StyleSheet.create({
         paddingTop: 50
     },
     libraryImg: {
-        height: 370,
-        // width: '100%',
-        resizeMode: 'stretch',
+        height: 400,
+        resizeMode:'cover',
         borderTopRightRadius: 16,
         borderTopLeftRadius: 16,
         // aspectRatio: 1.25

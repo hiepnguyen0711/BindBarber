@@ -1,4 +1,4 @@
-import { Dimensions, ScrollView, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import LibraryItem from "../components/LibraryItem";
 import { Colors } from "../constants/Colors";
 import { collection, doc, getDocs, onSnapshot, orderBy, query, where } from "firebase/firestore";
@@ -44,6 +44,7 @@ function LibraryScreen() {
 
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
+            <View style={styles.container}>
             {libraryData.map((item) => (
                 <LibraryItem
                     key={item.id}
@@ -53,6 +54,8 @@ function LibraryScreen() {
                     liked={item.liked}
                 />
             ))}
+            </View>
+            
         </ScrollView>
     );
 }
@@ -63,5 +66,7 @@ const styles = StyleSheet.create({
     root: {
         backgroundColor: Colors.primary100,
     },
-
+    container:{
+        alignItems: 'center'
+    }
 })

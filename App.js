@@ -32,6 +32,7 @@ import { Provider } from 'react-redux'
 import { store } from './store/redux/store';
 import AdminBookScheduleScreen from './screens/AdminBookScheduleScreen';
 import ProductScreen from './screens/ProductScreen';
+import PostProductScreen from './screens/PostProductScreen';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -198,9 +199,15 @@ export default function App() {
             }} />
             <Stack.Screen name="managerbooked" component={AdminBookScheduleScreen} options={{
               title: 'Quản lý Đặt Lịch',
+              headerBackTitleVisible: false,
             }} />
             <Stack.Screen name="managerproduct" component={ProductScreen} options={{
               title: 'Quản lý sản phẩm',
+              headerBackTitleVisible: false,
+            }} />
+             <Stack.Screen name="postproduct" component={PostProductScreen} options={{
+              title: 'Đăng sản phẩm',
+              headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>
         </NavigationContainer>

@@ -52,16 +52,17 @@ function PostAdminForm() {
             const result = await uploadBytes(storageRef, blob);
 
             blob.close();
-            postImageFireStore();
+            const url = await getDownloadURL(storageRef);
+            postImageFireStore(url);
             Alert.alert('Thông báo', 'Đăng bài thành công !');
             navigation.goBack();
-            return await getDownloadURL(storageRef);
+            return url;
         } catch (error) {
             Alert.alert(`Bị lỗi: ${error}`);
         }
     }
 
-    async function postImageFireStore() {
+    async function postImageFireStore(imageUrl) {
         const uid = await AsyncStorage.getItem('uid');
         const q = query(userRef, where('uid', '==', uid));
         const result = await onSnapshot(q, (querySnapshot) => {
@@ -76,14 +77,12 @@ function PostAdminForm() {
                 avatar: users[0].avatar,
                 fullName: users[0].fullName,
                 barberId: uid,
-                image: image,
+                image: imageUrl,
                 liked: 0,
                 time: new Date()
 
             });
         });
-
-
     }
 
     return (
