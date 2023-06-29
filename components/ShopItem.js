@@ -5,7 +5,7 @@ import ButtonShop from "./ButtonShop";
 import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
-function ShopItem({ imageUrl, title, price }) {
+function ShopItem({ imageUrl, title, price, onPress }) {
     const [loading, setLoading] = useState(false);
 
     function onLoading(value){
@@ -25,7 +25,7 @@ function ShopItem({ imageUrl, title, price }) {
                 <Text style={styles.itemTitle}>{title}</Text>
                 <Text style={styles.itemPrice}>{number_format(price)} đ</Text>
             </View>
-            <ButtonShop />
+            <ButtonShop onPress={onPress}/>
         </View>
     );
 }

@@ -2,9 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 
-function ButtonShop(){
+function ButtonShop({onPress}){
     return(
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.buttonContainer}>
                 <Ionicons name="cart-outline" size={15} color={'white'} />
                 <Text style={styles.buttonTitle}> Thêm vào giỏ hàng </Text>

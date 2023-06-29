@@ -33,6 +33,7 @@ import { store } from './store/redux/store';
 import AdminBookScheduleScreen from './screens/AdminBookScheduleScreen';
 import ProductScreen from './screens/ProductScreen';
 import PostProductScreen from './screens/PostProductScreen';
+import CartScreen from './screens/CartScreen';
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -207,6 +208,10 @@ export default function App() {
             }} />
              <Stack.Screen name="postproduct" component={PostProductScreen} options={{
               title: 'Đăng sản phẩm',
+              headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="cart" component={CartScreen} options={{
+              title: 'Giỏ hàng',
               headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>

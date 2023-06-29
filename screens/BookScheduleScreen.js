@@ -5,7 +5,6 @@ import BannerBookSchedule from "../components/BannerBookSchedule";
 import ItemBookSchedule from "../components/ItemBookSchedule";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
-import { useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function BookScheduleScreen({ navigation }) {
@@ -29,7 +28,6 @@ function BookScheduleScreen({ navigation }) {
             try {
                 await AsyncStorage.getItem('phone')
                     .then((value) => {
-                        // console.log(value);
                         setUserPhone(value);
                     })
                     .catch((error) => {
@@ -70,16 +68,7 @@ function BookScheduleScreen({ navigation }) {
                     status={booking.status}
                 />
             ))}
-            {/* <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule />
-            <ItemBookSchedule /> */}
+           
         </ScrollView>
     );
 }

@@ -17,9 +17,7 @@ function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
     const dateBookingId = useSelector((state) => state.booking.dates.dateId);
 
     useEffect(() => {
-        // console.log(serviceBooking);
         setSelectedService([]);
-        // setSelectedService(serviceBooking);
     }, serviceBooking)
     return (
         <View style={styles.root}>
