@@ -1,5 +1,5 @@
 import axios from "axios";
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, setDoc, doc, query, where, onSnapshot } from 'firebase/firestore';
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import React, { useState, useEffect } from 'react';
 import { Alert } from "react-native";
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_KEY = 'AIzaSyB8NqJwFSO-ce2kvKYhO_Wo3b7MZVGcFn4';
 export async function createAccount(email, fullName, password, phone, navigation) {
-    
+
     try {
         const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + API_KEY, {
             email: email,
@@ -51,7 +51,7 @@ export async function createAccount(email, fullName, password, phone, navigation
     }
 }
 
-export async function loginUser(email, password, navigation){
+export async function loginUser(email, password, navigation) {
     try {
         const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + API_KEY, {
             email: email,
@@ -59,16 +59,30 @@ export async function loginUser(email, password, navigation){
             returnSecureToken: true
         });
         // xem userUID
-        const currentUserUID = response.data.localId;
+        const currentUserUID = await response.data.localId;
         console.log('currentUser UID:', currentUserUID);
-        navigation.replace('bottomtab');
-        AsyncStorage.setItem('email', email);
-        AsyncStorage.setItem('password', password);
-        AsyncStorage.setItem('isLogged', '1');
-        AsyncStorage.setItem('uid', currentUserUID);
-        
+        const userRef = collection(FIRESTORE_DB, 'Users');
+        const q = query(userRef, where('uid', '==', currentUserUID));
+        const result = onSnapshot(q, (querySnapshot) => {
+            const users = [];
+            querySnapshot.forEach((doc) => {
+                const user = doc.data();
+                users.push({ id: doc.id, ...user });
+            });
+            AsyncStorage.setItem('email', email);
+            AsyncStorage.setItem('password', password);
+            AsyncStorage.setItem('isLogged', '1');
+            AsyncStorage.setItem('uid', currentUserUID);
+            AsyncStorage.setItem('phone', users[0].phone);
+            AsyncStorage.setItem('avatar', users[0].avatar);
+            AsyncStorage.setItem('fullName', users[0].fullName);
+            navigation.replace('bottomtab');
+        });
+
+
+
         // const valueUid = JSON.stringify(currentUserUID);
-        
+
     } catch (error) {
         if (error.response) {
             console.log('Thông tin chi tiết lỗi: ', error.response.data);

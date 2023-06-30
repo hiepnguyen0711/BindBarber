@@ -22,7 +22,7 @@ function ContentAdmin({navigation}) {
             </View>
             <View style={styles.itemContainer}>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/ZwY5MrB.png'} title='Đặt lịch' onPress={ManagerBookingAdminScreenHandler}/>
-                <DashboardContentItem imageUrl={'https://i.imgur.com/vHhzX7M.png'} title='Đơn hàng' />
+                <DashboardContentItem imageUrl={'https://i.imgur.com/vHhzX7M.png'} title='Đơn hàng' onPress={() => navigation.navigate('managerorder')}/>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/GW7eWZY.png'} title='Đăng bài' onPress={PostAdminScreenHandler} />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/YczV1Rf.png'} title='Dịch vụ' />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/H0aJok0.png'} title='Sản phẩm' onPress={ManagerProductScreenHandler} />

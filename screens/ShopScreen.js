@@ -3,10 +3,10 @@ import { Colors } from "../constants/Colors";
 import ShopItem from "../components/ShopItem";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
-import { addProductToCart } from "../store/redux/addCart";
+import { addProductToCart, updateToCart } from "../store/redux/addCart";
 
 function ShopScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -14,22 +14,31 @@ function ShopScreen({ navigation }) {
     const [productData, setProductData] = useState([]);
     const [numberProducts, setNumberProducts] = useState(0);
     const cartData = useSelector((state) => state.cartProduct.carts);
-    const cartCount = cartData.length;
-    const getCartCount = () => {
-        return cartData.length;
+    const getCartCount = useCallback(() => {
+        let count = 0;
+        const checkCounts = cartData.map((item) => {
+            count += item.quantity;
+        });
+        return count;
+    }, [cartData]);
+    function CartScreenHandler(){
+        if(numberProducts === 0){
+            Alert.alert('Thông báo','Giỏ hàng trống');
+        }else{
+            navigation.navigate('cart');
+        }
     }
     useEffect(() => {
         setNumberProducts(getCartCount());
         navigation.setOptions({
             headerRight: () => (
                 <View style={styles.headerRightContainer}>
-                    <TouchableOpacity onPress={() => navigation.navigate('cart')}>
+                    <TouchableOpacity onPress={CartScreenHandler}>
                         <Ionicons name='md-cart' size={32} color={Colors.primary400} />
                         {numberProducts > 0 && <View style={styles.cartContainer}>
                             <Text style={styles.cartFont}>{numberProducts}</Text>
                         </View>}
                     </TouchableOpacity>
-
                 </View>
             ),
         });
@@ -45,12 +54,19 @@ function ShopScreen({ navigation }) {
             })
         }
         getProductData();
-    }, [numberProducts]);
+    }, [numberProducts, getCartCount]);
 
     function addCartHandler(id, name, image, price) {
-        dispatch(addProductToCart({ cartId: id, cartName: name, cartImage: image, cartPrice: price }));
+        const cartItem = cartData.find(item => item.id === id);
+        if (cartItem) {
+            // console.log(cartItem);
+            dispatch(updateToCart({ cartId: id, cartQuantity: +1}));
+        } else {
+            // console.log(id);
+            dispatch(addProductToCart({ cartId: id, cartName: name, cartImage: image, cartPrice: price, cartQuantity: 1 }));
+        }
         const count = getCartCount();
-        setNumberProducts(count+1);
+        setNumberProducts(count + 1);
     }
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false} >

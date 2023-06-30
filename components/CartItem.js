@@ -1,10 +1,12 @@
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from "../constants/Colors";
 import number_format from "../library/NumberFormat";
+import { useEffect, useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
-function CartItem({ id, name, imageUri, price, count }) {
+function CartItem({ id, name, imageUri, price, count, onPressAdd, onPressRemove }) {
+    
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
@@ -20,11 +22,11 @@ function CartItem({ id, name, imageUri, price, count }) {
                 </View>
             </View>
             <View>
-                <TouchableOpacity style={styles.btnQuantity}>
+                <TouchableOpacity style={styles.btnQuantity} onPress={() => onPressAdd(id)}>
                     <Ionicons name='add' size={22} color={Colors.primary400} />
                 </TouchableOpacity>
                 <Text style={styles.quantityFont}>{count}</Text>
-                <TouchableOpacity style={styles.btnQuantitys}>
+                <TouchableOpacity style={styles.btnQuantitys} onPress={() => onPressRemove(id)}>
                     <Ionicons name='remove' size={22} color={Colors.primary400} />
                 </TouchableOpacity>
             </View>

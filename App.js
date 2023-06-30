@@ -14,7 +14,7 @@ import AppLoading from 'expo-app-loading';
 import TestFirebase from './screens/TestFirebase';
 import LoginScreen from './screens/LoginScreen';
 import SigupScreen from './screens/SigupScreen';
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 import TestAsyncStorage from './screens/TestAsyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AccountSetting from './screens/AccountSettings';
@@ -34,6 +34,9 @@ import AdminBookScheduleScreen from './screens/AdminBookScheduleScreen';
 import ProductScreen from './screens/ProductScreen';
 import PostProductScreen from './screens/PostProductScreen';
 import CartScreen from './screens/CartScreen';
+import { LogBox } from 'react-native';
+import ManagerOrderScreen from './screens/ManagerOrderScreen';
+
 
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -42,6 +45,7 @@ const BottomTab = createBottomTabNavigator();
 function BottomTabNavigator() {
   const [checkLogin, setLogin] = useState();
   useLayoutEffect(() => {
+    
     const checkLogged = async () => {
       try {
         const response = await AsyncStorage.getItem('isLogged');
@@ -118,6 +122,7 @@ function BottomTabNavigator() {
 }
 
 export default function App() {
+  
   const [fontLoaded] = useFonts({
     'dancing-b': require('./assets/fonts/dancing-b.ttf'),
     'dancing-m': require('./assets/fonts/dancing-m.ttf'),
@@ -130,9 +135,12 @@ export default function App() {
     'chakra-m': require('./assets/fonts/chakra-m.ttf'),
     'chakra-r': require('./assets/fonts/chakra-r.ttf')
   });
+  
   if (!fontLoaded) {
     return <AppLoading />;
   }
+  LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+  LogBox.ignoreAllLogs();//Ignore all log notifications
   return (
     <>
       <StatusBar style='light' />
@@ -212,6 +220,10 @@ export default function App() {
             }} />
             <Stack.Screen name="cart" component={CartScreen} options={{
               title: 'Giỏ hàng',
+              headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="managerorder" component={ManagerOrderScreen} options={{
+              title: 'Quản Lí Đơn Hàng',
               headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>
