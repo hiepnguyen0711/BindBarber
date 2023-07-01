@@ -149,14 +149,14 @@ const styles = StyleSheet.create({
     },
     btnConfirmContainer: {
         backgroundColor: Colors.primary200,
-        width: windowWidth - 300,
+        width: windowWidth - 250,
         padding: Platform.OS === 'android' ? 8 : 12,
         borderRadius: 4,
         marginHorizontal: 4
     },
     btnCancelContainer: {
         backgroundColor: '#CC3636',
-        width: windowWidth - 300,
+        width: windowWidth - 250,
         padding: Platform.OS === 'android' ? 8 : 12,
         borderRadius: 4,
         marginHorizontal: 4
