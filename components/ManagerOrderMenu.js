@@ -1,28 +1,28 @@
-import {View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Colors } from '../constants/Colors';
 
-function ManagerOrderMenu() {
+function ManagerOrderMenu({ onPressHandler }) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.btnWait}>
+            <TouchableOpacity style={styles.btnWait} onPress={() => onPressHandler(1)}>
                 <Text style={styles.waitFont}>Chờ duyệt</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnDelivering}>
+            <TouchableOpacity style={styles.btnDelivering} onPress={() => onPressHandler(2)}>
                 <Text style={styles.waitFont}>Đang giao</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.btnDelivered}>
+            <TouchableOpacity style={styles.btnDelivered} onPress={() => onPressHandler(3)}>
                 <Text style={styles.waitFont}>Đã giao</Text>
             </TouchableOpacity>
         </View>
     );
 }
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 10
     },
-    btnWait:{
+    btnWait: {
         backgroundColor: Colors.primary200,
         padding: 8,
         borderRadius: 4,
@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    waitFont :{
+    waitFont: {
         fontFamily: 'chakra-b',
         color: Colors.primary400
     },
-    btnDelivering:{
+    btnDelivering: {
         backgroundColor: Colors.primary300,
         padding: 8,
         borderRadius: 4,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    btnDelivered:{
+    btnDelivered: {
         backgroundColor: '#9CA777',
         padding: 8,
         borderRadius: 4,

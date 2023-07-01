@@ -3,53 +3,49 @@ import number_format from '../library/NumberFormat'
 import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
-function OrderPending({ data }) {
-    const timestamp = data.date;
-    const dateOrder = timestamp.toDate();
-    const day = dateOrder.getDate();
-    const month = dateOrder.getMonth() + 1;
-    const year = dateOrder.getFullYear();
-    const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+function OrderDelivering() {
     return (
         <View style={styles.container}>
             <View style={styles.dateContainer}>
                 <Text style={styles.dateTitle}>Ngày đặt</Text>
-                <Text style={styles.dateFont}>{formattedDate}</Text>
+                <Text style={styles.dateFont}>06/06/2023</Text>
             </View>
             <View style={styles.phoneContainer}>
-                <Text style={styles.phoneFont}>{data.phone}</Text>
+                <Text style={styles.phoneFont}>0772655181</Text>
                 <Text> - </Text>
-                <Text style={styles.nameFont}>{data.name}</Text>
+                <Text style={styles.nameFont}>Hiệp</Text>
             </View>
             <View style={styles.addressContainer}>
                 <Text style={styles.addressTitle}>Giao đến:</Text>
                 <View style={styles.addressFontContainer}>
-                    <Text style={styles.addressFont}>{data.address}</Text>
+                    <Text style={styles.addressFont}>298/2/1A khuông việt, p. Phú Trung, Q. Tân Phú, Tp.HCM</Text>
                 </View>
             </View>
-            {data.product.map((item, index) => (
-                <View style={styles.productContainer} key={index}>
-                    <Image
-                        source={{ uri: item.image }}
-                        style={styles.productImage} />
-                    <Text style={styles.productName}>{item.name}</Text>
-                    <Text style={styles.productQuantity}>{item.quantity}</Text>
-                    <Text style={styles.productPrice}>{number_format(item.price*item.quantity)} đ</Text>
-                </View>
-            ))}
-
-
+            <View style={styles.productContainer}>
+                <Image
+                    source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Products%2Fimage-1687946402412?alt=media&token=6de7893c-73ae-4dbf-9692-5876a345ec38' }}
+                    style={styles.productImage} />
+                <Text style={styles.productName}>Hiệp pomade</Text>
+                <Text style={styles.productQuantity}>3</Text>
+                <Text style={styles.productPrice}>{number_format(1500000)} đ</Text>
+            </View>
+            <View style={styles.productContainer}>
+                <Image
+                    source={{ uri: 'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Products%2Fimage-1687946402412?alt=media&token=6de7893c-73ae-4dbf-9692-5876a345ec38' }}
+                    style={styles.productImage} />
+                <Text style={styles.productName}>Hiệp pomade</Text>
+                <Text style={styles.productQuantity}>3</Text>
+                <Text style={styles.productPrice}>{number_format(1500000)} đ</Text>
+            </View>
             <View style={styles.totalContainer}>
                 <Text style={styles.totalTitle}>TỔNG CỘNG</Text>
-                <Text style={styles.totalPrice}>{number_format(data.price)} đ</Text>
+                <Text style={styles.totalPrice}>{number_format(1515000)} đ</Text>
             </View>
             <View style={styles.btnContainer}>
                 <TouchableOpacity style={styles.btnConfirm}>
-                    <Text style={styles.confirmFont}>Giao hàng</Text>
+                    <Text style={styles.confirmFont}>Hoàn tất</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnCancel}>
-                    <Text style={styles.confirmFont}>Từ chối</Text>
-                </TouchableOpacity>
+                
             </View>
         </View>
     );
@@ -79,16 +75,16 @@ const styles = StyleSheet.create({
     dateFont: {
         fontFamily: 'chakra-b'
     },
-    phoneContainer: {
+    phoneContainer:{
         flexDirection: 'row',
         alignItems: 'center'
     },
-    phoneFont: {
+    phoneFont:{
         fontFamily: 'chakra-b',
         fontSize: 16,
         color: Colors.primary200
     },
-    nameFont: {
+    nameFont:{
         fontFamily: 'chakra-b',
         fontSize: 16,
         color: Colors.primary200
@@ -107,7 +103,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 4,
 
     },
-    productContainer: {
+    productContainer:{
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -119,50 +115,50 @@ const styles = StyleSheet.create({
         height: 50,
         resizeMode: 'contain'
     },
-    productName: {
+    productName:{
         fontFamily: 'chakra-m'
     },
-    productQuantity: {
+    productQuantity:{
         fontFamily: 'chakra-m'
     },
-    productPrice: {
+    productPrice:{
         fontFamily: 'chakra-m'
     },
-    totalContainer: {
-        flexDirection: 'row',
+    totalContainer:{
+        flexDirection:'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         marginVertical: 8
     },
-    totalTitle: {
+    totalTitle:{
         fontFamily: 'chakra-m',
         fontSize: 16,
 
     },
-    totalPrice: {
+    totalPrice:{
         fontFamily: 'chakra-b',
         fontSize: 16,
         color: Colors.primary200
     },
-    btnContainer: {
+    btnContainer:{
         flexDirection: 'row',
         justifyContent: 'center'
     },
-    btnConfirm: {
+    btnConfirm:{
         backgroundColor: '#2A0944',
         padding: 8,
         borderRadius: 4,
         marginHorizontal: 8
     },
-    confirmFont: {
+    confirmFont:{
         fontFamily: 'chakra-b',
         color: Colors.primary400
     },
-    btnCancel: {
+    btnCancel:{
         backgroundColor: '#A10035',
         padding: 8,
         borderRadius: 4,
         marginHorizontal: 8
     }
 })
-export default OrderPending;
+export default OrderDelivering;
