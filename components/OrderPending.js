@@ -1,15 +1,21 @@
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import number_format from '../library/NumberFormat'
 import { Colors } from "../constants/Colors";
+import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
-function OrderPending({ data }) {
+function OrderPending({ data, onPressDeliver }) {
+    const [loading, setLoading] = useState(false);
     const timestamp = data.date;
     const dateOrder = timestamp.toDate();
     const day = dateOrder.getDate();
     const month = dateOrder.getMonth() + 1;
     const year = dateOrder.getFullYear();
     const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+
+    function onLoading(value){
+        setLoading(value);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.dateContainer}>
@@ -29,9 +35,13 @@ function OrderPending({ data }) {
             </View>
             {data.product.map((item, index) => (
                 <View style={styles.productContainer} key={index}>
+                    {loading && <ActivityIndicator size={'large'} color={Colors.primary200} style={styles.activity}/>}
                     <Image
                         source={{ uri: item.image }}
-                        style={styles.productImage} />
+                        style={styles.productImage} 
+                        onLoadStart={() => onLoading(true)}
+                        onLoadEnd={() => onLoading(false)}
+                        />
                     <Text style={styles.productName}>{item.name}</Text>
                     <Text style={styles.productQuantity}>{item.quantity}</Text>
                     <Text style={styles.productPrice}>{number_format(item.price*item.quantity)} đ</Text>
@@ -44,7 +54,7 @@ function OrderPending({ data }) {
                 <Text style={styles.totalPrice}>{number_format(data.price)} đ</Text>
             </View>
             <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.btnConfirm}>
+                <TouchableOpacity style={styles.btnConfirm} onPress={() => onPressDeliver(data.id)} >
                     <Text style={styles.confirmFont}>Giao hàng</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnCancel}>
@@ -113,6 +123,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 4,
         paddingHorizontal: 4
+    },
+    activity:{
+        position: 'absolute',
+         zIndex: 1,
+         left: 10
     },
     productImage: {
         width: 50,

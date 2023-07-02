@@ -13,7 +13,7 @@ function AvatarAccount({ imageUrl, accountName, phone, rankName }) {
 
     function onLoading(value) {
         setLoading(value);
-    }
+    } 
 
     const pickAvatar = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
