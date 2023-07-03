@@ -24,7 +24,7 @@ function ContentAdmin({navigation}) {
                 <DashboardContentItem imageUrl={'https://i.imgur.com/ZwY5MrB.png'} title='Đặt lịch' onPress={ManagerBookingAdminScreenHandler}/>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/vHhzX7M.png'} title='Đơn hàng' onPress={() => navigation.navigate('managerorder')}/>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/GW7eWZY.png'} title='Đăng bài' onPress={PostAdminScreenHandler} />
-                <DashboardContentItem imageUrl={'https://i.imgur.com/YczV1Rf.png'} title='Dịch vụ' />
+                <DashboardContentItem imageUrl={'https://i.imgur.com/YczV1Rf.png'} title='Dịch vụ' onPress={() => navigation.navigate('managerservice')}/>
                 <DashboardContentItem imageUrl={'https://i.imgur.com/H0aJok0.png'} title='Sản phẩm' onPress={ManagerProductScreenHandler} />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/1Tx9vHE.png'} title='Thành viên' />
             </View>

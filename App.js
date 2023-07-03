@@ -36,6 +36,7 @@ import PostProductScreen from './screens/PostProductScreen';
 import CartScreen from './screens/CartScreen';
 import { LogBox } from 'react-native';
 import ManagerOrderScreen from './screens/ManagerOrderScreen';
+import ManagerServiceScreen from './screens/ManagerServiceScreen';
 
 
 const Stack = createStackNavigator();
@@ -224,6 +225,10 @@ export default function App() {
             }} />
             <Stack.Screen name="managerorder" component={ManagerOrderScreen} options={{
               title: 'Quản Lí Đơn Hàng',
+              headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="managerservice" component={ManagerServiceScreen} options={{
+              title: 'Quản Lí Dịch Vụ',
               headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>

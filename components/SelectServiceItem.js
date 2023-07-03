@@ -4,34 +4,16 @@ import TotalService from "./TotalService";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addBooking, addBookingPrice, addBookingService, removeBookingPrice, removeBookingService } from "../store/redux/bookSchedule";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 
 function SelectServiceItem() {
+    const serviceRef = collection(FIRESTORE_DB, 'Services');
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
 
     const [totalService, setTotalService] = useState([]);
-    const [selectedService, setSelectedService] = useState([{
-        id: 1,
-        serviceName: 'Cắt & Cạo',
-        price: 60000,
-        status: false
-    }, {
-        id: 2,
-        serviceName: 'Uốn',
-        price: 300000,
-        status: false
-    }, {
-        id: 3,
-        serviceName: 'Nhuộm',
-        price: 200000,
-        status: false
-    }, {
-        id: 4,
-        serviceName: 'Ép Side',
-        price: 120000,
-        status: false
-    }
-    ]);
+    const [selectedService, setSelectedService] = useState([]);
     function setToltalPriceHandler(){
         let totalPrice = 0;
         totalService.forEach(service => {
@@ -66,19 +48,29 @@ function SelectServiceItem() {
         setSelectedService(updateServices);
 
     }
+    const getServiceData = () => {
+        const q = query(serviceRef, orderBy('price', 'desc'));
+        const result = onSnapshot(q, (querySnapshot) => {
+            const services = [];
+            querySnapshot.forEach((doc) => {
+                const service = doc.data();
+                services.push({id: doc.id, status: false, ...service});
+            });
+            setSelectedService(services);
+        });
+    }
     useEffect(() => {
-        totalService.forEach(service => {
-            // console.log(service.serviceName)
-        })
+        getServiceData();
+        console.log(selectedService);
     },[totalService]);
 
     function renderItemService() {
 
         return (
-            selectedService.map((service) => (
+            selectedService.map((service, index) => (
                 <ItemService
-                    key={service.id}
-                    title={service.serviceName}
+                    key={index}
+                    title={service.name}
                     price={service.price}
                     nameIonicons={service.status === false ? 'add-circle' : 'remove-circle'}
                     onPress={() => selectServiceHandle(service.id)}

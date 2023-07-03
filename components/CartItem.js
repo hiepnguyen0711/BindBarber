@@ -1,4 +1,4 @@
-import { Alert, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from "../constants/Colors";
 import number_format from "../library/NumberFormat";
@@ -6,14 +6,20 @@ import { useEffect, useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
 function CartItem({ id, name, imageUri, price, count, onPressAdd, onPressRemove }) {
-    
+    const [loading, setLoading] = useState(false);
+    function onLoading(value) {
+        setLoading(value);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.innerContainer}>
                 <View>
+                    {loading && <ActivityIndicator size={'large'} color={Colors.primary200} style={styles.loadingStyle} />}
                     <Image
                         source={{ uri: imageUri === '' ? '' : imageUri }}
                         style={styles.imageProduct}
+                        onLoadStart={() => onLoading(true)}
+                        onLoadEnd={() => onLoading(false)}
                     />
                 </View>
                 <View>
@@ -49,6 +55,12 @@ const styles = StyleSheet.create({
     innerContainer: {
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    loadingStyle: {
+        position: 'absolute',
+        zIndex: 1,
+        left: 25,
+        top: 15
     },
     imageProduct: {
         width: 80,

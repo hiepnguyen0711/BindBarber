@@ -7,12 +7,15 @@ import { useCallback, useEffect, useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart, updateToCart } from "../store/redux/addCart";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function ShopScreen({ navigation }) {
     const dispatch = useDispatch();
     const productRef = collection(FIRESTORE_DB, 'Products');
     const [productData, setProductData] = useState([]);
     const [numberProducts, setNumberProducts] = useState(0);
+    const [isLogged, setIsLogged] = useState(false);
+
     const cartData = useSelector((state) => state.cartProduct.carts);
     const getCartCount = useCallback(() => {
         let count = 0;
@@ -22,13 +25,25 @@ function ShopScreen({ navigation }) {
         return count;
     }, [cartData]);
     function CartScreenHandler(){
+        if(isLogged === false) return Alert.alert('Thông báo', 'Bạn chưa đăng nhập, không thể đặt hàng');
         if(numberProducts === 0){
             Alert.alert('Thông báo','Giỏ hàng trống');
         }else{
             navigation.navigate('cart');
         }
     }
+    const getLogin = async () => {
+        const login = await AsyncStorage.getItem('isLogged');
+        if(login == 1)
+        {
+            setIsLogged(true);
+        }else if(login == 0)
+        {
+            setIsLogged(false);
+        }
+    }
     useEffect(() => {
+        getLogin();
         setNumberProducts(getCartCount());
         navigation.setOptions({
             headerRight: () => (
@@ -54,9 +69,10 @@ function ShopScreen({ navigation }) {
             })
         }
         getProductData();
-    }, [numberProducts, getCartCount]);
+    }, [numberProducts, getCartCount, isLogged]);
 
     function addCartHandler(id, name, image, price) {
+        if(isLogged === false) return Alert.alert('Thông báo', 'Bạn chưa đăng nhập, không thể đặt hàng');
         const cartItem = cartData.find(item => item.id === id);
         if (cartItem) {
             // console.log(cartItem);
