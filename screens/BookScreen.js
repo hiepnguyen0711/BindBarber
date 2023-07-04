@@ -20,11 +20,10 @@ function BookScreen() {
 
     const bookingDate = useSelector((state) => state.booking.dates);
     const [isModalVisible, setModalVisible] = useState(false);
-    const [selectedDay, setSelectedDay] = useState();
     const [checkedLogin, setLogin] = useState(false);
 
     const hourBooking = useSelector((state) => state.booking.hours);
-    const dateBookingId = useSelector((state) => state.booking.dates.dateId);
+    const dateBookingId = useSelector((state) => state.booking.dates);
     const barberBookingName = useSelector((state) => state.booking.barber);
     const serviceBooking = useSelector((state) => state.booking.service)
     const priceBooking = useSelector((state) => state.booking.prices);
@@ -32,11 +31,14 @@ function BookScreen() {
     const userRef = collection(FIRESTORE_DB, 'Users');
 
     function toggleModal() {
-        if (checkedLogin === false) return Alert.alert('Thông báo', 'Bạn hãy đăng nhập để đặt lịch');
-        else if(dateBookingId === null) return Alert.alert('Thông báo', 'Bạn chưa chọn ngày cắt');
-        else if(hourBooking === null) return Alert.alert('Thông báo', 'Bạn chưa chọn khung giờ');
-        else if(barberBookingName === '') return Alert.alert('Thông báo', 'Bạn chưa chọn thợ cắt');
-        else if(priceBooking === 0) return Alert.alert('Thông báo', 'Bạn chưa chọn dịch vụ');
+        // if (checkedLogin === false) return Alert.alert('Thông báo', 'Bạn hãy đăng nhập để đặt lịch');
+        // else if (dateBookingId === null) return Alert.alert('Thông báo', 'Bạn chưa chọn ngày cắt');
+        // else if (hourBooking === null) return Alert.alert('Thông báo', 'Bạn chưa chọn khung giờ');
+        // else if (barberBookingName === '') return Alert.alert('Thông báo', 'Bạn chưa chọn thợ cắt');
+        // else if (priceBooking === 0) return Alert.alert('Thông báo', 'Bạn chưa chọn dịch vụ');
+        // else {
+        //     setModalVisible(!isModalVisible);
+        // }
         setModalVisible(!isModalVisible);
         // console.log(phone);
     }
@@ -57,7 +59,7 @@ function BookScreen() {
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 
     useEffect(() => {
@@ -89,7 +91,7 @@ function BookScreen() {
             }
         };
         getUserData();
-    }, [selectedDay, bookingDate]);
+    }, []);
 
 
     return (
@@ -103,6 +105,7 @@ function BookScreen() {
                 visible={isModalVisible}
                 transparent={true}
                 animationType="fade"
+                statusBarTranslucent={true}
             >
                 <ModalBookSchedule onPressCancel={toggleModal} onPressConfirm={addBookingFireStore} />
             </Modal>

@@ -4,19 +4,20 @@ import { createSlice } from '@reduxjs/toolkit';
 const bookSchedule = createSlice({
     name: 'bookSchedule',
     initialState: {
-        dates: {
-            dateId: null,
-            dateName: null,
-        },
+        // dates: {
+        //     dateId: null,
+        //     dateName: null,
+        // },
+        dates: '',
         hours: null,
         barber: '',
         service: [],
         prices: 0
     },
     reducers: {
-        addBooking: (state, action) => {
-            state.dates.dateId = action.payload.dateId;
-            state.dates.dateName = action.payload.dateName;
+        addBookingDay: (state, action) => {
+            // state.dates.dateId = action.payload.dateId;
+            state.dates = action.payload.dateName;
         },
         addBookingHours: (state, action) => {
             state.hours = action.payload.hour;
@@ -45,5 +46,5 @@ const bookSchedule = createSlice({
     }
 });
 
-export const { addBooking, addBookingHours, addBookingBarber, addBookingService, removeBookingService, removeAllBookingServices, addBookingPrice, removeBookingPrice, removeAllBookingPrice } = bookSchedule.actions; // Thay đổi tên action thành addBooking
+export const { addBookingDay, addBookingHours, addBookingBarber, addBookingService, removeBookingService, removeAllBookingServices, addBookingPrice, removeBookingPrice, removeAllBookingPrice } = bookSchedule.actions; // Thay đổi tên action thành addBooking
 export default bookSchedule.reducer;

@@ -10,12 +10,13 @@ function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
     const [selectedService, setSelectedService] = useState([]);
 
     const hourBooking = useSelector((state) => state.booking.hours);
-    const dateBookingName = useSelector((state) => state.booking.dates.dateName);
+    const dateBookingName = useSelector((state) => state.booking.dates);
     const barberBookingName = useSelector((state) => state.booking.barber);
     const serviceBooking = useSelector((state) => state.booking.service)
     const priceBooking = useSelector((state) => state.booking.prices);
-    const dateBookingId = useSelector((state) => state.booking.dates.dateId);
+    const dateBookingId = useSelector((state) => state.booking.dates);
 
+    console.log(serviceBooking);
     useEffect(() => {
         setSelectedService([]);
     }, serviceBooking)
@@ -31,10 +32,10 @@ function ModalBookSchedule({ onPressCancel, onPressConfirm }) {
                         />
                         <Text style={styles.barberFont}>Thợ cắt: <Text style={styles.barberName}>{barberBookingName}</Text></Text>
                     </View>
-                    {serviceBooking !== null && serviceBooking.map(service => (
-                        <View style={styles.iconContainer}>
+                    {serviceBooking !== null && serviceBooking.map((service, index) => (
+                        <View style={styles.iconContainer} key={index}>
                             <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                            <Text style={styles.serviceFont}>{service.serviceName}</Text>
+                            <Text style={styles.serviceFont}>{service}</Text>
                         </View>
                     ))
                     }

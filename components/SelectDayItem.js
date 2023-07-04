@@ -2,7 +2,7 @@ import { Alert, StyleSheet, Text, View } from "react-native";
 import DayItem from "./DayItem";
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
-import { addBooking } from "../store/redux/bookSchedule";
+import { addBookingDay } from "../store/redux/bookSchedule";
 
 function SelectDayItem() {
     const dispatch = useDispatch();
@@ -57,11 +57,11 @@ function SelectDayItem() {
     const handleDayItemClick = (itemValue, value) => {
         setSelectedItem(itemValue);
         setSelectedDay(value);
-        dispatch(addBooking({ dateId: getDayId(value), dateName: getDateName(value) })); // Thay đổi tên hành động thành addBooking
+        const dayName = getDateName(value);
+        dispatch(addBookingDay({dateName: dayName })); // Thay đổi tên hành động thành addBooking
     };
 
     useEffect(() => {
-        // console.log(selectedDay);
     }, [selectedDay])
 
     return (

@@ -1,8 +1,8 @@
 import { Alert, FlatList, Platform, StyleSheet, Text, View } from "react-native";
 import ItemService from "./ItemService";
 import TotalService from "./TotalService";
-import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addBooking, addBookingPrice, addBookingService, removeBookingPrice, removeBookingService } from "../store/redux/bookSchedule";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
@@ -14,16 +14,10 @@ function SelectServiceItem() {
 
     const [totalService, setTotalService] = useState([]);
     const [selectedService, setSelectedService] = useState([]);
-    function setToltalPriceHandler(){
-        let totalPrice = 0;
-        totalService.forEach(service => {
-                totalPrice += service.price;
-                console.log(totalPrice);
-        });
-        setTotalPrice(totalPrice);
-    }
-    function selectServiceHandle(value) {
-        const updateServices = selectedService.map(service => {
+
+    
+    async function selectServiceHandle(value) {
+        const updateServices = await selectedService.map((service) => {
             if (service.id === value) {
                 const updateService = { ...service, status: !service.status };
                 if(service.status){
@@ -34,12 +28,13 @@ function SelectServiceItem() {
                     setTotalService((prevTotalService) =>
                         prevTotalService.filter((item) => item.id !== updateService.id)
                     );
-                    dispatch(removeBookingService({serviceName: updateService})); // remove itemService to totalService . variable
-                } else {
+                    dispatch(removeBookingService({serviceName: service.name})); // remove itemService to totalService . variable
+                } 
+                else {
                     setTotalService((prevTotalService) => [...prevTotalService, updateService]);
-                    setTotalPrice(prevTotalPrice => prevTotalPrice + updateService.price);
-                    dispatch(addBookingPrice({price: updateService.price}));
-                    dispatch(addBookingService({serviceName: updateService})); // add itemService to totalService . variable
+                    setTotalPrice(prevTotalPrice => prevTotalPrice + service.price);
+                    dispatch(addBookingPrice({price: service.price}));
+                    dispatch(addBookingService({serviceName: service.name})); // add itemService to totalService . variable
                 }
                 return updateService;
             }
@@ -48,21 +43,23 @@ function SelectServiceItem() {
         setSelectedService(updateServices);
 
     }
-    const getServiceData = () => {
+    const getServiceData = useCallback( () => {
         const q = query(serviceRef, orderBy('price', 'desc'));
         const result = onSnapshot(q, (querySnapshot) => {
             const services = [];
+            let id = 0;
             querySnapshot.forEach((doc) => {
                 const service = doc.data();
-                services.push({id: doc.id, status: false, ...service});
+                const price = Number(doc.get('price'));
+                services.push({id: id,uid: doc.id, status: false, ...service, price: price});
+                id += 1;
             });
             setSelectedService(services);
         });
-    }
+    }, []);
     useEffect(() => {
         getServiceData();
-        console.log(selectedService);
-    },[totalService]);
+    },[getServiceData]);
 
     function renderItemService() {
 

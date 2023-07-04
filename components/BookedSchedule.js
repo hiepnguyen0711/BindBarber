@@ -17,7 +17,7 @@ function BookedSchedule({guestName, phone, dateId, hour, service, price, onPress
             {service.map((service, index) => (
                 <View key={index} style={styles.serviceContainer}>
                 <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                <Text style={styles.serviceFont}>{service.serviceName}</Text>
+                <Text style={styles.serviceFont}>{service}</Text>
                 </View>
             ))}
             

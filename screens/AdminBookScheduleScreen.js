@@ -1,5 +1,5 @@
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import BookedSchedule from "../components/BookedSchedule";
 import { collection, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
@@ -8,32 +8,34 @@ function AdminBookScheduleScreen() {
 
     const bookingRef = collection(FIRESTORE_DB, 'Bookings');
     const [bookingData, setBookingData] = useState([]);
-   
-    useEffect(() => {
-        const getBookingData = async () => {
-            try {
-                const q = query(bookingRef, where('status', '==', 1));
-                const result = onSnapshot(q, (querySnapshot) => {
-                    const bookings = [];
-                    querySnapshot.forEach((doc) => {
-                        const booking = doc.data();
-                        bookings.push({id: doc.id, ...booking});
-                    });
-                    setBookingData(bookings);
+
+    const getBookingData = useCallback(() => {
+        try {
+            const q = query(bookingRef, where('status', '==', 1));
+            const result = onSnapshot(q, (querySnapshot) => {
+                const bookings = [];
+                querySnapshot.forEach((doc) => {
+                    const booking = doc.data();
+                    bookings.push({ id: doc.id, ...booking });
                 });
-            } catch (error) {
-                console.log(error);
-            }
+                setBookingData(bookings);
+            });
+        } catch (error) {
+            console.log(error);
         }
-        getBookingData();
     }, [bookingData]);
-    function confirmBookingHandler(id){
+
+    useEffect(() => {
+
+        getBookingData();
+    }, []);
+    function confirmBookingHandler(id) {
         const updateBooking = doc(bookingRef, id);
         updateDoc(updateBooking, {
             status: 2
         })
     }
-    function cancelBookingHandler(id){
+    function cancelBookingHandler(id) {
         const updateBooking = doc(bookingRef, id);
         updateDoc(updateBooking, {
             status: 3
@@ -43,7 +45,7 @@ function AdminBookScheduleScreen() {
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 {bookingData !== null && bookingData.map((booking, index) => (
-                        <BookedSchedule 
+                    <BookedSchedule
                         key={index}
                         guestName={booking.guestName}
                         phone={booking.phone}
@@ -54,7 +56,7 @@ function AdminBookScheduleScreen() {
                         id={booking.id}
                         onPressConfirm={confirmBookingHandler}
                         onPressCancel={cancelBookingHandler}
-                         />
+                    />
                 ))}
             </View>
         </ScrollView>

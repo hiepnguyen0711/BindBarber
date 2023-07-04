@@ -37,6 +37,7 @@ import CartScreen from './screens/CartScreen';
 import { LogBox } from 'react-native';
 import ManagerOrderScreen from './screens/ManagerOrderScreen';
 import ManagerServiceScreen from './screens/ManagerServiceScreen';
+import ManagerMemberScreen from './screens/ManagerMemberScreen';
 
 
 const Stack = createStackNavigator();
@@ -229,6 +230,10 @@ export default function App() {
             }} />
             <Stack.Screen name="managerservice" component={ManagerServiceScreen} options={{
               title: 'Quản Lí Dịch Vụ',
+              headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="managermember" component={ManagerMemberScreen} options={{
+              title: 'Quản lý thành viên',
               headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>

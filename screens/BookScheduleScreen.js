@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import { useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Colors } from "../constants/Colors";
 import BannerBookSchedule from "../components/BannerBookSchedule";
 import ItemBookSchedule from "../components/ItemBookSchedule";
@@ -13,7 +13,33 @@ function BookScheduleScreen({ navigation }) {
     const [userBookingData, setUserBookingData] = useState([]);
     const [userName, setUserName] = useState(null);
 
-    useLayoutEffect(() => {
+    const getUserBookingData = useCallback(async () => {
+        try {
+            await AsyncStorage.getItem('phone')
+                .then((value) => {
+                    setUserPhone(value);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            const userBookingRef = await collection(FIRESTORE_DB, 'Bookings');
+            const q = query(userBookingRef, where('phone', '==', userPhone));
+            const result = onSnapshot(q, (querySnapshot) => {
+                const userBookings = [];
+                querySnapshot.forEach((doc) => {
+                    const userBooking = doc.data();
+                    userBookings.push(userBooking);
+                });
+                setUserBookingData(userBookings);
+                if (userBookings.length > 0) {
+                    setUserName(userBookings[0].guestName);
+                }
+            });
+        } catch (error) {
+            console.log(e);
+        }
+    }, [userBookingData]);
+    useEffect(() => {
         navigation.setOptions({
             headerTitle: '',
             headerShown: false,
@@ -23,40 +49,13 @@ function BookScheduleScreen({ navigation }) {
                 borderBottomWidth: 0
             }
         });
-
-        const getUserBookingData = async () => {
-            try {
-                await AsyncStorage.getItem('phone')
-                    .then((value) => {
-                        setUserPhone(value);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-                const userBookingRef = await collection(FIRESTORE_DB, 'Bookings');
-                const q = query(userBookingRef, where('phone', '==', userPhone));
-                const result = onSnapshot(q, (querySnapshot) => {
-                    const userBookings = [];
-                    querySnapshot.forEach((doc) => {
-                        const userBooking = doc.data();
-                        userBookings.push(userBooking);
-                    });
-                    setUserBookingData(userBookings);
-                    if(userBookings.length > 0){
-                        setUserName(userBookings[0].guestName);
-                    }
-                });
-            } catch (error) {
-
-            }
-        }
         getUserBookingData();
-    }, [userPhone, userName]);
+    }, [getUserBookingData, userName]);
 
     // console.log(userPhone);
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
-            <BannerBookSchedule navigation={navigation} name={userName}/>
+            <BannerBookSchedule navigation={navigation} name={userName} />
             {userBookingData !== null && userBookingData.map((booking, index) => (
                 <ItemBookSchedule
                     key={index}
@@ -68,7 +67,7 @@ function BookScheduleScreen({ navigation }) {
                     status={booking.status}
                 />
             ))}
-           
+
         </ScrollView>
     );
 }
