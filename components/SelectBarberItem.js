@@ -1,16 +1,37 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import BarberItem from "./barberItem";
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { useDispatch } from "react-redux";
 import { addBookingBarber } from "../store/redux/bookSchedule";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
+import { Colors } from "../constants/Colors";
 
 function SelectBarberItem() {
+    const userRef = collection(FIRESTORE_DB, 'Users');
     const dispatch = useDispatch();
     const [selectBarber, setSelectBarber]= useState(null);
+    const [barberData, setBarberData] = useState([]);
     function selectBarberHandler(value, name){
         setSelectBarber(value);
         dispatch(addBookingBarber({barberName: name}));
     }
+
+    const getBarberData = useCallback(() => {
+        const q = query(userRef, where('barber', '==', true), orderBy('rank', 'desc'));
+        const result = onSnapshot(q, (querySnapshot) =>{
+            const barbers = [];
+            querySnapshot.forEach((doc) => {
+                const barber = doc.data();
+                barbers.push({id: doc.id, ...barber});
+            });
+            setBarberData(barbers);
+        })
+    },[]);
+
+    useEffect(() => {
+        getBarberData();
+    }, []);
     return (
         <View>
             <View>
@@ -18,37 +39,22 @@ function SelectBarberItem() {
                     Barber
                 </Text>
             </View>
-            <View style={styles.barberGroup}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+                <View style={styles.barberGroup}>
+                {barberData.map((item, index) => (
                     <BarberItem 
-                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fbind.jpeg?alt=media&token=971ff10c-163d-4c64-9eae-a6ac03bee76c'} 
-                    barberName={'BOSS'}
-                    color={'red'}
+                    key={index}
+                    imageUrl={item.avatar} 
+                    barberName={item.fullName}
+                    color={Colors.primary300}
                     onPress={selectBarberHandler}
-                    value={1}
-                    name={'Bind'}
-                    selected={selectBarber === 1}
+                    value={index}
+                    name={item.fullName}
+                    selected={selectBarber === index}
                     />
-                    {/* barber 2 */}
-                    <BarberItem 
-                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fhiep_2.jpeg?alt=media&token=5ea5be23-47a2-4539-a28c-2d19ec723689'} 
-                    barberName={'Hiệp'}
-                    color={'white'}
-                    onPress={selectBarberHandler}
-                    value={2}
-                    name={'Hiệp'}
-                    selected={selectBarber === 2}
-                    />
-                    {/* barber 3 */} 
-                    <BarberItem 
-                    imageUrl={'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Barbers%2Fhung.jpeg?alt=media&token=99308eab-dc44-40df-adc9-c933c01ee11d'} 
-                    barberName={'Hùng'}
-                    color={'white'}
-                    onPress={selectBarberHandler}
-                    value={3}
-                    name={'Hùng'}
-                    selected={selectBarber === 3}
-                    />
-            </View>
+                ))}
+                   </View>
+            </ScrollView>
         </View>
     );
 }
@@ -63,7 +69,6 @@ const styles = StyleSheet.create({
     },
     barberGroup:{
         flexDirection: 'row',
-        justifyContent: 'space-around',
         marginVertical: 8
     }
 })

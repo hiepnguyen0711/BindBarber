@@ -1,55 +1,78 @@
-import { Image, StyleSheet, View, Text, Platform, ScrollView } from "react-native";
+import { Image, StyleSheet, View, Text, Platform, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
 import InfoContact from "../components/InfoContact";
 import { Colors } from "../constants/Colors";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
+import { useCallback, useEffect, useState } from "react";
 
 function CategoryScreen() {
-    function ViewBannerHandler() {
+    const userRef = collection(FIRESTORE_DB, 'Users');
+    const [barberData, setBarberData] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const onLoading = (value) => {
+        setLoading(value);
     }
+
+    const getBarberData = useCallback(() => {
+
+        const q = query(userRef, where('barber', '==', true), orderBy('rank', 'desc'));
+        const result = onSnapshot(q, (querySnapshot) => {
+            const barbers = [];
+            querySnapshot.forEach((doc) => {
+                const barber = doc.data();
+                barbers.push({ id: doc.id, ...barber });
+            });
+            setBarberData(barbers);
+        })
+    }, []);
+    useEffect(() => {
+        getBarberData();
+    }, []);
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
-        <View style={styles.container}>
-            <Banner onPress={ViewBannerHandler} />
-            <View style={styles.innerContainer}>
-                <View style={styles.serviceTitle}>
-                    <Service title='Dịch vụ' />
-                </View>
-                <View style={styles.serviceButton}>
-                    <ServiceItem title='Cắt Tóc' />
-                </View>
-                <View style={styles.barberTitle}>
-                    <Text style={styles.barberFont}>Barber</Text>
-                </View>
-                <View style={styles.barberImg}>
-                    {/* barber 1 */}
-                    <View style={styles.textImg}>
-                        <View style={styles.innerBarber}>
-                            <Image source={require('../assets/images/barber/bind.jpeg')} style={styles.barberPicture} />
-                        </View>
-                        <Text style={[styles.barberText, {color: 'red'}]}>BOSS</Text>
+            <View style={styles.container}>
+                <Banner />
+                <View style={styles.innerContainer}>
+                    <View style={styles.serviceTitle}>
+                        <Service title='Dịch vụ' />
                     </View>
-                    {/* barber 2 */}
-                    <View style={styles.textImg}>
-                        <View style={styles.innerBarber}>
-                            <Image source={require('../assets/images/barber/hiep_2.jpeg')} style={styles.barberPicture} />
-                        </View>
-                        <Text style={[styles.barberText, {color: 'white'}]}>Hiệp</Text>
+                    <View style={styles.serviceButton}>
+                        <ServiceItem title='Cắt Tóc' />
                     </View>
-                    {/* barber 3 */}
-                    <View style={styles.textImg}>
-                        <View style={styles.innerBarber}>
-                            <Image source={require('../assets/images/barber/hung.jpeg')} style={styles.barberPicture} />
-                        </View>
-                        <Text style={[styles.barberText, {color: 'white'}]}>Hùng</Text>
+                    <View style={styles.barberTitle}>
+                        <Text style={styles.barberFont}>Barber</Text>
                     </View>
-                    {/*  */}
+                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                        <View style={styles.barberImg}>
+                            {barberData.map((item, index) => (
+                                <TouchableOpacity style={styles.barberImageContainer} key={index}>
+                                    <View style={styles.textImg} >
+                                        <View style={styles.innerBarber}>
+                                            {loading && <ActivityIndicator size={'large'} color={'red'} style={styles.activity} />}
+                                            <Image
+                                                source={{ uri: item.avatar }}
+                                                style={styles.barberPicture}
+                                                onLoadStart={() => onLoading(true)}
+                                                onLoadEnd={() => onLoading(false)}
+                                            />
+                                        </View>
+                                        <Text style={[styles.barberText, { color: 'red' }]}>{item.fullName}</Text>
+                                    </View>
+                                </TouchableOpacity>
+
+                            ))}
+
+                        </View>
+
+                    </ScrollView>
                 </View>
+                {/* info contact */}
+                <InfoContact />
             </View>
-            {/* info contact */}
-            <InfoContact />
-        </View>
         </ScrollView>
     );
 
@@ -57,7 +80,7 @@ function CategoryScreen() {
 
 export default CategoryScreen;
 const styles = StyleSheet.create({
-    root:{
+    root: {
         backgroundColor: Colors.primary100,
     },
     container: {
@@ -88,11 +111,13 @@ const styles = StyleSheet.create({
         color: '#E8AA42'
     },
     barberImg: {
-        flex: 4,
-        paddingHorizontal: 10,
         flexDirection: 'row',
+        paddingHorizontal: 10,
         alignItems: 'flex-start',
-        justifyContent: 'space-around'
+    },
+    barberImageContainer: {
+        alignItems: 'center',
+        marginHorizontal: 2
     },
     textImg: {
         alignItems: 'center',
@@ -110,9 +135,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         elevation: 8,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 8
+    },
+    activity: {
+        position: 'absolute',
+        zIndex: 1
     },
     barberPicture: {
         height: 75,

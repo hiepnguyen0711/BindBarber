@@ -1,19 +1,57 @@
-import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Alert, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { arrayRemove, arrayUnion, collection, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
-function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
+function LibraryItem({ barberName, imageUrl, barberImage, liked, id }) {
+    const userRef = collection(FIRESTORE_DB, 'Users');
     const [loading, setLoading] = useState(false);
+    const [userUid, setUserUid] = useState('');
+    const [userSavePost, setUserSavePost] = useState([]);
+    // const savedCollection = userSavePost[0].savedCollection;
+    const findSavePost = userSavePost.find(user => user.savedCollection.includes(id));
+
+    useEffect(() => {
+        getUserUid();
+        getUserSavePost();
+    },[getUserSavePost]);
+    const getUserUid = useCallback(async () => {
+        const uid = await AsyncStorage.getItem('uid');
+        setUserUid(uid);
+    },[]);
+    const getUserSavePost = useCallback(() => {
+        const q = query(userRef, where('uid', '==', userUid));
+        const result = onSnapshot(q, (querySnapshot) => {
+            const users = [];
+            querySnapshot.forEach((doc) => {
+                const user = doc.data();
+                users.push({id: doc.id, ...user});
+            });
+            setUserSavePost(users);
+        })
+        console.log(typeof findSavePost);
+    },[]);
     function onLoading(value, label) {
         setLoading(value);
     }
+    function SavePostHandler(id){
+        updateDoc(doc(userRef, userUid), {
+            savedCollection: arrayUnion(id)
+        })
+    }
+    function RemovePostHandler(id) {
+        updateDoc(doc(userRef, userUid), {
+          savedCollection: arrayRemove(id)
+        });
+      }
     return (
         <View style={styles.container}>
             <View style={styles.imgContainer}>
-                {loading && <View style={styles.loadingActivity}>
-                    <ActivityIndicator size='large' color='red' />
-                </View>}
+                {loading && <ActivityIndicator size='large' color='red'  style={styles.loadingActivity}/> }
                 <Image
                     source={{ uri: imageUrl }}
                     style={styles.libraryImg}
@@ -28,11 +66,16 @@ function LibraryItem({ barberName, imageUrl, barberImage, liked }) {
                             <Ionicons name="heart-outline" size={24} color={'black'} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    {findSavePost ? <TouchableOpacity onPress={() => RemovePostHandler(id)}>
+                        <View style={styles.buttonIcon}>
+                            <Ionicons name="bookmark" size={24} color={Colors.primary300} />
+                        </View>
+                    </TouchableOpacity> :  <TouchableOpacity onPress={() => SavePostHandler(id)}>
                         <View style={styles.buttonIcon}>
                             <Ionicons name="bookmark-outline" size={24} color={'black'} />
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> }
+                   
                 </View>
                 <TouchableOpacity>
                     <View style={styles.barberInfo}>
@@ -74,12 +117,10 @@ const styles = StyleSheet.create({
     imgContainer: {
     },
     loadingActivity: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        alignContent: 'center',
-        alignSelf: 'center',
-        paddingTop: 50
+       position: 'absolute',
+       zIndex: 1,
+       top: '45%',
+       left: '45%'
     },
     libraryImg: {
         height: 400,

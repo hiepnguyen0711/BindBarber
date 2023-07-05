@@ -14,7 +14,7 @@ function ShopItem({ imageUrl, title, price, onPress }) {
     return (
         <View style={styles.root}>
             <View style={styles.container}>
-                {loading && <ActivityIndicator size={'large'} color={'red'} />}
+                {loading && <ActivityIndicator size={'large'} color={'red'} style={styles.activity} />}
                 
                 <Image 
                 source={{ uri: imageUrl }} 
@@ -52,6 +52,12 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         justifyContent: 'space-around',
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible'
+    },
+    activity:{
+        position: 'absolute',
+        zIndex: 1,
+        top: 45,
+        // left: 30
     },
     itemImage: {
         width: 110,

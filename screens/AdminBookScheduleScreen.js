@@ -59,7 +59,7 @@ function AdminBookScheduleScreen() {
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity style={styles.btnNotReceived}>
+                    <TouchableOpacity style={styles.btnNotReceived} onPress={getBookingData}>
                         <Text style={styles.notReceivedFont}>Chưa nhận</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnReceived} onPress={getBookingDataReceived}>
@@ -77,6 +77,7 @@ function AdminBookScheduleScreen() {
                         price={booking.price}
                         id={booking.id}
                         status={booking.status}
+                        barber={booking.barberName}
                         onPressConfirm={confirmBookingHandler}
                         onPressCancel={cancelBookingHandler}
                     />

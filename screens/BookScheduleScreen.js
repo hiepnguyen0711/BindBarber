@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Colors } from "../constants/Colors";
 import BannerBookSchedule from "../components/BannerBookSchedule";
 import ItemBookSchedule from "../components/ItemBookSchedule";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -23,7 +23,7 @@ function BookScheduleScreen({ navigation }) {
                     console.log(error);
                 });
             const userBookingRef = await collection(FIRESTORE_DB, 'Bookings');
-            const q = query(userBookingRef, where('phone', '==', userPhone));
+            const q = query(userBookingRef, where('phone', '==', userPhone), orderBy('dateId', 'desc'));
             const result = onSnapshot(q, (querySnapshot) => {
                 const userBookings = [];
                 querySnapshot.forEach((doc) => {

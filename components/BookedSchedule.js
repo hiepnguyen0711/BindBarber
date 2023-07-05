@@ -4,7 +4,7 @@ import { Colors } from "../constants/Colors";
 import number_format from "../library/NumberFormat";
 
 const windowWidth = Dimensions.get('window').width;
-function BookedSchedule({guestName, phone, dateId, hour, service, price, onPressConfirm, onPressCancel, id, status}) {
+function BookedSchedule({ guestName, phone, dateId, hour, service, price, onPressConfirm, onPressCancel, id, status, barber }) {
     return (
         <View style={styles.container}>
             <View>
@@ -14,41 +14,45 @@ function BookedSchedule({guestName, phone, dateId, hour, service, price, onPress
                 <Text style={styles.dateFont}>{dateId}</Text>
                 <Text style={styles.hourFont}>{hour}:00</Text>
             </View>
+            <View style={styles.barberContainer}>
+                <Text style={styles.barberFont}>Thợ : </Text>
+                <Text style={styles.barberFont}>{barber}</Text>
+            </View>
             {service.map((service, index) => (
                 <View key={index} style={styles.serviceContainer}>
-                <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
-                <Text style={styles.serviceFont}>{service}</Text>
+                    <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
+                    <Text style={styles.serviceFont}>{service}</Text>
                 </View>
             ))}
-            
+
             <View style={styles.priceContainer}>
                 <Text style={styles.priceFont}>{number_format(price)} đ</Text>
             </View>
             {status === 1 && <View style={styles.btnContainer}>
-              <TouchableOpacity style={styles.btnConfirm} onPress={() => onPressConfirm(id)}>
+                <TouchableOpacity style={styles.btnConfirm} onPress={() => onPressConfirm(id)}>
                     <Ionicons name="checkmark-sharp" color={'white'} size={22} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnCancel} onPress={() => onPressCancel(id)}>
                     <Ionicons name="close-sharp" color={'white'} size={22} />
-                </TouchableOpacity> 
-            </View> }
+                </TouchableOpacity>
+            </View>}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: 'white',
         width: windowWidth - 32,
         margin: 8,
         borderRadius: 8,
         elevation: 8,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 8
     },
-    nameFont:{
+    nameFont: {
         fontFamily: 'chakra-b',
         textTransform: 'uppercase',
         fontSize: 18,
@@ -56,37 +60,46 @@ const styles = StyleSheet.create({
         marginVertical: 4,
         color: Colors.primary200
     },
-    dateContainer:{
+    dateContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 12
     },
-    dateFont:{
+    dateFont: {
         fontSize: 16,
         fontFamily: 'chakra-m',
         textTransform: 'uppercase'
     },
-    hourFont:{
+    hourFont: {
         fontSize: 16,
         color: 'gray',
         fontFamily: 'chakra-m'
     },
-    serviceContainer:{
+    barberContainer: {
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        paddingVertical: 4
+    },
+    barberFont: {
+        fontFamily: 'chakra-m',
+        fontSize: 16
+    },
+    serviceContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 12,
-        marginVertical: Platform.OS === 'android'? 2:4
+        marginVertical: Platform.OS === 'android' ? 2 : 4
     },
     serviceIcon: {
         width: 27,
         height: 27
     },
-    serviceFont:{
+    serviceFont: {
         fontFamily: 'josefin-r',
         fontSize: 14,
         color: 'gray'
     },
-    priceContainer:{
+    priceContainer: {
         alignItems: 'flex-end',
         paddingHorizontal: 12
     },
@@ -95,30 +108,30 @@ const styles = StyleSheet.create({
         fontFamily: 'chakra-b',
         color: '#1F8A70'
     },
-    btnContainer:{
+    btnContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginVertical: 6
     },
-    btnConfirm:{
+    btnConfirm: {
         backgroundColor: '#FF7B54',
         padding: 8,
         marginHorizontal: 4,
         borderRadius: 8,
         elevation: 4,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4
     },
-    btnCancel:{
+    btnCancel: {
         backgroundColor: '#E8C4C4',
         padding: 8,
         marginHorizontal: 4,
         borderRadius: 8,
         elevation: 4,
         shadowColor: 'black',
-        shadowOffset: {width: 0, height: 2},
+        shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 4
     }

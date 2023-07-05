@@ -64,7 +64,7 @@ function AvatarAccount({ imageUrl, accountName, phone, rankName }) {
         <View style={styles.container}>
             <View style={styles.avatarContainer}>
                 <TouchableOpacity onPress={pickAvatar}>
-                    {loading && <ActivityIndicator size='small' color={Colors.primary200} />}
+                    {loading && <ActivityIndicator size='large' color={Colors.primary200} style={styles.activity} />}
                     <Image
                         source={{ uri: imageUrl === null ? '' : imageUrl }}
                         style={styles.avatarAccount}
@@ -104,6 +104,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 8,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
+    },
+    activity:{
+        position: 'absolute',
+        zIndex: 1,
+        left: 10,
+        top: 10
     },
     avatarAccount: {
         width: 60,

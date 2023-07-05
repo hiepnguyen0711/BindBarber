@@ -45,13 +45,14 @@ function LibraryScreen() {
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false} >
             <View style={styles.container}>
-            {libraryData.map((item) => (
+            {libraryData.map((item, index) => (
                 <LibraryItem
-                    key={item.id}
+                    key={index}
                     barberName={item.fullName}
                     barberImage={item.avatar}
                     imageUrl={item.image}
                     liked={item.liked}
+                    id={item.id}
                 />
             ))}
             </View>

@@ -1,29 +1,41 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
+import { useState } from "react";
 
 function BarberItem({ imageUrl, barberName, color, onPress, value, name, selected }) {
+    const [loading, setLoading] = useState(false);
+
+    const onLoading = (value) => {
+        setLoading(value);
+    }
     return (
-        <TouchableOpacity onPress={() => onPress(value, name)} >
-            <View style={styles.barberContainer}>
+        <View style={styles.barberContainer}>
+            <TouchableOpacity onPress={() => onPress(value, name)} style={styles.innerContainer} >
                 <View style={[styles.barberItem, selected && styles.selectedBarberItem]}>
+                    {loading && <ActivityIndicator size={'large'} color={Colors.primary200} style={styles.activity} />}
                     <Image
                         source={{ uri: imageUrl }}
                         style={styles.barberImage}
+                        onLoadStart={() => onLoading(true)}
+                        onLoadEnd={() => onLoading(false)}
                     />
                 </View>
                 <View>
                     <Text style={[styles.barberNameFont, { color: color }]}>{barberName}</Text>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
 
     );
 }
 export default BarberItem;
 const styles = StyleSheet.create({
     barberContainer: {
-        // justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 16,
+    },
+    innerContainer:{
+        alignItems: 'center',
     },
     barberItem: {
         width: 85,
@@ -55,5 +67,9 @@ const styles = StyleSheet.create({
     },
     selectedBarberItem: {
         backgroundColor: Colors.primary300
+    },
+    activity: {
+        position: 'absolute',
+        zIndex: 1
     }
 })
