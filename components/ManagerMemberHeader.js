@@ -1,8 +1,13 @@
 import { Dimensions, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { Colors } from "../constants/Colors";
+import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
-function ManagerMemberHeader() {
+function ManagerMemberHeader({onPressFind}) {
+    const [findData, setFindData] = useState('');
+    const onFindData = (value) => {
+        setFindData(value);
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.headerTitleFont}>TÌM THÀNH VIÊN</Text>
@@ -11,8 +16,10 @@ function ManagerMemberHeader() {
                 keyboardType="numeric"
                 maxLength={10}
                 textAlign="center"
+                value={findData}
+                onChangeText={onFindData}
             />
-            <TouchableOpacity style={styles.btnFind}>
+            <TouchableOpacity style={styles.btnFind} onPress={() => onPressFind(findData)}>
                 <Text style={styles.findFont}>Tìm kiếm</Text>
             </TouchableOpacity>
         </View>

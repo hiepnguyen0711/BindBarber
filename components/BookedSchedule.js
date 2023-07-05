@@ -4,7 +4,7 @@ import { Colors } from "../constants/Colors";
 import number_format from "../library/NumberFormat";
 
 const windowWidth = Dimensions.get('window').width;
-function BookedSchedule({guestName, phone, dateId, hour, service, price, onPressConfirm, onPressCancel, id}) {
+function BookedSchedule({guestName, phone, dateId, hour, service, price, onPressConfirm, onPressCancel, id, status}) {
     return (
         <View style={styles.container}>
             <View>
@@ -24,14 +24,14 @@ function BookedSchedule({guestName, phone, dateId, hour, service, price, onPress
             <View style={styles.priceContainer}>
                 <Text style={styles.priceFont}>{number_format(price)} đ</Text>
             </View>
-            <View style={styles.btnContainer}>
-                <TouchableOpacity style={styles.btnConfirm} onPress={() => onPressConfirm(id)}>
+            {status === 1 && <View style={styles.btnContainer}>
+              <TouchableOpacity style={styles.btnConfirm} onPress={() => onPressConfirm(id)}>
                     <Ionicons name="checkmark-sharp" color={'white'} size={22} />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnCancel} onPress={() => onPressCancel(id)}>
                     <Ionicons name="close-sharp" color={'white'} size={22} />
-                </TouchableOpacity>
-            </View>
+                </TouchableOpacity> 
+            </View> }
         </View>
     );
 }

@@ -76,6 +76,7 @@ export async function loginUser(email, password, navigation) {
             AsyncStorage.setItem('phone', users[0].phone);
             AsyncStorage.setItem('avatar', users[0].avatar);
             AsyncStorage.setItem('fullName', users[0].fullName);
+            AsyncStorage.setItem('rank', users[0].rank.toString());
             navigation.replace('bottomtab');
         });
 
