@@ -7,25 +7,11 @@ import { useState, useEffect } from 'react';
 
 function LibraryScreen() {
     const customerRef = collection(FIRESTORE_DB, 'Library');
-    // const userRef = collection(FIRESTORE_DB, 'Users');
-
     const [libraryData, setLibraryData] = useState([]);
-
     useEffect(() => {
         const getLibraryData = async () => {
             try {
-                // này là lấy dữ liệu = getDocs
-
-                // const q = await query(userRef, where('rank', '>=', 2));
-                // const userSnapshot = await getDocs(q);
-                // const barber = [];
-                // userSnapshot.forEach((doc) => {
-                //     barber.push({ id: doc.id, ...doc.data() });
-                //     // console.log(doc.data());
-                // });
-                // setBarberData(barber);
-
-                // này là lấy dữ liệu = onSnapshot
+               
                 const qq = await query(customerRef, orderBy('time', 'desc'))
                 const resultsss = await onSnapshot(qq, (querySnapshot) => {
                     const data = [];
@@ -39,7 +25,7 @@ function LibraryScreen() {
             }
         }
         getLibraryData();
-
+        
     }, []);
 
     return (
@@ -53,6 +39,7 @@ function LibraryScreen() {
                     imageUrl={item.image}
                     liked={item.liked}
                     id={item.id}
+                    date={item.time}
                 />
             ))}
             </View>

@@ -7,51 +7,41 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
-function LibraryItem({ barberName, imageUrl, barberImage, liked, id }) {
+function LibraryItem({ barberName, imageUrl, barberImage, liked, id, date }) {
     const userRef = collection(FIRESTORE_DB, 'Users');
     const [loading, setLoading] = useState(false);
     const [userUid, setUserUid] = useState('');
-    const [userSavePost, setUserSavePost] = useState([]);
-    // const savedCollection = userSavePost[0].savedCollection;
-    const findSavePost = userSavePost.find(user => user.savedCollection.includes(id));
+   
+    const timestamp = date;
+    const datePost = timestamp.toDate();
+    const day = datePost.getDate();
+    const month = datePost.getMonth()+1;
+    const year = datePost.getFullYear();
+    const formattedDate = `${day < 10? '0' + day : day }/${month < 10 ? '0' + month : month}/${year}`;
 
-    useEffect(() => {
-        getUserUid();
-        getUserSavePost();
-    },[getUserSavePost]);
-    const getUserUid = useCallback(async () => {
-        const uid = await AsyncStorage.getItem('uid');
-        setUserUid(uid);
-    },[]);
-    const getUserSavePost = useCallback(() => {
-        const q = query(userRef, where('uid', '==', userUid));
-        const result = onSnapshot(q, (querySnapshot) => {
-            const users = [];
-            querySnapshot.forEach((doc) => {
-                const user = doc.data();
-                users.push({id: doc.id, ...user});
-            });
-            setUserSavePost(users);
-        })
-        console.log(typeof findSavePost);
-    },[]);
+
     function onLoading(value, label) {
         setLoading(value);
     }
-    function SavePostHandler(id){
+    function SavePostHandler(id) {
         updateDoc(doc(userRef, userUid), {
             savedCollection: arrayUnion(id)
-        })
+        });
+
     }
     function RemovePostHandler(id) {
         updateDoc(doc(userRef, userUid), {
-          savedCollection: arrayRemove(id)
+            savedCollection: arrayRemove(id)
         });
-      }
+    }
+    useEffect(() => {
+        
+    }, []);
+
     return (
         <View style={styles.container}>
             <View style={styles.imgContainer}>
-                {loading && <ActivityIndicator size='large' color='red'  style={styles.loadingActivity}/> }
+                {loading && <ActivityIndicator size='large' color='red' style={styles.loadingActivity} />}
                 <Image
                     source={{ uri: imageUrl }}
                     style={styles.libraryImg}
@@ -61,21 +51,7 @@ function LibraryItem({ barberName, imageUrl, barberImage, liked, id }) {
             </View>
             <View style={styles.buttonContainer}>
                 <View style={styles.buttonGroup}>
-                    <TouchableOpacity>
-                        <View style={styles.buttonIcon}>
-                            <Ionicons name="heart-outline" size={24} color={'black'} />
-                        </View>
-                    </TouchableOpacity>
-                    {findSavePost ? <TouchableOpacity onPress={() => RemovePostHandler(id)}>
-                        <View style={styles.buttonIcon}>
-                            <Ionicons name="bookmark" size={24} color={Colors.primary300} />
-                        </View>
-                    </TouchableOpacity> :  <TouchableOpacity onPress={() => SavePostHandler(id)}>
-                        <View style={styles.buttonIcon}>
-                            <Ionicons name="bookmark-outline" size={24} color={'black'} />
-                        </View>
-                    </TouchableOpacity> }
-                   
+                   <Text style={styles.dateFont}>{formattedDate}</Text>
                 </View>
                 <TouchableOpacity>
                     <View style={styles.barberInfo}>
@@ -92,9 +68,7 @@ function LibraryItem({ barberName, imageUrl, barberImage, liked, id }) {
                 </TouchableOpacity>
 
             </View>
-            <View style={styles.containerLike}>
-                <Text style={styles.likeFont} >{liked} lượt thích</Text>
-            </View>
+            
         </View>
     );
 }
@@ -117,14 +91,14 @@ const styles = StyleSheet.create({
     imgContainer: {
     },
     loadingActivity: {
-       position: 'absolute',
-       zIndex: 1,
-       top: '45%',
-       left: '45%'
+        position: 'absolute',
+        zIndex: 1,
+        top: '45%',
+        left: '45%'
     },
     libraryImg: {
         height: 400,
-        resizeMode:'cover',
+        resizeMode: 'cover',
         borderTopRightRadius: 16,
         borderTopLeftRadius: 16,
         // aspectRatio: 1.25
@@ -140,6 +114,10 @@ const styles = StyleSheet.create({
     buttonGroup: {
         flex: 1,
         flexDirection: 'row',
+    },
+    dateFont:{
+        fontFamily: 'chakra-m',
+        color: 'gray'
     },
     buttonIcon: {
         marginHorizontal: 5
