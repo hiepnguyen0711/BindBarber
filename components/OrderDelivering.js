@@ -1,15 +1,21 @@
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import number_format from '../library/NumberFormat'
 import { Colors } from "../constants/Colors";
+import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
 function OrderDelivering({ data, onPressFinishOrder }) {
+    const [loading, setLoading] = useState(false);
     const timestamp = data.date;
     const dateOrder = timestamp.toDate();
     const day = dateOrder.getDate();
     const month = dateOrder.getMonth() + 1;
     const year = dateOrder.getFullYear();
     const formattedDate = `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+
+    const onLoading = (value) => {
+        setLoading(value);
+    }
     return (
         <View style={styles.container}>
             <View style={styles.dateContainer}>
@@ -29,9 +35,13 @@ function OrderDelivering({ data, onPressFinishOrder }) {
             </View>
             {data.product.map((order, index) => (
                 <View style={styles.productContainer} key={index}>
+                {loading && <ActivityIndicator size={'large'} color={Colors.primary200} style={styles.acitivity} /> }
                 <Image
                     source={{ uri: order.image }}
-                    style={styles.productImage} />
+                    style={styles.productImage} 
+                    onLoadStart={() => onLoading(true)}
+                    onLoadEnd={() => onLoading(false)}
+                    />
                 <Text style={styles.productName}>{order.name}</Text>
                 <Text style={styles.productQuantity}>{order.quantity}</Text>
                 <Text style={styles.productPrice}>{number_format(order.price*order.quantity)} đ</Text>
@@ -110,6 +120,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 4,
         paddingHorizontal: 4
+    },
+    acitivity:{
+        position: 'absolute',
+        zIndex: 1,
+        left: 10
     },
     productImage: {
         width: 50,

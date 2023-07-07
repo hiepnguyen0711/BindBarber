@@ -38,6 +38,7 @@ import { LogBox } from 'react-native';
 import ManagerOrderScreen from './screens/ManagerOrderScreen';
 import ManagerServiceScreen from './screens/ManagerServiceScreen';
 import ManagerMemberScreen from './screens/ManagerMemberScreen';
+import NotificationScreen from './screens/NotificationScreen';
 
 
 const Stack = createStackNavigator();
@@ -234,6 +235,10 @@ export default function App() {
             }} />
             <Stack.Screen name="managermember" component={ManagerMemberScreen} options={{
               title: 'Quản lý thành viên',
+              headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="postnotification" component={NotificationScreen} options={{
+              title: 'Gửi thông báo',
               headerBackTitleVisible: false,
             }} />
           </Stack.Navigator>

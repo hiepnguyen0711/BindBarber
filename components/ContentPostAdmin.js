@@ -65,7 +65,7 @@ function ContentPostAdmin() {
             return (
                 <View style={styles.container}>
                     <View style={styles.imageContainer}>
-                        {loading && <ActivityIndicator size='large' color={Colors.primary200} style={Platform.OS === 'android' ? null : styles.imagePost} />}
+                        {loading && <ActivityIndicator size='large' color={Colors.primary200} style={styles.activity} />}
 
                         <Image
                             source={{ uri: itemData.item.image }}
@@ -100,12 +100,6 @@ function ContentPostAdmin() {
                 renderItem={loadLibraryData}
                 keyExtractor={item => item.id}
             />
-
-            {/* {displayedItems < totalItems && (
-                <TouchableOpacity style={styles.loadMoreButton} onPress={handleLoadMore}>
-                    <Text style={styles.loadMoreButtonText}>Load More</Text>
-                </TouchableOpacity>
-            )} */}
             <TouchableOpacity style={styles.loadMoreButton} onPress={handleLoadMore}>
                     <Text style={styles.loadMoreButtonText}>Load More</Text>
                 </TouchableOpacity>
@@ -132,9 +126,15 @@ const styles = StyleSheet.create({
     imageContainer: {
         borderRadius: 8,
     },
+    activity:{
+        position: 'absolute',
+        zIndex: 1,
+        top: '45%',
+        left: '45%'
+    },
     imagePost: {
-        height: 350,
-        resizeMode: 'stretch',
+        height: 450,
+        resizeMode: 'cover',
         borderTopLeftRadius: 8,
         borderTopRightRadius: 8
     },

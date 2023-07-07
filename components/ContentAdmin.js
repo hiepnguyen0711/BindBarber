@@ -28,7 +28,7 @@ function ContentAdmin({navigation}) {
                 <DashboardContentItem imageUrl={'https://i.imgur.com/H0aJok0.png'} title='Sản phẩm' onPress={ManagerProductScreenHandler} />
                 <DashboardContentItem imageUrl={'https://i.imgur.com/1Tx9vHE.png'} title='Thành viên' onPress={() => navigation.navigate('managermember')} />
             </View>
-            <TouchableOpacity style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconContainer} onPress={() => navigation.navigate('postnotification')}>
                 <View>
                     <Ionicons name='add' color={'white'} size={38} />
                 </View>

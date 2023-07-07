@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Dimensions } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { Colors } from "../constants/Colors";
 import BannerBookSchedule from "../components/BannerBookSchedule";
@@ -7,6 +7,7 @@ import { collection, onSnapshot, orderBy, query, where } from "firebase/firestor
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const windowWidth = Dimensions.get('window').width;
 function BookScheduleScreen({ navigation }) {
 
     const [userPhone, setUserPhone] = useState(0);
@@ -56,7 +57,7 @@ function BookScheduleScreen({ navigation }) {
     return (
         <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
             <BannerBookSchedule navigation={navigation} name={userName} />
-            {userBookingData !== null && userBookingData.map((booking, index) => (
+            {userBookingData.length !== 0 ? userBookingData.map((booking, index) => (
                 <ItemBookSchedule
                     key={index}
                     hour={booking.hour}
@@ -66,7 +67,14 @@ function BookScheduleScreen({ navigation }) {
                     service={booking.service.length}
                     status={booking.status}
                 />
-            ))}
+            )) :
+                <View style={styles.innerContainer}>
+                    <View style={styles.notBookedContainer}>
+                        <Text style={styles.notBookedFont}>Bạn chưa đặt lịch nào</Text>
+                    </View>
+                </View>
+
+            }
 
         </ScrollView>
     );
@@ -76,6 +84,26 @@ export default BookScheduleScreen;
 const styles = StyleSheet.create({
     root: {
         flex: 1,
-        backgroundColor: '#EEEEEE'
+        backgroundColor: '#EEEEEE',
+    },
+    innerContainer: {
+        alignItems: 'center',
+        marginTop: -20
+    },
+    notBookedContainer: {
+        backgroundColor: 'white',
+        width: windowWidth - 30,
+        padding: 30,
+        borderRadius: 10,
+        elevation: 8,
+        shadowColor: 'black',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.25,
+        shadowRadius: 4
+    },
+    notBookedFont:{
+        fontFamily: 'chakra-m',
+        fontSize: 18,
+        textAlign: 'center'
     }
 })
