@@ -39,6 +39,7 @@ import ManagerOrderScreen from './screens/ManagerOrderScreen';
 import ManagerServiceScreen from './screens/ManagerServiceScreen';
 import ManagerMemberScreen from './screens/ManagerMemberScreen';
 import NotificationScreen from './screens/NotificationScreen';
+import HairCutScreen from './screens/HairCutScreen';
 
 
 const Stack = createStackNavigator();
@@ -92,6 +93,7 @@ function BottomTabNavigator() {
         title: 'Bind Barber',
         tabBarIcon: ({ color, size }) => <Ionicons name="ios-cut" size={size} color={color} />,
         tabBarLabel: 'Trang chủ',
+        headerShown: false
 
       }} />
       <BottomTab.Screen name="library" component={LibraryScreen} options={{
@@ -114,12 +116,7 @@ function BottomTabNavigator() {
           title: 'Tài khoản',
           tabBarIcon: ({ color, size }) => <Ionicons name="ios-person-circle-sharp" size={size} color={color} />
         }} />
-      <BottomTab.Screen name="asyncstore" component={TestAsyncStorage} options={{
-        title: 'Test AsyncStorage',
-        tabBarIcon: ({ color, size }) => <Ionicons name="bug-sharp" size={size} color={color} />,
-        tabBarLabel: 'Test Async'
-      }} />
-
+      
     </BottomTab.Navigator>
   );
 }
@@ -240,6 +237,16 @@ export default function App() {
             <Stack.Screen name="postnotification" component={NotificationScreen} options={{
               title: 'Gửi thông báo',
               headerBackTitleVisible: false,
+            }} />
+            <Stack.Screen name="haircut" component={HairCutScreen} options={{
+              title: 'Cắt tóc',
+              headerBackTitleVisible: false,
+              headerShown: false
+            }} />
+            <Stack.Screen name="bookscreen" component={BookScreen} options={{
+              title: 'Đặt lịch',
+              headerBackTitleVisible: false,
+              // headerShown: false
             }} />
           </Stack.Navigator>
         </NavigationContainer>

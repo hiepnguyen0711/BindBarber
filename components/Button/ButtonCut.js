@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 
 function ButtonCut({title}) {
+    const navigation = useNavigation();
     return (
         <View style={styles.ButtonContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('haircut')}>
                 <Image source={require('../../assets/images/hair-cut_2.png')} style={styles.img} />
                 <Text style={styles.ButtonTitle}>
                     {title}

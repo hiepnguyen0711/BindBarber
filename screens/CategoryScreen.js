@@ -1,15 +1,17 @@
-import { Image, StyleSheet, View, Text, Platform, ScrollView, TouchableOpacity, ActivityIndicator } from "react-native";
+import { Image, StyleSheet, View, Text, Platform, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import Banner from "../components/Banner";
 import Service from "../components/Service";
 import ServiceItem from "../components/ServiceItem";
 import InfoContact from "../components/InfoContact";
 import { Colors } from "../constants/Colors";
-import { collection, onSnapshot, orderBy, query, where } from "firebase/firestore";
+import { arrayUnion, collection, doc, onSnapshot, orderBy, query, setDoc, updateDoc, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
 import { useCallback, useEffect, useState } from "react";
+import * as Notifications from 'expo-notifications';
 
 function CategoryScreen() {
     const userRef = collection(FIRESTORE_DB, 'Users');
+    const tokenRef = collection(FIRESTORE_DB, 'Tokens');
     const [barberData, setBarberData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -30,6 +32,30 @@ function CategoryScreen() {
         })
     }, []);
     useEffect(() => {
+        async function configurePushNotifications() {
+            const { status } = await Notifications.getPermissionsAsync();
+            let finalStatus = status;
+
+            if (finalStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                Alert.alert('Thông báo', 'Yêu cầu thông báo cần cấp quyền !');
+                return;
+            }
+            const pushTokenData = await Notifications.getExpoPushTokenAsync();
+            updateDoc(doc(tokenRef, 'jVKNVJZHgrxwsZKjQHpH'), {
+                token: arrayUnion(pushTokenData.data)
+            });
+            if (Platform.OS === 'android') {
+                Notifications.setNotificationChannelAsync('default', {
+                    name: 'default',
+                    importance: Notifications.AndroidImportance.DEFAULT
+                });
+            }
+        }
+        configurePushNotifications();
         getBarberData();
     }, []);
     return (
@@ -84,10 +110,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary100,
     },
     container: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'space-between',
+        minHeight: 800
     },
     innerContainer: {
-        flex: 1
+        flex: 1,
     },
     banner: {
         height: 250,

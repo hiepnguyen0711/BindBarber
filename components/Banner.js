@@ -3,22 +3,21 @@ import Carousel from "react-native-snap-carousel";
 
 
 const windowWidth = Dimensions.get('window').width;
-function Banner({onPress}){
+function Banner({ onPress }) {
     const data = [
-        { imageUrl: 'https://images.pexels.com/photos/1813272/pexels-photo-1813272.jpeg?cs=srgb&dl=pexels-thgusstavo-santana-1813272.jpg&fm=jpg' },
-        { imageUrl: 'https://img.freepik.com/premium-photo/barbershop-armchair-salon-men_293990-16.jpg?w=2000' },
-        { imageUrl: 'https://www.washingtonian.com/wp-content/uploads/2021/10/ScissorsScotchNavyYard-4-2048x1366.jpg' },
-      ];
-    
-      const renderItem = ({ item }) => (
+        // { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Banners%2Fbanner_1.png?alt=media&token=68234498-7133-4bf5-b238-65e1800beddd' },
+        { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/bindbarber-a98b3.appspot.com/o/Banners%2Fbanner_2.png?alt=media&token=d510d3ac-ad00-427f-8dc0-1f504ff45092' },
+    ];
+
+    const renderItem = ({ item }) => (
         <TouchableOpacity onPress={onPress} >
-        <View style={styles.innerContainer}>
-          <Image source={{uri: item.imageUrl}} style={styles.banner} />
-        </View>
+            <View style={styles.innerContainer}>
+                <Image source={{ uri: item.imageUrl }} style={styles.banner} />
+            </View>
         </TouchableOpacity>
 
-      );
-    return(
+    );
+    return (
         <View style={styles.container}>
             <Carousel
                 data={data}
@@ -37,20 +36,18 @@ function Banner({onPress}){
 export default Banner;
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         overflow: 'hidden',
         margin: 0
     },
-    innerContainer:{
+    innerContainer: {
         flex: 1,
-        margin: 0
-    },
-    banner:{
-        height: 350,
-        // resizeMode: 'contain',
-        width: windowWidth,
         margin: 0,
-        aspectRatio: 1.25
+        height: 300
+    },
+    banner: {
+        height: 300,
+        resizeMode: 'cover',
     }
 })

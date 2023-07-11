@@ -20,7 +20,7 @@ function BookedSchedule({ guestName, phone, dateId, hour, service, price, onPres
             </View>
             {service.map((service, index) => (
                 <View key={index} style={styles.serviceContainer}>
-                    <Image source={require('../assets/images/favorite.gif')} style={styles.serviceIcon} />
+                    <Ionicons name="ios-star" size={22} color={Colors.primary200} style={styles.serviceIcon}/>
                     <Text style={styles.serviceFont}>{service}</Text>
                 </View>
             ))}
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 12,
-        marginVertical: Platform.OS === 'android' ? 2 : 4
+        marginVertical: Platform.OS === 'android' ? 2 : 4,
+        
     },
     serviceIcon: {
-        width: 27,
-        height: 27
+        marginHorizontal: 5
     },
     serviceFont: {
         fontFamily: 'josefin-r',

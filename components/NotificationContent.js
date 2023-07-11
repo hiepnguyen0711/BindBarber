@@ -1,54 +1,44 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Colors } from "../constants/Colors";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebase/app/firebaseConfig";
+import { useEffect, useState } from "react";
 
 
 const windowWidth = Dimensions.get('window').width;
 function NotificationContent(){
+    const notificationRef = collection(FIRESTORE_DB, 'NotificationHistory');
+    const [notificationData, setNotificationData] = useState([]);
+    useEffect(() => {
+        async function getNotificationData(){
+            const q = await query(notificationRef, orderBy('time', 'desc'));
+            const result = await onSnapshot(q, (querySnapshot) => {
+                const notifications = [];
+                querySnapshot.forEach((doc) => {
+                    const notification = doc.data();
+                    notification.time = notification.time.toDate();
+                    const day = notification.time.getDate();
+                    const month = notification.time.getMonth()+1;
+                    const year = notification.time.getFullYear();
+                    const formattedDate = `${day < 10? '0' + day : day }/${month < 10 ? '0' + month : month}/${year}`;
+                    notifications.push({id: doc.id, date: formattedDate, ...notification});
+                });
+                setNotificationData(notifications);
+            });
+        }
+        getNotificationData();
+    }, []);
     return(
         <View style={styles.container}>
             <Text style={styles.title}>Lịch sử thông báo</Text>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
+            {notificationData.map((item, index) => (
+                <View style={styles.contentContainer} key={index}>
+                <View style={styles.dateContainer}><Text style={styles.dateFont}>{item.date}</Text></View>    
+                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>{item.content}</Text></View>    
+                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>{item.userPost}</Text></View>        
             </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
-            <View style={styles.contentContainer}>
-                <View style={styles.dateContainer}><Text style={styles.dateFont}>15/6/2023</Text></View>    
-                <View style={styles.contentInnnerContainer}><Text style={styles.contentFont}>Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào Xin chào xin chào
-                Xin chào xin chào</Text></View>    
-                <View style={styles.authorContainer}><Text style={styles.authorTitle}>được gửi bởi </Text><Text style={styles.authorName}>Hiệp</Text></View>        
-            </View>
+            ))}
+            
         </View>
     );
 }
@@ -90,7 +80,8 @@ const styles = StyleSheet.create({
     },
     contentFont:{
         fontFamily: 'chakra-r',
-        fontSize: 14
+        fontSize: 14,
+        textAlign: 'center'
     },
     authorContainer:{
         flexDirection: 'row',

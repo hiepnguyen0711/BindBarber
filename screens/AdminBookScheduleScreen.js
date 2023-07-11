@@ -19,13 +19,14 @@ function AdminBookScheduleScreen() {
                     const booking = doc.data();
                     bookings.push({ id: doc.id, ...booking });
                 });
+                setBookingData([]);
                 setBookingData(bookings);
             });
         } catch (error) {
             console.log(error);
         }
-    }, [bookingData]);
-    const getBookingDataReceived = useCallback(() => {
+    }, []);
+    const getBookingDataReceived = () => {
         try {
             const q = query(bookingRef, where('status', '==', 2), orderBy('dateId', 'desc'));
             const result = onSnapshot(q, (querySnapshot) => {
@@ -34,12 +35,14 @@ function AdminBookScheduleScreen() {
                     const booking = doc.data();
                     bookings.push({id: doc.id, ...booking});
                 });
+                setBookingData([]);
                 setBookingData(bookings);
             })
         } catch (e) {
             console.log(e);
         }
-    }, []);
+    };
+    
     useEffect(() => {
         getBookingData();
     }, []);
