@@ -1,9 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 
 function ButtonPressed({title}) {
+
+    const navigation = useNavigation();
     return (
         <View style={styles.ButtonContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('pressedside')}>
                 <Image source={require('../../assets/images/hair-color.png')} style={styles.img} />
                 <Text style={styles.ButtonTitle}>
                     {title}

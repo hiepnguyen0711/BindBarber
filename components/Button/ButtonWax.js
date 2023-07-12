@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 
 function ButtonWax({title}) {
+    const navigation = useNavigation();
     return (
         <View style={styles.ButtonContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('shopscreen')}>
                 <Image source={require('../../assets/images/hair-mask.png')} style={styles.img} />
                 <Text style={styles.ButtonTitle}>
                     {title}

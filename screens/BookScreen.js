@@ -31,16 +31,15 @@ function BookScreen() {
     const userRef = collection(FIRESTORE_DB, 'Users');
 
     function toggleModal() {
-        // if (checkedLogin === false) return Alert.alert('Thông báo', 'Bạn hãy đăng nhập để đặt lịch');
-        // else if (dateBookingId === null) return Alert.alert('Thông báo', 'Bạn chưa chọn ngày cắt');
-        // else if (hourBooking === null) return Alert.alert('Thông báo', 'Bạn chưa chọn khung giờ');
-        // else if (barberBookingName === '') return Alert.alert('Thông báo', 'Bạn chưa chọn thợ cắt');
-        // else if (priceBooking === 0) return Alert.alert('Thông báo', 'Bạn chưa chọn dịch vụ');
-        // else {
-        //     setModalVisible(!isModalVisible);
-        // }
+        if (checkedLogin === false) return Alert.alert('Thông báo', 'Bạn hãy đăng nhập để đặt lịch');
+        else if (dateBookingId === null) return Alert.alert('Thông báo', 'Bạn chưa chọn ngày cắt');
+        else if (hourBooking === null) return Alert.alert('Thông báo', 'Bạn chưa chọn khung giờ');
+        else if (barberBookingName === '') return Alert.alert('Thông báo', 'Bạn chưa chọn thợ cắt');
+        else if (priceBooking === 0) return Alert.alert('Thông báo', 'Bạn chưa chọn dịch vụ');
+        else {
+            setModalVisible(!isModalVisible);
+        }
         setModalVisible(!isModalVisible);
-        // console.log(phone);
     }
     function addBookingFireStore() {
         try {

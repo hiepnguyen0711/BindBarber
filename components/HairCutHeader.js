@@ -10,7 +10,7 @@ function HairCutHeader({imageUri}) {
         <View style={styles.container}>
             <Image source={{uri:imageUri}} style={styles.imageBanner} />
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.icon}>
-                <Ionicons name="md-arrow-undo-sharp" size={38} color={Colors.primary200} />
+                <Ionicons name="md-arrow-undo-sharp" size={38} color={Colors.primary400} />
             </TouchableOpacity>
         </View>
     );

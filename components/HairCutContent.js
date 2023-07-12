@@ -3,12 +3,12 @@ import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View }
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
-function HairCutContent() {
+function HairCutContent({title,content, imageData}) {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <Text style={styles.serviceFont}>Dịch vụ</Text>
-            <Text style={styles.titleFont}>Cắt & Cạo</Text>
+            <Text style={styles.titleFont}>{title}</Text>
             <View style={styles.iconContainer}>
                 <Image source={require('../assets/images/star.png')} style={styles.icon} />
                 <Image source={require('../assets/images/star.png')} style={styles.icon} />
@@ -17,20 +17,14 @@ function HairCutContent() {
                 <Image source={require('../assets/images/star.png')} style={styles.icon} />
             </View>
             <View style={styles.aboutContainer}>
-                <Text style={styles.aboutFont}>Chào mừng đến Bind Barber - tiệm cắt tóc hàng đầu ở Cà Mau! 
-                Với 8 năm kinh nghiệm và danh tiếng xuất sắc, chúng tôi mang đến dịch vụ cắt và cạo râu tuyệt vời. 
-                Đội ngũ chuyên nghiệp, không gian thoải mái và phong cách tạo kiểu độc đáo. 
-                Hãy đến và trải nghiệm sự tươi mới và tự tin tại Bind Barber!
+                <Text style={styles.aboutFont}>{content}
                 </Text>
             </View>
             <View >
                 <View style={styles.imageContainer}>
-                    <Image source={require('../assets/images/1.jpeg')} style={styles.imageGuest} />
-                    <Image source={require('../assets/images/2.jpeg')} style={styles.imageGuest} />
-                    <Image source={require('../assets/images/3.jpeg')} style={styles.imageGuest} />
-                    <Image source={require('../assets/images/4.jpeg')} style={styles.imageGuest} />
-                    <Image source={require('../assets/images/5.jpeg')} style={styles.imageGuest} />
-                    <Image source={require('../assets/images/6.jpeg')} style={styles.imageGuest} />
+                    {imageData.map((item, index) => (
+                        <Image source={{uri: item}} style={styles.imageGuest} key={index}/>
+                    ))}
                 </View>
 
             </View>
@@ -44,7 +38,7 @@ function HairCutContent() {
 }
 const styles = StyleSheet.create({
     container: {
-        minHeight: (windowHeight+50) - 300,
+        minHeight: (windowHeight+150) - 300,
         backgroundColor: 'white',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,

@@ -1,9 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native';
 
 function ButtonDying({title}) {
+    const navigation = useNavigation();
     return (
         <View style={styles.ButtonContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('hairdying')}>
                 <Image source={require('../../assets/images/hair-dye.png')} style={styles.img} />
                 <Text style={styles.ButtonTitle}>
                     {title}

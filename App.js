@@ -41,6 +41,8 @@ import ManagerMemberScreen from './screens/ManagerMemberScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import HairCutScreen from './screens/HairCutScreen';
 import CurlingScreen from './screens/CurlingScreen';
+import HairDyingScreen from './screens/HairDyingScreen';
+import PressedSideScreen from './screens/PressedSideScreen';
 
 
 const Stack = createStackNavigator();
@@ -253,6 +255,21 @@ export default function App() {
               title: 'Đặt lịch',
               headerBackTitleVisible: false,
               headerShown: false
+            }} />
+            <Stack.Screen name="hairdying" component={HairDyingScreen} options={{
+              title: 'Nhuộm Tóc',
+              headerBackTitleVisible: false,
+              headerShown: false
+            }} />
+            <Stack.Screen name="pressedside" component={PressedSideScreen} options={{
+              title: 'Ép Side',
+              headerBackTitleVisible: false,
+              headerShown: false
+            }} />
+            <Stack.Screen name="shopscreen" component={ShopScreen} options={{
+              title: 'Cửa hàng',
+              headerBackTitleVisible: false,
+              // headerShown: false
             }} />
           </Stack.Navigator>
         </NavigationContainer>
