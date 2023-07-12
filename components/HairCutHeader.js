@@ -4,11 +4,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constants/Colors";
 
 const windowWidth = Dimensions.get('window').width;
-function HairCutHeader() {
+function HairCutHeader({imageUri}) {
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/images/hair_cut_bg.jpeg')} style={styles.imageBanner} />
+            <Image source={{uri:imageUri}} style={styles.imageBanner} />
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.icon}>
                 <Ionicons name="md-arrow-undo-sharp" size={38} color={Colors.primary200} />
             </TouchableOpacity>

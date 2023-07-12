@@ -40,6 +40,7 @@ import ManagerServiceScreen from './screens/ManagerServiceScreen';
 import ManagerMemberScreen from './screens/ManagerMemberScreen';
 import NotificationScreen from './screens/NotificationScreen';
 import HairCutScreen from './screens/HairCutScreen';
+import CurlingScreen from './screens/CurlingScreen';
 
 
 const Stack = createStackNavigator();
@@ -247,6 +248,11 @@ export default function App() {
               title: 'Đặt lịch',
               headerBackTitleVisible: false,
               // headerShown: false
+            }} />
+            <Stack.Screen name="curling" component={CurlingScreen} options={{
+              title: 'Đặt lịch',
+              headerBackTitleVisible: false,
+              headerShown: false
             }} />
           </Stack.Navigator>
         </NavigationContainer>

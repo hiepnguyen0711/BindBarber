@@ -5,7 +5,7 @@ import HairCutContent from "../components/HairCutContent";
 function HairCutScreen() {
     return (
         <View>
-            <HairCutHeader />
+            <HairCutHeader imageUri={'https://i.imgur.com/PFrcBwd.jpg'} />
             <HairCutContent />
         </View>
 

@@ -17,11 +17,10 @@ function HairCutContent() {
                 <Image source={require('../assets/images/star.png')} style={styles.icon} />
             </View>
             <View style={styles.aboutContainer}>
-                <Text style={styles.aboutFont}>dsadasdsadsa das sad sad sad saasdasdsad sadsa dsa dsad sad sad sad asd sad sada
-                    dsad asd sadsa
-                    dsadsadsa dsad sadsadsadsadsa
-                    dsadsadsa dsadasdsa ddasddddddd dsa dsad sad sad sadasdsa dsa
-                    d sadsa dsa dsa dsa dsa
+                <Text style={styles.aboutFont}>Chào mừng đến Bind Barber - tiệm cắt tóc hàng đầu ở Cà Mau! 
+                Với 8 năm kinh nghiệm và danh tiếng xuất sắc, chúng tôi mang đến dịch vụ cắt và cạo râu tuyệt vời. 
+                Đội ngũ chuyên nghiệp, không gian thoải mái và phong cách tạo kiểu độc đáo. 
+                Hãy đến và trải nghiệm sự tươi mới và tự tin tại Bind Barber!
                 </Text>
             </View>
             <View >
@@ -45,11 +44,11 @@ function HairCutContent() {
 }
 const styles = StyleSheet.create({
     container: {
-        minHeight: windowHeight - 300,
+        minHeight: (windowHeight+50) - 300,
         backgroundColor: 'white',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
-        marginTop: -50,
+        marginTop: -100,
         alignItems: 'center',
         justifyContent: 'space-around',
         padding: 10,
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
     },
     aboutContainer: {
         width: windowWidth - 100,
+        marginVertical: 5
     },
     aboutFont: {
         fontFamily: 'josefin-r',
