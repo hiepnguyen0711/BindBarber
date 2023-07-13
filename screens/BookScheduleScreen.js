@@ -13,32 +13,9 @@ function BookScheduleScreen({ navigation }) {
     const [userPhone, setUserPhone] = useState(0);
     const [userBookingData, setUserBookingData] = useState([]);
     const [userName, setUserName] = useState(null);
+    const [userUid, setUserUid] = useState('');
 
     const getUserBookingData = useCallback(async () => {
-        try {
-            await AsyncStorage.getItem('phone')
-                .then((value) => {
-                    setUserPhone(value);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            const userBookingRef = await collection(FIRESTORE_DB, 'Bookings');
-            const q = query(userBookingRef, where('phone', '==', userPhone), orderBy('dateId', 'desc'));
-            const result = onSnapshot(q, (querySnapshot) => {
-                const userBookings = [];
-                querySnapshot.forEach((doc) => {
-                    const userBooking = doc.data();
-                    userBookings.push(userBooking);
-                });
-                setUserBookingData(userBookings);
-                if (userBookings.length > 0) {
-                    setUserName(userBookings[0].guestName);
-                }
-            });
-        } catch (error) {
-            console.log(e);
-        }
     }, [userBookingData]);
     useEffect(() => {
         navigation.setOptions({
@@ -50,7 +27,25 @@ function BookScheduleScreen({ navigation }) {
                 borderBottomWidth: 0
             }
         });
-        getUserBookingData();
+        const getUserUid = async () => {
+            const uid = await AsyncStorage.getItem('uid');
+            setUserUid(uid);
+            const userBookingRef = await collection(FIRESTORE_DB, 'Bookings');
+            const q = query(userBookingRef, where('uid', '==', userUid), orderBy('dateId', 'desc'));
+            const result = onSnapshot(q, (querySnapshot) => {
+                const userBookings = [];
+                querySnapshot.forEach((doc) => {
+                    const userBooking = doc.data();
+                    userBookings.push(userBooking);
+                });
+                setUserBookingData(userBookings);
+                if (userBookings.length > 0) {
+                    setUserName(userBookings[0].guestName);
+                }
+            });
+        }
+        getUserUid();
+        // getUserBookingData();
     }, [getUserBookingData, userName]);
 
     // console.log(userPhone);

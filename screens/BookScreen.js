@@ -17,8 +17,7 @@ function BookScreen() {
     const dispatch = useDispatch();
     const [userName, setUserName] = useState('');
     const [phone, setPhone] = useState('');
-
-    const bookingDate = useSelector((state) => state.booking.dates);
+    const [userUid, setUserUid] = useState('');
     const [isModalVisible, setModalVisible] = useState(false);
     const [checkedLogin, setLogin] = useState(false);
 
@@ -52,7 +51,8 @@ function BookScreen() {
                 price: priceBooking,
                 guestName: userName,
                 phone: phone,
-                status: 1
+                status: 1,
+                uid: userUid
             });
             Alert.alert('Chúc mừng', 'Bạn đã đặt lịch thành công');
         } catch (error) {
@@ -73,6 +73,7 @@ function BookScreen() {
                     setLogin(false);
                 }
                 const uid = await AsyncStorage.getItem('uid');
+                setUserUid(uid);
                 const q = query(userRef, where('uid', '==', uid));
                 const result = onSnapshot(q, (querySnapshot) => {
                     const users = [];

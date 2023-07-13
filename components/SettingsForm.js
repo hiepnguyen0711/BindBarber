@@ -1,15 +1,21 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { Colors } from "../constants/Colors";
+import { useState } from "react";
 
 const windowWidth = Dimensions.get('window').width;
 
-function SettingsForm({ title, titleContent, titleInput, type }) {
+function SettingsForm({ title, titleContent, titleInput, type, status, saveHandler }) {
+    const [textinputValue, setTextinputValue] = useState('');
+
     function handlePress() {
         Keyboard.dismiss();
     }
+
+    function getValue(value){
+        setTextinputValue(value);
+    }
     return (
         <TouchableWithoutFeedback onPress={handlePress}>
-
             <View style={styles.container}>
                 <View>
                     <View style={styles.titleContainer}>
@@ -21,10 +27,12 @@ function SettingsForm({ title, titleContent, titleInput, type }) {
                         maxLength={32}
                         autoCapitalize="characters"
                         keyboardType={type}
+                        value={textinputValue}
+                        onChangeText={getValue}
                     />
                 </View>
                 <View style={styles.btnContainer}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => saveHandler(status, textinputValue)}>
                         <View style={styles.btnInnerContainer}>
                             <Text style={styles.btnSave}>Lưu lại</Text>
                         </View>
