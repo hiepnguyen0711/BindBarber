@@ -22,19 +22,19 @@
     "android": {
       "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/adaptive_icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.jasons711.BindBarber"
     },
     "web": {
-      "favicon": "./assets/icon.png"
+      "favicon": "./assets/adaptive_icon.png"
     },
     "plugins": [
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png",
+          "icon": "./assets/adaptive_icon.png",
           "color": "#ffffff",
           "sounds": [
             "./assets/sound.wav"
